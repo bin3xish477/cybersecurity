@@ -14,6 +14,6 @@ new_mac = options.new_mac
 
 print('[+] Changing Mac address for ' + interface + ' to ' + new_mac)
 
-subprocess.call(['ifconfig', interface, 'down'])
-subprocess.call(['ifconfig', interface, 'hw', 'ether', new_mac])
-subprocess.call(['ifconfig', interface, 'up'])
+subprocess.call(['sudo', 'ifconfig', interface, 'down'])
+subprocess.call(['sudo', 'ifconfig', interface, 'hw', 'ether', new_mac])
+subprocess.call(['sudo', 'ifconfig', interface, 'up'])
