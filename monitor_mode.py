@@ -15,7 +15,7 @@ mode = options.mode
 
 print('[+] ' + interface + ' has been set to mode ' + mode)
 
-subprocess.call(['ifconfig', interface, 'down'])
-subprocess.call(['airmon-ng check kill'])
-subprocess.call(['iwconfig', interface, 'mode', mode])
-subprocess.call(['ifconfig', interface, 'up'])
+subprocess.call(['sudo', 'ifconfig', interface, 'down'])
+subprocess.call(['sudo', 'airmon-ng', 'check', 'kill'])
+subprocess.call(['sudo', 'iwconfig', interface, 'mode', mode])
+subprocess.call(['sudo', 'ifconfig', interface, 'up'])
