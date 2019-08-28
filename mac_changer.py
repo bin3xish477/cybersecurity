@@ -3,17 +3,25 @@
 import subprocess
 import optparse
 
-parser = optparse.OptionParser()
 
-parser.add_option('-i', '--interface', dest='interface', help='Interface whose MAC address you want to alter')
-parser.add_option('-m', '--mac', dest='new_mac', help='Desired MAC address')
-(options, arguments) = parser.parse_args()
+def get_args():
+    parser = optparse.OptionParser()
 
-interface = options.interface
-new_mac = options.new_mac
+    parser.add_option('-i', '--interface', dest='interface', help='Interface whose MAC address you want to alter')
+    parser.add_option('-m', '--mac', dest='new_mac', help='Desired MAC address')
+    (options, arguments) = parser.parse_args()
+    if not options.interface or not options.new_mac:
+        parser.error('[-] You forgot to enter the interface or MAC address, --help for more info')
+    return options
 
-print('[+] Changing Mac address for ' + interface + ' to ' + new_mac)
 
-subprocess.call(['sudo', 'ifconfig', interface, 'down'])
-subprocess.call(['sudo', 'ifconfig', interface, 'hw', 'ether', new_mac])
-subprocess.call(['sudo', 'ifconfig', interface, 'up'])
+def change_mac(interface, new_mac='00:11:22:33:44:55'):
+    print('[+] Changing Mac address for ' + interface + ' to ' + new_mac)
+
+    subprocess.call(['sudo', 'ifconfig', interface, 'down'])
+    subprocess.call(['sudo', 'ifconfig', interface, 'hw', 'ether', new_mac])
+    subprocess.call(['sudo', 'ifconfig', interface, 'up'])
+
+
+options = get_args()
+change_mac(options.interface, options.new_mac)
