@@ -8,7 +8,7 @@ def get_args():
     parser = optparse.OptionParser()
 
     parser.add_option('-i', '--interface', dest='interface', help='Interface whose MAC address you want to alter')
-    parser.add_option('-m', '--mac', dest='new_mac', help='Desired MAC address')
+    parser.add_option('-m', '--mac', dest='new_mac', help='Desired MAC address. Note: first number should be even.')
     (options, arguments) = parser.parse_args()
     if not options.interface or not options.new_mac:
         parser.error('[-] You forgot to enter the interface or MAC address, --help for more info')
