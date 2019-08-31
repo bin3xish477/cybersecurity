@@ -1,3 +1,9 @@
+
+
+
+
+
+
 #!/usr/bin/env python
 
 import subprocess
@@ -17,7 +23,7 @@ def get_args():
 
 
 def change_mac(interface, new_mac='00:11:22:33:44:55'):
-    print('[+] Changing MAC address for ' + interface + ' to ' + new_mac + '\n')
+    print('[+] Changing MAC address for ' + interface + ' to ' + new_mac)
 
     subprocess.call(['sudo', 'ifconfig', interface, 'down'])
     subprocess.call(['sudo', 'ifconfig', interface, 'hw', 'ether', new_mac])
@@ -30,7 +36,7 @@ def get_current_mac(interface):
     if mac_address_result:
         return mac_address_result.group(0)
     else:
-        print("[-] Couldn\'t read MAC address. \n")
+        print("[-] Couldn\'t read MAC address.")
 
 options = get_args()
 
@@ -41,8 +47,9 @@ change_mac(options.interface, options.new_mac)
 
 current_mac = get_current_mac(options.interface)
 if current_mac == options.new_mac:
-    print("[+] Mac address was successfully altered to : " + str(current_mac))
+    print("[+] MAC address was successfully altered to : " + str(current_mac))
 else:
     print("[-] MAC address did not change")
 
+    
     
