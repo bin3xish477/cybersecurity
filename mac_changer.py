@@ -1,10 +1,23 @@
-
-
-
-
-
-
 #!/usr/bin/env python
+
+
+"""
+***********************************************************
+Title :       mac_changer.py
+Author :      Alexis Rodriguez
+Created on :  August 30th, 2019
+Description : Changes the MAC address of a desired network 
+              interface.
+Purpose :     Uses the subprocess, optparse, and re modules
+              to call system commands, customize build
+              commands, and extract data using regular
+              expressions, ultimately providing all the 
+              information needed to altar a network 
+              interface's MAC address.
+Build with :  python mac_changer.py -i [interface] -m [MAC]
+***********************************************************
+"""
+
 
 import subprocess
 import optparse
@@ -50,6 +63,3 @@ if current_mac == options.new_mac:
     print("[+] MAC address was successfully altered to : " + str(current_mac))
 else:
     print("[-] MAC address did not change")
-
-    
-    
