@@ -1,5 +1,17 @@
 #!/usr/bin/env python
 
+"""
+************************************************************
+Title :       monitor_mode.py
+Author :      Alexis Rodriguez
+Created on :  August 25th, 2019
+Description : sets a preferred interface into monitor mode
+Purpose :     Uses the subprocess and optparse module to call
+              system commands and parsing command-line options.
+Build with :  python monitor_mode.py -i [interface] -m[mode]
+************************************************************
+"""
+
 import subprocess
 import optparse
 
