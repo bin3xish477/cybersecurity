@@ -1,4 +1,4 @@
 # PythonEthicalHacking
-Ethical Hacking with Python
+Ethical Hacking with Python /n
 NOTE: all of this code is referenced from the "Lern Python & Ethical Hacking From Scracth" course on Udemy. 
 I have just added my known variable and functions names.
