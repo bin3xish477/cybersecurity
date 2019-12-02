@@ -8,8 +8,9 @@ def request(url):
          pass
     except requests.exceptions.InvalidURL:
         pass
+    
+targer_url = input("Enter a URL: ")
 
-target_url = "google.com"
 with open("wordlist.txt") as wordlist_file:
     for line in wordlist_file:
         line = line.strip("\n")
