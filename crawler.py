@@ -11,10 +11,10 @@ def request(url):
     
 target_url = input("Enter a URL: ")
 
-with open("subdomain_wordlist.txt", "r") as wordlist_file:
-    for line in wordlist_file:
-        line = line.strip("\n")
-        url = line + "." +  target_url
+with open("files-and-dirs-wordlist.txt", "r") as wordlist_file:
+    for word in wordlist_file:
+        word = word.strip("\n")
+        url = target_url + "/" + word
         response = request(url)
         if response:
             print("[+] discovered subdomain --> " + url)
