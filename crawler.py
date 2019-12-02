@@ -9,7 +9,7 @@ def request(url):
     except requests.exceptions.InvalidURL:
         pass
     
-targer_url = input("Enter a URL: ")
+target_url = input("Enter a URL: ")
 
 with open("wordlist.txt") as wordlist_file:
     for line in wordlist_file:
