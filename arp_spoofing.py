@@ -36,5 +36,3 @@ while not stop:
     spoof("10.0.2.6", "10.0.2.1")
     spoof("10.0.2.1", "10.0.2.6")
     time.sleep(2)
-     
-# CTRL+C to exit program
