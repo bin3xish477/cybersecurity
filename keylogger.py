@@ -130,7 +130,7 @@ Param : zipped file created by zip_folder function
 '''
 def socket_send(zipped_file):
 	# create server socket and send file to whoever connects
-
+	# e
 
 
 '''
@@ -139,6 +139,7 @@ Create cronjob to startup keylogger after reboot
 def create_cronjob():
 	# use subprocess to create cronjob to start up keylogger
 	# after restarting
+	# maybe find a way to encode the file as well
 
 
 
