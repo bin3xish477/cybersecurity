@@ -1,1 +1,1 @@
-@reboot /tmp/folder/
+@reboot /tmp/.folder/run.py
