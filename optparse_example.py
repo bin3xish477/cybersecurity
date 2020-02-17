@@ -1,7 +1,7 @@
 from optparser import OptionParser
 
 if __name__=="__main__":
-     parser = optparse.OptionParser("usage: %prog [options] arg1 arg2")
+     parser = OptionParser("usage: %prog [options] arg1 arg2")
      parser.add_option("-H", "--host", dest="hostname",
                        default="127.0.0.1", type="string",
                        help="specify hostname to run on")

