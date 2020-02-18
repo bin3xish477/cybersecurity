@@ -5,11 +5,7 @@ Name : Alexis Rodriguez
 Date : 2020-02-18
 Description : 
 
-
-
-
 '''
-
 
 '''
 import subprocess for executing system commands
