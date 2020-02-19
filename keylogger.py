@@ -74,6 +74,7 @@ try:
   # module to capture keystrokes
 	from pynput import keyboard
 except:
+  # attempt to install dependency
   install_dependency('pynput')
 	# try importing module after attempting download
   from pynput import keyboard
