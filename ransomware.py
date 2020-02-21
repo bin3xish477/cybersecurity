@@ -33,7 +33,6 @@ except ImportError:
 # Try importing cryptography module class
 try:
 	from cryptography.fernet import Fernet
-	import os
 # If any errors occurs importing the cryp module
 # installing it with the following command
 except:
