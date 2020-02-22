@@ -4,7 +4,7 @@
 Name : Alexis Rodriguez
 
 Start Date : 2020-02-18
-End Date : 2020-02-
+End Date : 2020-02-..
 
 
 Description : 
