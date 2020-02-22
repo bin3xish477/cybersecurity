@@ -13,7 +13,8 @@ G90IG9mIHRoZSB2aWN0aW1zIHNjcmVlbiwgYW5kIGJpbmRzIGEgc2VydmVyIHNvY2tldCB0byB0cmFuc
 Z2F0aGVyZWQgZGF0YSBvdmVyIGEgc29ja2V0IGNvbm5lY3Rpb24uIFRoZSBrZXkgdGV4dCBmaWxlIGlzIHVwZGF0ZWQgZXZlcnkgMjAgc2Vjb25kcyB
 hbmQgdGhlIHNjcmVlbiBjYXB0dXJlIG9jY3VycyBldmVyeSAyIG1pbnV0ZXMuIEFzIG9mIHJpZ2h0IG5vdyB0aGlzIHByb2dyYW0gd2lsbCBvbmx5IH
 dvcmsgb24gTGludXggbWFjaGluZXMgYnV0IHdpbGwgYmUgdXBkYXRlZCBpbiB0aGUgbmVhciBmdXR1cmUgZm9yIFdpbmRvd3MgbWFjaGluZXMgdG9vLg==
-			  
+
+			None of the art was made by me!!! I wish I had art skills haha		  
 			  ___   _      ___   _      ___   _      ___   _      ___   _
 			 [(_)] |=|    [(_)] |=|    [(_)] |=|    [(_)] |=|    [(_)] |=|
 			  '-`  |_|     '-`  |_|     '-`  |_|     '-`  |_|     '-`  |_|
