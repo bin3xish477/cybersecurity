@@ -4,15 +4,15 @@
 Name : Alexis Rodriguez
 
 Start Date : 2020-02-18
-End Date : 2020-02-..
+End Date : 2020-02-23
 
 
 Description : This module is simply an example of a ransomware malware. *Warning*: This file is
 dangerous; encrypting your files and losing the key will be horrendous so please be very cautious 
 of the directory that is being encrypted when attempting to use this program. This program is just 
-another proof of concept. The files that are defined within the Ransomware class will be encrypted
-depending on the directory that is provided as an argument. The key generated will be stored into a file
-and can be retrieved using a class method. 
+another proof of concept, and was not created with any malicious intentions. The files that are defined 
+within the Ransomware class will be encrypted depending on the directory that is provided as an argument.
+The key generated will be stored into a file and can be retrieved using a class method. 
 
 
 		  ooo,    .---.
