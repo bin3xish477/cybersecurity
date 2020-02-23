@@ -237,7 +237,7 @@ def parse_arguments():
 						required=True)
 	# --> This argument will define the cryption action (decrypt/encrypt)
 	required.add_argument('-a', '--action', dest='action', type=str, 
-						  help='Encrypt or decrypt files files',
+						  help='Encrypt or decrypt files',
 						  required=True, default='encrypt')
 	# --> This argument will define the absolute path to a file that has a key
 	# --> or will be used to store a key
