@@ -30,15 +30,16 @@ class Conv3ni3nt:
 		pass
 
 def prompt_tools():
-	print('%sEnter the tools you would like to use: e.g. nmap nikto dirb...%s' % (fg(226), attr(0)))
-	tools = input('cmd> ')
+	print('%sEnter the tools below you would like to use: %s' % (fg(226), attr(0)), end='')
+	print('%se.g. nmap dirb nikto ...%s' % (fg(196), attr(0)))
+	tools = input('conv3> ')
 	lst_of_tools = tools.split()
 	return lst_of_tools
 
 def signature():
 	sig = Figlet(font='future')
 	print(sig.renderText('binexishatt'))
-	print('By : ' + '%sAlexis Rodriguez%s' % (fg(207), attr(0)))
+	print('By : ' + '%sAlexis Rodriguez\n\n%s' % (fg(129), attr(0)))
 
 def initiate():
 	# print my signature
