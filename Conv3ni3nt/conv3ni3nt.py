@@ -88,16 +88,15 @@ class Conv3ni3nt:
 	def start_tool(self, tool_name, tool_options):
 		# > get file name to create
 		file_name = self.generate_file_name(tool_name, tool_options) + '.txt'
-		print(file_name)
 		# > open file created for writing
 		with open(file_name, 'w') as tool_file:
 			# > if tool_options is not asking for the help menu
 			if tool_options != '-h':
 				# > use the tool with its options and direct output to file
-				subp.call(tool_name + ' ' + tool_options, stdout=tool_file)
+				subp.run(tool_name + ' ' + tool_options + ' > ' + tool_file)
 			# > if option equals -h print out help menu to terminal
 			else:
-				subp.call(tool_name + ' ' + tool_options, shell=True)
+				subp.run(tool_name + ' ' + tool_options, shell=True)
 
 
 
