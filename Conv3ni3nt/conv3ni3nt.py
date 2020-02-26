@@ -37,8 +37,8 @@ def get_tools():
 
 def initiate():
 	# print my signature
-	interface_obj
-	conv3_obj = Conv3ni3nt()
+	inter = Interface()
+	conv3_obj = Conv3ni3nt(inter)
 	time.sleep(10)
 	os.system('clear')
 
