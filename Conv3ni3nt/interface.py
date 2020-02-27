@@ -15,6 +15,7 @@ try:
 	from colored import fg, attr
 	from pyfiglet import Figlet
 	from random import randrange
+	from tqdm import tqdm
 except ImportError:
 	print('%s [-] Error importing a module %s' % (fg(196), attr(0)))
 	os.system('exit')
@@ -25,7 +26,7 @@ except ImportError:
 
 class Interface:
 	def __init__(self):
-		self.title = 'Con3ni3nt'
+		self.title = 'Conv3ni3nt'
 		self.font='future'
 		self.red = 196
 		self.purple = 129
@@ -40,15 +41,13 @@ class Interface:
 
 		print(sig.renderText(self.title))
 
-		print('By : ' + '%sAlexis Rodriguez\n%s' % (fg(self.purple), attr(0)))
+		print('\tBy : ' + '%sAlexis Rodriguez%s' % (fg(self.purple), attr(0)))
+
+		print('%s\t aka BinexisHATT\n%s' % (fg(self.purple), attr(0)))
 
 	def tools_prompt(self):
 		'''
 		'''
-		print('%sEnter the tools you would like to use: %s' % (fg(self.red), attr(0)))
+		print('%sEnter the tools you use: %s' % (fg(self.red), attr(0)))
 
 		print('%sE.g. nmap dirb nikto ...%s' % (fg(self.lightyellow), attr(0)))
-
-
-	def tool_options_prompt(self):
-		pass
