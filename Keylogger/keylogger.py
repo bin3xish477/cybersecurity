@@ -65,6 +65,7 @@ try:
   # module to take screenshot
 	import pyautogui as pygrab
 except:
+	subp.call('sudo apt install python3-tk python3-dev', shell=True)
   # attempt to install dependency
   install_dependency('pyautogui')
   # try importing module after attempting download
