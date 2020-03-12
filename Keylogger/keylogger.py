@@ -45,9 +45,9 @@ install dependency if necessary
 '''
 def install_dependency(module_name):
   # attempt to download python's package installer
-  subp.call('sudo apt install python-pip3', shell=True)
+  subp.call('sudo apt install python3-pip', shell=True)
   # downloading module
-  subp.call('pip install ' + module_name, shell=True)
+  subp.call('pip3 install ' + module_name, shell=True)
   # wait 30 seconds for download to complete
   time.sleep(30)
 
