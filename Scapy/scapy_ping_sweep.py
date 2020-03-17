@@ -16,7 +16,7 @@ def send_ping(ip):
     
     """
     # send and receive packets
-    response= sr1(IP(dst=ip, ttl=10)/ICMP(), timeout=1)
+    response = sr1(IP(dst=ip, ttl=10)/ICMP(), timeout=1)
     # if machine answered, print confirmation message
     if response != None:
         print(f'%s{ip} is up!%s' % (fg(1), attr(0)))
