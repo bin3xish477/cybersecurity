@@ -4,7 +4,6 @@ try:
     import socket
     from sys import exit, argv
     from os import _exit
-    from time import sleep
 except ImportError as err:
     print("Import error: {err}")
 
