@@ -40,7 +40,7 @@ if __name__ == '__main__':
         main()
     except KeyboardInterrupt:
         try:
-            print('Exiting scanner...')
+            print('\033[31m', 'Exiting scanner...', '\033[0m')
             exit(1)
         except SystemExit:
             _exit(1)
