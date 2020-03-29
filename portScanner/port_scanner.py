@@ -40,6 +40,7 @@ if __name__ == '__main__':
         main()
     except KeyboardInterrupt:
         try:
+            print('Exiting scanner...')
             exit(1)
         except SystemExit:
             _exit(1)
