@@ -29,7 +29,7 @@ def portScan(target_ip, start, finish):
                 soc.close()
 
 def main():
-    if len(argv) < 4 or len(argv) > 4:
+    if len(argv) != 4:
         print('\033[31m', 'Usage: ./port_scanner.py TARGET_IP START_PORT FINISH_PORT', '\033[0m')
         exit(1)
     TARGET, START, FINISH = argv[1], int(argv[2]), int(argv[3])
