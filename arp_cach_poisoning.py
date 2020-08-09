@@ -4,8 +4,8 @@ from time import sleep
 
 TARGET_IP  = ""
 TARGET_MAC = ""
-FAKE_IP    = ""
-FAKE_MAC   = ""
+FAKE_IP    = "11.22.33.44"
+FAKE_MAC   = "aa:bb:cc:dd:ee:ff"
 
 
 if __name__ == "__main__:
