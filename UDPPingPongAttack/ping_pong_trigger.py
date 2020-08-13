@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
 
+"""
+1. Run udp_server.py on two different computers
+2. Change src and dst address in IP header to
+   IP addresses of computer's running udp_server.py
+3. Run ping_pong_trigger.py
+"""
 from scapy.all import *
 
 def trigger_ping_pong_attack():
