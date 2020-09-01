@@ -12,7 +12,6 @@ int main()
 
     if(!access(fn, W_OK))
     {
-
         fp = fopen(fn, "a+");
         fwrite("\n", sizeof(char), 1, fp);
         fwrite(buffer, sizeof(char), strlen(buffer), fp);
