@@ -1,5 +1,35 @@
 # Ethical Hacking with Python
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 			 The Hacker Manifesto
 			          by
 			    +++The Mentor+++
