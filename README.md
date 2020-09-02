@@ -1,7 +1,6 @@
 # Ethical Hacking with Python
 
 			 The Hacker Manifesto
-
 			          by
 			    +++The Mentor+++
 			Written January 8, 1986
