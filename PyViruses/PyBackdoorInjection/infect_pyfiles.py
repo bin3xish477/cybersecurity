@@ -7,13 +7,8 @@ from re import search
 from base64 import b64encode, b64decode
 from subprocess import run, PIPE
 
-# ** pip3 install pytinstaller **
-
-# compile for Windows:
-# pyinstaller --onefile --noconsole infect_pyfiles.py
-
-# compile for Linux:
-# pyinstaller --onefile infect_pyfiles.py
+# pip install -U nuitka
+# nuitka3 infect_pyfiles.py
 
 # creating job that runs on startup on Windows
 # https://devblogs.microsoft.com/scripting/use-powershell-to-create-job-that-runs-at-startup/
