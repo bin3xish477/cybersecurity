@@ -19,7 +19,6 @@ target_python_modules = (
     "/numpy/__init__.py",
     "/tkinter/__init__.py",
     "/datetime.py",
-    "/abc.py",
     "/argparse.py",
     "/asyncio/__init__.py",
     "/collections/__init__.py",
