@@ -15,6 +15,6 @@ if __name__ == "__main__":
     running_processes = {p.pid: p.info['name'] for p in process_iter(["pid", "name"])}
     for pid, p_name in running_processes.items():
       if p_name in target_browser_executables:
-        if getuid() != 0: setuid(0);
+        if getuid() != 0: setuid(0)
         kill(pid, SIGTERM)
         sleep(10)
