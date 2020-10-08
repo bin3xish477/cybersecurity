@@ -5,7 +5,8 @@ from winreg import (
 	ConnectRegistry,
 	OpenKey,
 	EnumValue,
-	EnumKey
+	EnumKey,
+	QueryInfoKey
 )
 
 from ctypes import (
@@ -15,13 +16,9 @@ from ctypes import (
 )
 
 def get_key_values(key):
-	i = 0
-	while True:
-		try:
-			values = EnumValue(key, i)
-			print(f"[{values[0]} {values[1]} {values[2]}]")
-			i += 1
-		except WindowsError: break
+	num_key_values = QueryInfoKey(key)[1]
+	for i in range(num_key_values):
+		print("[{}, {}, {}]".format(*EnumValue(key, i)))
 
 def get_subkeys(key):
 		j = 0
@@ -36,6 +33,11 @@ def enumerate_registry_hive(top_registry_key, subkey=None):
 		for subkey in get_subkeys(key):
 			opened_key = OpenKey(top_registry_key, subkey, 0, KEY_ALL_ACCESS)
 			get_key_values(opened_key)
+	
+	if subkey not None:
+
+	subkey = f"{}"
+	#enumerate_registry_hive(top_registry_key, subkey=subkey)
 
 if __name__ == "__main__":
 	enumerate_registry_hive(HKEY_CURRENT_USER)
