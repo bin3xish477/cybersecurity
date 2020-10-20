@@ -59,7 +59,6 @@ func openKey(hive registry.Key, subkey string, access uint32) registry.Key {
 	return key
 }
 
-// toTime converts an 8-byte Windows Filetime to time.Time.
 func toTime(t []byte) time.Time {
 	ft := &syscall.Filetime{
 		LowDateTime:  binary.LittleEndian.Uint32(t[:4]),
