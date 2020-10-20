@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/binary"
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -258,13 +259,30 @@ func getRecycleBinFiles() {
 }
 
 func main() {
-	getComputerInfo()
-	getInstalledApps()
-	getEnVars()
-	getStartUpApps()
-	getJumpLists()
-	getLNKFiles()
-	getShellBags()
-	getPrefetchFiles()
-	getRecycleBinFiles()
+	var showAll = flag.Bool("a", false, "Show all available information")
+	var viewComputerInfo = flag.Bool("c", false, "Show Computer Set Up Information")
+	var viewInstalledApps = flag.Bool("i", false, "Show Installed Applications")
+	var viewEnvars = flag.Bool("e", false, "Show Environment Variables")
+	var viewStartUpApps = flag.Bool("j", false, "Show Programs That Run On Start Up")
+	var viewJumpLists = flag.Bool("l", false, "Show Jump List File Info")
+	var viewLNKFiles = flag.Bool("s", false, "Show LNK Files Info")
+	var viewShellBags = flag.Bool("p", false, "Show Shell Bag Info")
+	var viewRecycledFiles = flag.Bool("r", false, "Show Recycle Files")
+	flag.Parse()
+
+	if *showAll {
+		getComputerInfo()
+		getEnVars()
+		getStartUpApps()
+		getJumpLists()
+		getLNKFiles()
+		getShellBags()
+		getPrefetchFiles()
+		getRecycleBinFiles()
+		return
+	}
+
+	if *viewInstalledApps {
+		getInstalledApps()
+	}
 }
