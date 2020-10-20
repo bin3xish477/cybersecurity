@@ -29,13 +29,9 @@ var (
 )
 
 // ------------------------- Helper Functions --------------------------
-func print(args ...interface{}) {
-	fmt.Println(args...)
-}
-
 func check(e error, errMsg string) bool {
 	if e != nil {
-		print(errMsg)
+		fmt.Println(errMsg)
 	}
 	return true
 }
@@ -80,21 +76,21 @@ func getComputerInfo() {
 	defer key.Close()
 
 	boldBlue.Println("◎ ☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶ Computer Build Info ☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶ ◎")
-	print("")
+	fmt.Println("")
 
 	productName, _, err := key.GetStringValue("ProductName")
 	check(err, "ProductName value not found in registry...")
-	print("Product Name : " + productName)
+	fmt.Println("Product Name : " + productName)
 	currentVersion, _, err := key.GetStringValue("CurrentVersion")
 	check(err, "CurrentVersion value not found in registry...")
-	print("Current Version : " + currentVersion)
+	fmt.Println("Current Version : " + currentVersion)
 	currentBuildNumber, _, err := key.GetStringValue("CurrentBuildNumber")
 	check(err, "CurrentBuildNumber Value not found in registry...")
-	print("Build Number : " + currentBuildNumber)
+	fmt.Println("Build Number : " + currentBuildNumber)
 	registeredOwner, _, err := key.GetStringValue("RegisteredOwner")
 	check(err, "RegisteredOwner value not found in registry...")
-	print("Registered Owner : " + registeredOwner)
-	print("")
+	fmt.Println("Registered Owner : " + registeredOwner)
+	fmt.Println("")
 }
 
 func getInstalledApps() {
@@ -110,7 +106,7 @@ func getInstalledApps() {
 	check(err, "Unable to read subkeys...")
 
 	boldRed.Println("◎ ☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶ Installed Applications ☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶ ◎")
-	print("")
+	fmt.Println("")
 	for _, skey := range subkeys {
 		k := openKey(
 			registry.LOCAL_MACHINE,
@@ -122,9 +118,9 @@ func getInstalledApps() {
 		if exist := find(values, "DisplayName"); exist {
 			val, _, err := k.GetStringValue("DisplayName")
 			check(err, "Unable to retrieve data from value DisplayName...")
-			print("\u2022 " + val)
+			fmt.Println("\u2022 " + val)
 		} else {
-			print("\u2022 " + skey)
+			fmt.Println("\u2022 " + skey)
 		}
 	}
 }
@@ -142,14 +138,14 @@ func getEnVars() {
 	check(err, "Unable to read values from registry key...")
 
 	boldGreen.Println("\n◎ ☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶ Environment Variables ☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶ ◎")
-	print("")
+	fmt.Println("")
 
 	for _, envar := range environmentVariables {
 		envarValue, _, err := key.GetStringValue(envar)
 		check(err, "Unable to retrieve data from value in registry key...")
-		print(envar + " ☰☰ " + envarValue)
+		fmt.Println(envar + " ☰☰ " + envarValue)
 	}
-	print("")
+	fmt.Println("")
 }
 
 func getStartUpApps() {
@@ -160,7 +156,7 @@ func getJumpLists() {
 	currentUser, err := user.Current()
 	check(err, "Unable to fetch username...")
 	username := strings.Split(currentUser.Username, `\`)
-	jumpListPath := fmt.Sprintf(
+	jumpListPath := fmt.Sfmt.Printlnf(
 		`C:\Users\%s\AppData\Roaming\Microsoft\Windows\Recent\AutomaticDestinations`,
 		username[1],
 	)
@@ -168,11 +164,11 @@ func getJumpLists() {
 	check(err, "Unable to read files in jump list directory...")
 
 	boldYellow.Println("◎ ☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶ Jump List Files ☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶ ◎")
-	print("")
+	fmt.Println("")
 	for _, file := range jumpListFiles {
-		print(file.Name())
+		fmt.Println(file.Name())
 	}
-	print("")
+	fmt.Println("")
 }
 
 func getLNKFiles() {
@@ -223,7 +219,7 @@ func getRecycleBinFiles() {
 					check(err, "Unable to read data from dollar I recycle file...")
 
 					dateDeleted := toTime(deletedTimeStamp)
-					//convertToDate := fmt.Sprintf(`[DateTime]::FromFileTimeutc("%d")`, timeStamp)
+					//convertToDate := fmt.Sfmt.Printlnf(`[DateTime]::FromFileTimeutc("%d")`, timeStamp)
 					//date, err := exec.Command("powershell.exe", `-c`, convertToDate).CombinedOutput()
 					check(err, "Unable to retrieve time stamp from recycled file...")
 
@@ -234,13 +230,13 @@ func getRecycleBinFiles() {
 					fileName := make([]byte, (dollarIFileSize.Size() - 8 - 8 - 8 - 4))
 					_, err = fi.Read(fileName)
 
-					print("")
+					fmt.Println("")
 					fmt.Print("File Name: ")
 					boldCyan.Println(string(fileName))
-					print("OS: " + operatingSystem)
+					fmt.Println("OS: " + operatingSystem)
 					fmt.Print("File Deleted On: ")
 					boldRed.Println(dateDeleted)
-					print("File size: " + strconv.Itoa(int(binary.LittleEndian.Uint64(fileSize))))
+					fmt.Println("File size: " + strconv.Itoa(int(binary.LittleEndian.Uint64(fileSize))))
 
 				}
 			}
