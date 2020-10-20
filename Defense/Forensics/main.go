@@ -34,6 +34,7 @@ var (
 func check(e error, errMsg string) bool {
 	if e != nil {
 		fmt.Println(errMsg)
+		return false
 	}
 	return true
 }
@@ -49,7 +50,7 @@ func find(slice []string, val string) bool {
 
 func getNumberOfSubKeysAndValues(k registry.Key) (uint32, uint32) {
 	keyInfo, err := k.Stat()
-	check(err, "Unable to fetch Stat info from registry object...")
+	_ := check(err, "Unable to fetch Stat info from registry object...")
 	return keyInfo.SubKeyCount, keyInfo.ValueCount
 }
 
@@ -80,16 +81,27 @@ func getComputerInfo() {
 	fmt.Println("")
 
 	productName, _, err := key.GetStringValue("ProductName")
-	check(err, "ProductName value not found in registry...")
+	if success := check(err, "ProductName value not found in registry..."); !success {
+		return
+	}
 	fmt.Println("Product Name : " + productName)
+	
 	currentVersion, _, err := key.GetStringValue("CurrentVersion")
-	check(err, "CurrentVersion value not found in registry...")
+	if success = check(err, "CurrentVersion value not found in registry..."); !success {
+		return
+	}
 	fmt.Println("Current Version : " + currentVersion)
+	
 	currentBuildNumber, _, err := key.GetStringValue("CurrentBuildNumber")
-	check(err, "CurrentBuildNumber Value not found in registry...")
+	if success = check(err, "CurrentBuildNumber Value not found in registry..."); !success {
+		return
+	}
 	fmt.Println("Build Number : " + currentBuildNumber)
+	
 	registeredOwner, _, err := key.GetStringValue("RegisteredOwner")
-	check(err, "RegisteredOwner value not found in registry...")
+	if success = check(err, "RegisteredOwner value not found in registry..."); !success {
+		return
+	}
 	fmt.Println("Registered Owner : " + registeredOwner)
 	fmt.Println("")
 }
