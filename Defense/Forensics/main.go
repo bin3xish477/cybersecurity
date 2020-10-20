@@ -16,6 +16,8 @@ import (
 )
 
 var (
+	wht        = color.New(color.FgWhite)
+	boldWhite  = wht.Add(color.Bold)
 	blu        = color.New(color.FgBlue)
 	boldBlue   = blu.Add(color.Bold)
 	rd         = color.New(color.FgRed)
@@ -156,7 +158,7 @@ func getJumpLists() {
 	currentUser, err := user.Current()
 	check(err, "Unable to fetch username...")
 	username := strings.Split(currentUser.Username, `\`)
-	jumpListPath := fmt.Sfmt.Printlnf(
+	jumpListPath := fmt.Sprintf(
 		`C:\Users\%s\AppData\Roaming\Microsoft\Windows\Recent\AutomaticDestinations`,
 		username[1],
 	)
@@ -232,7 +234,7 @@ func getRecycleBinFiles() {
 
 					fmt.Println("")
 					fmt.Print("File Name: ")
-					boldCyan.Println(string(fileName))
+					boldWhite.Println(string(fileName))
 					fmt.Println("OS: " + operatingSystem)
 					fmt.Print("File Deleted On: ")
 					boldRed.Println(dateDeleted)
