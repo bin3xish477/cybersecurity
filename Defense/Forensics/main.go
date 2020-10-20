@@ -163,6 +163,13 @@ func getEnVars() {
 }
 
 func getStartUpApps() {
+	/*
+		Registry Run and RunOnce Keys (Run and RunOnce registry keys cause programs to run each time that a user logs on)
+			HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run
+			HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run
+			HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\RunOnce
+			HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\RunOnce
+	*/
 
 }
 
@@ -263,15 +270,17 @@ func main() {
 	var viewComputerInfo = flag.Bool("c", false, "Show Computer Set Up Information")
 	var viewInstalledApps = flag.Bool("i", false, "Show Installed Applications")
 	var viewEnvars = flag.Bool("e", false, "Show Environment Variables")
-	var viewStartUpApps = flag.Bool("j", false, "Show Programs That Run On Start Up")
-	var viewJumpLists = flag.Bool("l", false, "Show Jump List File Info")
-	var viewLNKFiles = flag.Bool("s", false, "Show LNK Files Info")
-	var viewShellBags = flag.Bool("p", false, "Show Shell Bag Info")
+	var viewStartUpApps = flag.Bool("s", false, "Show Programs That Run On Start Up")
+	var viewJumpLists = flag.Bool("j", false, "Show Jump List File Info")
+	var viewLNKFiles = flag.Bool("l", false, "Show LNK Files Info")
+	var viewShellBags = flag.Bool("b", false, "Show Shell Bag Info")
+	var viewPrefetchFiles = flag.Bool("p", false, "Show Prefetch Files")
 	var viewRecycledFiles = flag.Bool("r", false, "Show Recycle Files")
 	flag.Parse()
 
 	if *showAll {
 		getComputerInfo()
+		getInstalledApps()
 		getEnVars()
 		getStartUpApps()
 		getJumpLists()
@@ -282,7 +291,39 @@ func main() {
 		return
 	}
 
+	if *viewComputerInfo {
+		getComputerInfo()
+	}
+
 	if *viewInstalledApps {
 		getInstalledApps()
+	}
+
+	if *viewEnvars {
+		getEnVars()
+	}
+
+	if *viewStartUpApps {
+		getStartUpApps()
+	}
+
+	if *viewJumpLists {
+		getJumpLists()
+	}
+
+	if *viewLNKFiles {
+		getLNKFiles()
+	}
+
+	if *viewShellBags {
+		getShellBags()
+	}
+
+	if *viewPrefetchFiles {
+		getPrefetchFiles()
+	}
+
+	if *viewRecycledFiles {
+		getRecycleBinFiles()
 	}
 }
