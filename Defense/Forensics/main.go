@@ -275,7 +275,7 @@ func main() {
 	var viewLNKFiles = flag.Bool("l", false, "Show LNK Files Information")
 	var viewShellBags = flag.Bool("b", false, "Show Shell Bag Information")
 	var viewPrefetchFiles = flag.Bool("p", false, "Show Prefetch Files")
-	var viewRecycledFiles = flag.Bool("r", false, "Show Recycle Files")
+	var viewRecycledFiles = flag.Bool("r", false, "Show Recycled Files")
 	flag.Parse()
 
 	if *showAll {
