@@ -266,7 +266,7 @@ func getRecycleBinFiles() {
 }
 
 func main() {
-	var showAll = flag.Bool("a", false, "Show all available information")
+	var showAll = flag.Bool("a", false, "Show all Available Information")
 	var viewComputerInfo = flag.Bool("c", false, "Show Computer Set Up Information")
 	var viewInstalledApps = flag.Bool("i", false, "Show Installed Applications")
 	var viewEnvars = flag.Bool("e", false, "Show Environment Variables")
