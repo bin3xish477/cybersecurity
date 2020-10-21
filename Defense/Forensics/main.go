@@ -17,18 +17,23 @@ import (
 )
 
 var (
-	wht        = color.New(color.FgWhite)
-	boldWhite  = wht.Add(color.Bold)
-	blu        = color.New(color.FgBlue)
-	boldBlue   = blu.Add(color.Bold)
-	rd         = color.New(color.FgRed)
-	boldRed    = rd.Add(color.Bold)
-	grn        = color.New(color.FgGreen)
-	boldGreen  = grn.Add(color.Bold)
-	yel        = color.New(color.FgYellow)
-	boldYellow = yel.Add(color.Bold)
-	cyn        = color.New(color.FgCyan)
-	boldCyan   = cyn.Add(color.Bold)
+	wht         = color.New(color.FgWhite)
+	boldWhite   = wht.Add(color.Bold)
+	blu         = color.New(color.FgBlue)
+	boldBlue    = blu.Add(color.Bold)
+	rd          = color.New(color.FgRed)
+	boldRed     = rd.Add(color.Bold)
+	grn         = color.New(color.FgGreen)
+	boldGreen   = grn.Add(color.Bold)
+	yel         = color.New(color.FgYellow)
+	boldYellow  = yel.Add(color.Bold)
+	cyn         = color.New(color.FgCyan)
+	boldCyan    = cyn.Add(color.Bold)
+	mgn         = color.New(color.FgMagenta)
+	boldMagenta = mgn.Add(color.Bold)
+
+	currentUser, _ = user.Current()
+	username       = strings.Split(currentUser.Username, `\`)[1]
 )
 
 // ------------------------- Helper Functions --------------------------
@@ -174,26 +179,45 @@ func getStartUpApps() {
 }
 
 func getJumpLists() {
-	currentUser, err := user.Current()
-	check(err, "Unable to fetch username...")
-	username := strings.Split(currentUser.Username, `\`)
 	jumpListPath := fmt.Sprintf(
 		`C:\Users\%s\AppData\Roaming\Microsoft\Windows\Recent\AutomaticDestinations`,
-		username[1],
+		username,
 	)
 	jumpListFiles, err := ioutil.ReadDir(jumpListPath)
 	check(err, "Unable to read files in jump list directory...")
 
 	boldYellow.Println("◎ ☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶ Jump List Files ☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶ ◎")
-	fmt.Println("")
+	fmt.Println()
 	for _, file := range jumpListFiles {
 		fmt.Println(file.Name())
 	}
-	fmt.Println("")
+	fmt.Println()
 }
 
 func getLNKFiles() {
+	LNKPath := fmt.Sprintf(
+		`C:\Users\%s\AppData\Roaming\Microsoft\Windows\Recent`,
+		username,
+	)
 
+	LNKFiles, err := ioutil.ReadDir(LNKPath)
+	check(err, "Unable to read files from LNK file path location...")
+
+	boldMagenta.Println("◎ ☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶ LNK Files ☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶☶ ◎")
+	fmt.Println()
+	for _, file := range LNKFiles {
+		fi, err := os.Open(LNKPath + `\` + file.Name())
+		_ = check(err, "Unable to open LNK file...")
+		o := make([]byte, 28)
+		_, _ = fi.Read(o)
+		creationTime := make([]byte, 8)
+		_, _ = fi.Read(creationTime)
+
+		fmt.Print("LNK File Name: ")
+		boldWhite.Println(file.Name())
+		fmt.Print("LNK File Created On: ")
+		boldYellow.Println(toTime(creationTime).String())
+	}
 }
 
 func getShellBags() {
