@@ -212,12 +212,26 @@ func getLNKFiles() {
 		_, _ = fi.Read(o)
 		creationTime := make([]byte, 8)
 		_, _ = fi.Read(creationTime)
+		accessTime := make([]byte, 8)
+		_, _ = fi.Read(accessTime)
+		writeTime := make([]byte, 8)
+		_, _ = fi.Read(writeTime)
+		fileSize := make([]byte, 4)
+		_, _ = fi.Read(fileSize)
 
+		fmt.Println()
 		fmt.Print("LNK File Name: ")
 		boldWhite.Println(file.Name())
-		fmt.Print("LNK File Created On: ")
+		fmt.Print("File Created On: ")
 		boldYellow.Println(toTime(creationTime).String())
+		fmt.Print("File Last Accessed On: ")
+		boldYellow.Println(toTime(accessTime).String())
+		fmt.Print("File Last Modified On: ")
+		boldYellow.Println(toTime(writeTime).String())
+		fmt.Print("LNK Target File Size: ")
+		boldBlue.Println(binary.LittleEndian.Uint32(fileSize))
 	}
+	fmt.Println()
 }
 
 func getShellBags() {
@@ -290,6 +304,11 @@ func getRecycleBinFiles() {
 }
 
 func main() {
+	if len(os.Args[:]) < 2 {
+		boldRed.Println("Please use `-h` option to see full list of program options ...")
+		os.Exit(1)
+	}
+
 	var showAll = flag.Bool("a", false, "Show all Available Information")
 	var viewComputerInfo = flag.Bool("c", false, "Show Computer Set Up Information")
 	var viewInstalledApps = flag.Bool("i", false, "Show Installed Applications")
