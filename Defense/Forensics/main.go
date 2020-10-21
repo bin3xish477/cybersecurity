@@ -17,20 +17,13 @@ import (
 )
 
 var (
-	wht         = color.New(color.FgWhite)
-	boldWhite   = wht.Add(color.Bold)
-	blu         = color.New(color.FgBlue)
-	boldBlue    = blu.Add(color.Bold)
-	rd          = color.New(color.FgRed)
-	boldRed     = rd.Add(color.Bold)
-	grn         = color.New(color.FgGreen)
-	boldGreen   = grn.Add(color.Bold)
-	yel         = color.New(color.FgYellow)
-	boldYellow  = yel.Add(color.Bold)
-	cyn         = color.New(color.FgCyan)
-	boldCyan    = cyn.Add(color.Bold)
-	mgn         = color.New(color.FgMagenta)
-	boldMagenta = mgn.Add(color.Bold)
+	boldWhite   = color.New(color.FgWhite).Add(color.Bold)
+	boldBlue    = color.New(color.FgBlue).Add(color.Bold)
+	boldRed     = color.New(color.FgRed).Add(color.Bold)
+	boldGreen   = color.New(color.FgGreen).Add(color.Bold)
+	boldYellow  = color.New(color.FgYellow).Add(color.Bold)
+	boldCyan    = color.New(color.FgCyan).Add(color.Bold)
+	boldMagenta = color.New(color.FgMagenta).Add(color.Bold)
 
 	currentUser, _ = user.Current()
 	username       = strings.Split(currentUser.Username, `\`)[1]
