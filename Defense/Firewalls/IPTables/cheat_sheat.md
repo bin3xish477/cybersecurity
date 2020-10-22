@@ -1,6 +1,4 @@
 # Iptables Cheat Sheet
-Iptables Commands
-
 
 ### A -> appends a rule at the end of the CHAIN
 ```sudo iptables -A OUTPUT -p tcp --dport 443 -j DROP```
