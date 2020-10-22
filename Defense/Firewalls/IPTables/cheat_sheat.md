@@ -185,7 +185,7 @@ rule to accept 7 new tcp syn packets no matter the time frame,
 and then only accept 2 tcp syn packets after the first 7 tcp syn
 packets have been accepted
 ```sudo iptables -A INPUT -p tcp --syn -m limit --limit 2/s --limit-burst 7 -j ACCEPT```
-### Creating IP blacklist depending on firewall rule
+### Creating blacklist
 ```
 #!/bin/bash
 
@@ -201,11 +201,11 @@ iptables -A INPUT -m recent --name hackers --update --seconds 60 -j DROP
 # create a blacklist called hackers and as the src ip to the list 
 iptables -A INPUT -p tcp --dport 25 -m time --timestart 8:00 --timestop 22:00 \
 -m recent --name hackers --set -j DROP
-Accepting packets up to a particular quota
-# limiting the amount of bytes from the destination ip on http to 1gb
-sudo iptables -A INPUT -p tcp --sport 80 -d 234.24.5.6 -m quota --quota 1000000000 -j ACCEPT
-# if more than 1gb of data is requested, drop the packets
-sudo iptables -A INPUT -p tcp --sport 80 -d 234.24.5.6 -j DROP
 ```
+### Accepting packets up to a particular quota
+#### limiting the amount of bytes from the destination ip on http to 1gb
+```sudo iptables -A INPUT -p tcp --sport 80 -d 234.24.5.6 -m quota --quota 1000000000 -j ACCEPT```
+#### if more than 1gb of data is requested, drop the packets
+```sudo iptables -A INPUT -p tcp --sport 80 -d 234.24.5.6 -j DROP```
 
 ## For more on IP tables, check out this Udemy course where most of the example of this cheat sheet came from: https://www.udemy.com/course/linux-security-the-complete-iptables-firewall-guide/
