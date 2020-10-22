@@ -118,9 +118,7 @@ Filter Packets by TCP Flags
 ```sudo iptables -A INPUT -p tcp --dport 22 --syn -j DROP```
 
 ### accept all packets that have SYN ACK tcp flags
-```
-iptables -A OUTPUT -p tcp --tcp-flags syn,ack,rst,fin syn,ack -j ACCEPT
-```
+```iptables -A OUTPUT -p tcp --tcp-flags syn,ack,rst,fin syn,ack -j ACCEPT```
 
 Stateful Firewalls: Connection Tracking
 Packet States:
@@ -134,10 +132,9 @@ UNTRACKED > packets marked within the raw table with a NOTRACK target
 accept all inbound packets that are part of an existing connection
 or that are part of an existing connection and would like to
 establish a new connection
-```
-sudo iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
-```
-Configuring a Stateful Firewall: Bash Script
+```sudo iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT```
+
+### Configuring a Stateful Firewall: Bash Script
 ```
 #!/bin/bash
 
