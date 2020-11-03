@@ -3,7 +3,7 @@ from twitter import Api
 class TwitterCrawler:
     
     def __init__(
-        consumer_key, consumer_secret,
+        self, consumer_key, consumer_secret,
         access_token_key, access_token_secret
     ):
         self.consumer_key=consumer_key
