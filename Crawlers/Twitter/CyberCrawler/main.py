@@ -4,7 +4,6 @@ from json import dump, load
 from sys import exit
 from pandas import DataFrame, set_option
 from prog_args import parse_args
-from prettytable import PrettyTable
 
 def color_out(string, color) -> str:
     colors={
