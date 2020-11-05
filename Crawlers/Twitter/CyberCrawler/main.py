@@ -104,6 +104,7 @@ def main():
         tweet_usernames=[t.username for t in tweets]
         tweet_texts=[t.text for t in tweets]
         tweet_locations=[t.location for t in tweets]
+
         set_option("display.max_rows", len(tweets))
         d=DataFrame(
             {
