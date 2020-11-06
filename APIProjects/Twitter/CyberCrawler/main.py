@@ -110,7 +110,7 @@ def main():
         set_option("display.max_rows", len(tweets))
         d=DataFrame(
             {
-                "Date": tweet_dates,
+                "Date (UTC)": tweet_dates,
                 "Location": tweet_locations,
                 "Username": tweet_usernames,
                 "Tweet": tweet_texts
@@ -133,7 +133,7 @@ def main():
            sheet.update_cell(row, 4, tweet)
            row+=1
            sleep(0.5)
-        print(color_out("[**]", "p"), "Finished uploading search results to Google Sheet's Doc...)
+        print(color_out("[**]", "p"), "Finished uploading search results to Google Sheet's Doc...")
 
 if __name__ == "__main__":
     try:

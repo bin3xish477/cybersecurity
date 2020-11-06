@@ -52,10 +52,7 @@ class TwitterCrawler:
                 tweet_mode="extended"
             ).items(count)
         except error.TweepError:
-            print(
-                color_out("[!!]", "r"),
-                "Too many requests have been made... Try again in 10-15 minutes"
-            )
+            print("Too many requests have been made... Try again in 10-15 minutes")
 
         Tweet=namedtuple(
             "Tweet",
