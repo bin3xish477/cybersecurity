@@ -1,9 +1,15 @@
 from os import environ
+from time import sleep
 from twitter_crawler import TwitterCrawler
 from json import dump, load
 from sys import exit
 from pandas import DataFrame, set_option
 from prog_args import parse_args
+from gspread import service_account
+from shutil import get_terminal_size
+
+s=get_terminal_size((80, 20))
+set_option('display.max_colwidth', s.columns-75)
 
 def color_out(string, color) -> str:
     colors={
@@ -58,10 +64,6 @@ def main():
 
     args=parse_args()
 
-    if args.auth_file:
-        account=service_account(args.auth_file)
-        sheet=open_by_key(args.url_key).sheet1
-        
     api_info={}
 
     api_info["consumer_key"]		= environ.get("CONSUMER_KEY")
@@ -98,13 +100,13 @@ def main():
                 f"Search query: 'Malware OR Ransomware OR Advanced Persistent Threat OR CVE OR Cyber Threat OR Hacker', Count: {c}\n"
             )
             tweets=tw_crawler.search()
+
+    tweet_dates=[t.created_on for t in tweets]
+    tweet_locations=[t.location for t in tweets]
+    tweet_usernames=[t.username for t in tweets]
+    tweet_texts=[t.text for t in tweets]
     
     if args.console:
-        tweet_dates=[t.created_on for t in tweets]
-        tweet_usernames=[t.username for t in tweets]
-        tweet_texts=[t.text for t in tweets]
-        tweet_locations=[t.location for t in tweets]
-
         set_option("display.max_rows", len(tweets))
         d=DataFrame(
             {
@@ -117,10 +119,22 @@ def main():
         print(d)
 
     if args.auth_file:
-        print(color_out("[**]", "g"), f"Uploading results to a Google Sheet Doc identified by this URL key: {args.url_key}")
+        print(color_out("[**]", "g"), "Uploading results to a Google Sheet's Doc...")
         account=service_account(args.auth_file)
-        sheet=open_by_key(args.url_key).sheet1
-            
+        sheet=account.open_by_key(args.url_key).sheet1
+
+        row=len(sheet.col_values(1))+1
+        for date, loc, user, tweet in zip(
+            tweet_dates, tweet_locations, tweet_usernames, tweet_texts
+        ):
+           sheet.update_cell(row, 1, str(date))
+           sheet.update_cell(row, 2, loc)
+           sheet.update_cell(row, 3, user)
+           sheet.update_cell(row, 4, tweet)
+           row+=1
+           sleep(0.5)
+        print(color_out("[**]", "p"), "Finished uploading search results to Google Sheet's Doc...)
+
 if __name__ == "__main__":
     try:
         main()
