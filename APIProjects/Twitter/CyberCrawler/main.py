@@ -7,9 +7,10 @@ from pandas import DataFrame, set_option
 from prog_args import parse_args
 from gspread import service_account
 from shutil import get_terminal_size
+from tweepy import error
 
 s=get_terminal_size((80, 20))
-set_option('display.max_colwidth', s.columns-75)
+set_option('display.max_colwidth', s.columns-80)
 
 def color_out(string, color) -> str:
     colors={
@@ -78,32 +79,36 @@ def main():
  
     #tw_crawler.get_timeline()
     c=args.count
-    if c:
-        if args.query:
-            q=(" OR ".join(args.query))
-            print("\n"+color_out("[++]", "r"), f"Search query: '{q}', Count: {c}\n")
-            tweets=tw_crawler.search(count=c, to_query=q)
+    try:
+        if c:
+            if args.query:
+                q=(" OR ".join(args.query))
+                print("\n"+color_out("[++]", "r"), f"Search query: '{q}', Count: {c}\n")
+                tweets=tw_crawler.search(count=c, to_query=q)
+            else:
+                print(
+                    "\n"+color_out("[++]", "r"),
+                    f"Search query: 'Malware OR Ransomware OR Advanced Persistent Threat OR CVE OR Cyber Threat OR Hacker', Count: {c}\n"
+                )
+                tweets=tw_crawler.search(count=c)
         else:
-            print(
-                "\n"+color_out("[++]", "r"),
-                f"Search query: 'Malware OR Ransomware OR Advanced Persistent Threat OR CVE OR Cyber Threat OR Hacker', Count: {c}\n"
-            )
-            tweets=tw_crawler.search(count=c)
-    else:
-        if args.query:
-            q=(" OR ".join(args.query))
-            print("\n"+color_out("[++]", "r"), f"Search query: '{q}', Count: 200\n")
-            tweets=tw_crawler.search(to_query=q)
-        else:
-            print(
-                "\n"+color_out("[++]", "r"),
-                f"Search query: 'Malware OR Ransomware OR Advanced Persistent Threat OR CVE OR Cyber Threat OR Hacker', Count: {c}\n"
-            )
-            tweets=tw_crawler.search()
+            if args.query:
+                q=(" OR ".join(args.query))
+                print("\n"+color_out("[++]", "r"), f"Search query: '{q}', Count: 200\n")
+                tweets=tw_crawler.search(to_query=q)
+            else:
+                print(
+                    "\n"+color_out("[++]", "r"),
+                    f"Search query: 'Malware OR Ransomware OR Advanced Persistent Threat OR CVE OR Cyber Threat OR Hacker', Count: {c}\n"
+                )
+                tweets=tw_crawler.search()
+    except error.TweepError:
+        print("Too many requests have been made... Try again in 10-15 minutes")
+        exit(1)
 
     tweet_dates=[t.created_on for t in tweets]
     tweet_locations=[t.location for t in tweets]
-    tweet_usernames=[t.username for t in tweets]
+    tweet_usernames=[t.username for t in tweets ]
     tweet_texts=[t.text for t in tweets]
     
     if args.console:
@@ -116,10 +121,11 @@ def main():
                 "Tweet": tweet_texts
             }
         )
+        print()
         print(d)
 
     if args.auth_file:
-        print(color_out("[**]", "g"), "Uploading results to a Google Sheet's Doc...")
+        print("\n\n\n" + color_out("[**]", "g"), "Uploading results to the specified Google Sheet's Doc...")
         account=service_account(args.auth_file)
         sheet=account.open_by_key(args.url_key).sheet1
 

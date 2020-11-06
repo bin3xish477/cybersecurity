@@ -44,15 +44,12 @@ class TwitterCrawler:
             print(tweet.text, end="\n\n\n")
 
     def search(self, count=200, to_query=default_query):
-        try:
-            tweets=Cursor(
-                self.api.search,
-                q=to_query,
-                lang="en",
-                tweet_mode="extended"
-            ).items(count)
-        except error.TweepError:
-            print("Too many requests have been made... Try again in 10-15 minutes")
+        tweets=Cursor(
+            self.api.search,
+            q=to_query,
+            lang="en",
+            tweet_mode="extended"
+        ).items(count)
 
         Tweet=namedtuple(
             "Tweet",
