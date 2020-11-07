@@ -31,7 +31,7 @@ func main() {
 	fmt.Println(*searchStr)
 
 	var results github.RepositoriesSearch
-    params := []string{*searchStr, "language:"+*language}
+    	params := []string{*searchStr, "language:"+*language}
 	url := createSearchURL(params)
 
 	req, err := http.NewRequest("GET", url, nil)
@@ -52,6 +52,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	
 	parseJSON(body, &results)
 	fmt.Println(results.TotalCount)
 	for _, repo := range results.Items {
