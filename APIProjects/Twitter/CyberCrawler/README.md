@@ -6,7 +6,16 @@ Note: To use this program and all of it's features you need to acquire two thing
     - API tokens from a Twitter Developer account (setting up a Twitter developer account but hey it's worth it because you can also use it for your own future projects!)
     - A Google service account for interacting with a Google Sheet's document (this is also quite complicated if you have not interacted with Google's Developer Console
 
+### Installation
+
+```
+git clone https://github.com/binexisHATT/EthicalHacking.git
+cd EthicalHacking/APIProjects/Twitter/CyberCrawler
+pip3 install -r requirements.txt
+```
+
 ### HELP
+
 ```
 usage: main.py [-h] [-q [SearchTerm] [[SearchTerm] ...]] [-a FILENAME] [-k KEY] [-c COUNT] [-s]
 
