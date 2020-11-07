@@ -129,7 +129,7 @@ def main():
         account=service_account(args.auth_file)
         sheet=account.open_by_key(args.url_key).sheet1
 
-        row=len(sheet.col_values(1))+1
+        row=len(sheet.col_values(1))+2
         for date, loc, user, tweet in zip(
             tweet_dates, tweet_locations, tweet_usernames, tweet_texts
         ):
