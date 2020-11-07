@@ -1,6 +1,6 @@
-*** This program was created to collect gather cybersecurity (you can use to search anything but the intentions of the project are directed towards cybersecurity) information from Tweets posted on Twitter***
+*** This program was created to collect gather cybersecurity (you can use this program to search anything but the intentions of the project are directed towards cybersecurity) information from Tweets posted on Twitter***
 
-Note: To use this program and all of features you need to acquire two things:
+Note: To use this program and all of it's features you need to acquire two things:
     - API tokens from a Twitter Developer account
     - A Google service account for interacting with a Google Sheet's
       document
