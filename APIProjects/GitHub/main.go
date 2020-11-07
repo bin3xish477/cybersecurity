@@ -31,7 +31,8 @@ func main() {
 	fmt.Println(*searchStr)
 
 	var results github.RepositoriesSearch
-	url := createSearchURL([]string{*searchStr, *language})
+    params := []string{*searchStr, "language:"+*language}
+	url := createSearchURL(params)
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
