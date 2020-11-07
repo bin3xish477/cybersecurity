@@ -51,9 +51,9 @@ type Repo struct {
 	LabelsURL        string  `json:"labels_url,omitempty"`
 	ReleasesURL      string  `json:"releases_url,omitempty"`
 	DeploymentsURL   string  `json:"deployment_url,omitempty"`
-	CreatedAt        string  `json:"creared_at,omitempty"`
-	UpdatedAt        string  `json:"updated_at,omitempty"`
-	PushedAt         string  `json:"pushed_at,omitempty"`
+	CreatedAt        string `json:"creared_at,omitempty"`
+	UpdatedAt        string `json:"updated_at,omitempty"`
+	PushedAt         string `json:"pushed_at,omitempty"`
 	GitURL           string  `json:"git_url,omitempty"`
 	SSHURL           string  `json:"ssh_url,omitempty"`
 	CloneURL         string  `json:"clone_url,omitempty"`
