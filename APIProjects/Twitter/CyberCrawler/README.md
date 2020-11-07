@@ -12,6 +12,7 @@ Note: To use this program and all of it's features you need to acquire two thing
 git clone https://github.com/binexisHATT/EthicalHacking.git
 cd EthicalHacking/APIProjects/Twitter/CyberCrawler
 pip3 install -r requirements.txt
+python3 main.py -h
 ```
 
 ### HELP
