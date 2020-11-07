@@ -145,5 +145,5 @@ if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
-        print("\n",color_out("[CTRL+C]", "r"), " Killing Program...")
+        print("\n"+color_out("[CTRL+C]", "r"), " Killing Program...")
         exit(1)
