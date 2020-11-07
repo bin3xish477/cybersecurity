@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"./github"
+	"github.com/akamensky/argparse"
 )
 
 func createSearchURL(params []string) string {
@@ -20,9 +21,17 @@ func parseJSON(resp []byte, results *github.RepositoriesSearch) error {
 }
 
 func main() {
-	queryArgs := []string{"MS17-010", "language:python"}
+	parser := argparse.NewParser("gitsearch", "Search GitHub for repositories")
+	searchStr := parser.String("s", "search", &argparse.Options{Required: true, Help: "String to search repositories for"})
+	language := parser.String("l", "language", &argparse.Options{Required: false, Help: "Language the repositories must contain, ex. Python"})
+	err := parser.Parse(os.Args)
+	if err != nil {
+		fmt.Print(parser.Usage(err))
+	}
+	fmt.Println(*searchStr)
+
 	var results github.RepositoriesSearch
-	url := createSearchURL(queryArgs)
+	url := createSearchURL([]string{*searchStr, *language})
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
