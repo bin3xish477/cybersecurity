@@ -55,22 +55,22 @@ def setup():
     exit(1)
 
 def main():
-    # api_config_json=open("api.json", "r")
-    # api_info=load(api_config_json)
-    # for v in api_info.values():
-    #     if v=="None":
-    #         print("[!!] A value in config.json file has not been set")
-    #         print("[**] Please enter all necessary values in the following setup process")
-    #         setup()
+    api_config_json=open("api.json", "r")
+    api_info=load(api_config_json)
+    for v in api_info.values():
+        if v=="None":
+            print("[!!] A value in config.json file has not been set")
+            print("[**] Please enter all necessary values in the following setup process")
+            setup()
 
     args=parse_args()
 
     api_info={}
 
-    api_info["consumer_key"]		= environ.get("CONSUMER_KEY")
-    api_info["consumer_secret"]		= environ.get("CONSUMER_SECRET")
-    api_info["access_token_key"]	= environ.get("ACCESS_TOKEN_KEY")
-    api_info["access_token_secret"]	= environ.get("ACCESS_TOKEN_SECRET")
+#     api_info["consumer_key"]		= environ.get("CONSUMER_KEY")
+#     api_info["consumer_secret"]		= environ.get("CONSUMER_SECRET")
+#     api_info["access_token_key"]	= environ.get("ACCESS_TOKEN_KEY")
+#     api_info["access_token_secret"]	= environ.get("ACCESS_TOKEN_SECRET")
 
     tw_crawler=TwitterCrawler(
         api_info["consumer_key"], api_info["consumer_secret"],
