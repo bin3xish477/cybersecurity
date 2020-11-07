@@ -27,4 +27,6 @@ optional arguments:
 
 ### Example
 
+```
 python3 main.py -a "auth.json" -k "google_sheet_url_key" -q "CVE" "Hacker" "Advanced Persistent Threat" -c 100 -s
+```
