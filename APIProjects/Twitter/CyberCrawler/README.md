@@ -7,7 +7,7 @@ Note: To use this program and all of it's features you need to acquire two thing
     - A Google service account for interacting with a Google Sheet's document (this is also quite complicated if you have not interacted with Google's Developer Console
 
 ### HELP
-
+```
 usage: main.py [-h] [-q [SearchTerm] [[SearchTerm] ...]] [-a FILENAME] [-k KEY] [-c COUNT] [-s]
 
 Twitter Trending Cyber News or Vulnerabilities Crawler
@@ -23,7 +23,8 @@ optional arguments:
   -c COUNT, --count COUNT
                         The number of tweets to search for
   -s, --console         Print results to console
-  
+```
+
 ### Example
 
 python3 main.py -a "auth.json" -k "google_sheet_url_key" -q "CVE" "Hacker" "Advanced Persistent Threat" -c 100 -s
