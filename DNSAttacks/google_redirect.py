@@ -7,8 +7,6 @@ result in the victim being redirected to this bing.com
 
 from socket import socket, AF_INET, SOCK_DGRAM
 
-
-
 def start_dns_server(IP: str, PORT: int):
        with socket(AF_INET, SOCK_DGRAM) as s:
             print("[++] Starting DNS server ...")
