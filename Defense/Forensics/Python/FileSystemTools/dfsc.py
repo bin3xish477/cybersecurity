@@ -96,7 +96,7 @@ class Hash():
                 w.seek(0)
                 csvwriter = writer(w)
                 csvwriter.writerow(csv_fields_)
-                for root, dirs, files in walk(self.dirname):
+                for root, _, files in walk(self.dirname):
                     for f in files:
                         file_meta = []
                         abs_file_path = root + "/" + f 
