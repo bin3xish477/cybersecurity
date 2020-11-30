@@ -8,7 +8,9 @@ from argparse import ArgumentParser
 from colored import fg, attr
 from enum import Enum
 from time import sleep
-from os.path import exists, getsize, abspath
+from os.path import (
+    exists, getsize, abspath, join
+)
 from os import walk
 from sys import exit
 from csv import writer
@@ -99,7 +101,7 @@ class Hash():
                 for root, _, files in walk(self.dirname):
                     for f in files:
                         file_meta = []
-                        abs_file_path = root + "/" + f 
+                        abs_file_path = join(root, f)
                         if f in ("dfsc.py", "sys_files.csv"):
                             continue
                         file_size = getsize(abs_file_path)
