@@ -112,6 +112,7 @@ class Hash():
                             # TODO: 
                             #  - open file and hash file content 
                             #  - write csv row with csvwriter
+                            #  - check if any files were created as well!!
                             #file_meta.append(file_hash)
                             file_meta.append(file_size)
                             csvwriter.writerow(file_meta)
