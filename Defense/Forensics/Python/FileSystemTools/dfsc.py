@@ -90,9 +90,6 @@ class Hash():
 
     def run(self, ignore_permission_exception: bool=False):
         """Open and interates over all the files in `self.dirname`"""
-
-        file_path_and_hash = []
-
         if self.dir_exists():
             with open("sys_files.csv", "w") as w:
                 w.truncate(0)
