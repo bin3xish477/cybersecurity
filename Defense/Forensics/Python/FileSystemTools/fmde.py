@@ -6,6 +6,9 @@ from datetime import datetime as dt
 from sys import exit
 from colored import fg, attr
 from random import randint
+from hashlib import (
+    md5, sha1, sha256, sha512
+)
 
 __author__ = "Alexis Rodriguez"
 __date__   = 20201201
@@ -13,6 +16,34 @@ __date__   = 20201201
 
 parser = ArgumentParser(description="Extract file metadata")
 parser.add_argument("-f", "--file", help="File to extract metadata from")
+
+
+def get_file_hashes(f):
+
+    with open(f, "rb") as file_:
+        file_bytes = file_.read()
+
+        md5_hash = (
+            "\t[%sMD5%s]: %s"
+            % (fg(randint(1, 220)), attr(0), md5(file_bytes).hexdigest())
+            )
+
+        sha1_hash = (
+            "\t[%sSHA1%s]: %s"
+            % (fg(randint(1, 220)), attr(0), sha1(file_bytes).hexdigest())
+            )
+
+        sha256_hash = (
+            "\t[%sSHA256%s]: %s"
+            % (fg(randint(1, 220)), attr(0), sha256(file_bytes).hexdigest())
+            )
+
+        sha512_hash = (
+            "\t[%sSHA512%s]: %s"
+            % (fg(randint(1, 220)), attr(0), sha512(file_bytes).hexdigest())
+            )
+
+        return md5_hash, sha1_hash, sha256_hash, sha512_hash
 
 
 if __name__ == "__main__":
@@ -92,4 +123,13 @@ if __name__ == "__main__":
     print(file_size)
     print(num_of_hard_links)
     print(inode)
+    
+    print(
+        "\n\t[%sFile Hashes%s]:"
+        % (fg(randint(1, 220)), attr(0))
+        )
+
+    # File hashes
+    for h in get_file_hashes(args.file):
+        print("\t"+h)
 
