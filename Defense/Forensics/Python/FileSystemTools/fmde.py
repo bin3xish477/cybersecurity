@@ -24,22 +24,22 @@ def get_file_hashes(f):
         file_bytes = file_.read()
 
         md5_hash = (
-            "\t[%sMD5%s]: %s"
+            "\t%sMD5%s: %s"
             % (fg(randint(1, 220)), attr(0), md5(file_bytes).hexdigest())
             )
 
         sha1_hash = (
-            "\t[%sSHA1%s]: %s"
+            "\t%sSHA1%s: %s"
             % (fg(randint(1, 220)), attr(0), sha1(file_bytes).hexdigest())
             )
 
         sha256_hash = (
-            "\t[%sSHA256%s]: %s"
+            "\t%sSHA256%s: %s"
             % (fg(randint(1, 220)), attr(0), sha256(file_bytes).hexdigest())
             )
 
         sha512_hash = (
-            "\t[%sSHA512%s]: %s"
+            "\t%sSHA512%s: %s"
             % (fg(randint(1, 220)), attr(0), sha512(file_bytes).hexdigest())
             )
 
