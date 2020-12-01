@@ -23,11 +23,10 @@ if __name__ == "__main__":
         print("(-) Please provide the `-f` argument")
         exit(1)
 
-    f_path = abspath(args.file)
-    file_stats = stat(f_path)
+    file_stats = stat(args.file)
     SYSTEM = system()
 
-    print("\nFile: %s%s%s\n" % (fg(255), f_path, attr(0)))
+    print("\nFile: %s%s%s\n" % (fg(255), args.file, attr(0)))
 
     if SYSTEM in ("Linux", "Darwin"):
         ctime = (
@@ -53,16 +52,44 @@ if __name__ == "__main__":
         "\t[%sLast Accessed On%s]: %s"
         % (fg(randint(1, 220)), attr(0), dt.fromtimestamp(file_stats.st_mtime))
         )
-    
-    # TODO: convert st_mode (file permission to english)
+
     file_perm = (
-        "\t[%sFile Permissions%s]: %s"
+        "\t[%sPermissions%s]: %s"
         % (fg(randint(1, 220)), attr(0), (oct(file_stats.st_mode)[-3:]))
         )
 
+    owner_id = (
+        "\t[%sOwner ID%s]: %s"
+        % (fg(randint(1, 220)), attr(0), file_stats.st_uid)
+        )
+
+    group_id = (
+        "\t[%sGroup ID%s]: %s"
+        % (fg(randint(1, 220)), attr(0), file_stats.st_gid)
+        )
+
+    file_size = (
+        "\t[%sFile Size%s]: %s"
+        % (fg(randint(1, 220)), attr(0), file_stats.st_size)
+        )
+
+    num_of_hard_links = (
+        "\t[%sHard Links%s]: %s"
+        % (fg(randint(1, 220)), attr(0), file_stats.st_nlink)
+        )
+
+    inode = (
+        "\t[%sInode #%s]: %s"
+        % (fg(randint(1, 220)), attr(0), file_stats.st_ino)
+        )
 
     print(ctime)
     print(modified_on)
     print(access_on)
     print(file_perm)
+    print(owner_id)
+    print(group_id)
+    print(file_size)
+    print(num_of_hard_links)
+    print(inode)
 
