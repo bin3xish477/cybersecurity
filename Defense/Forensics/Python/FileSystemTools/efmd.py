@@ -15,7 +15,7 @@ __date__   = 20201201
 
 
 parser = ArgumentParser(description="Extract file metadata")
-parser.add_argument("-f", "--file", help="File to extract metadata from")
+parser.add_argument("file", help="File to extract metadata from")
 
 
 def get_file_hashes(f):
