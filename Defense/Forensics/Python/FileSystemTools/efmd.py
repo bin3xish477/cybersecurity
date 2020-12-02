@@ -88,8 +88,8 @@ if __name__ == "__main__":
 
     file_perm = (
         "\t[%sPermissions%s]: %s"
-        % (fg(randint(1, 220)), attr(0), (oct(file_stats.st_mode)[-3:]))
-        )
+        % (fg(randint(1, 220)), attr(0), oct(file_stats.st_mode & 0o777)[-3:]
+        ))
 
     owner_id = (
         "\t[%sOwner ID%s]: %s"
@@ -120,8 +120,13 @@ if __name__ == "__main__":
     print(modified_on)
     print(access_on)
     print(file_perm)
-    print(owner_id)
-    print(group_id)
+
+    # The following two variables are dummy variables in Windows
+    if SYSTEM != "Windows":
+        print(file_perm)
+        print(owner_id)
+        print(group_id)
+
     print(file_size)
     print(num_of_hard_links)
     print(inode)
