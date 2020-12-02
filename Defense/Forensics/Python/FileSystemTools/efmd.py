@@ -123,7 +123,6 @@ if __name__ == "__main__":
 
     # The following two variables are dummy variables in Windows
     if SYSTEM != "Windows":
-        print(file_perm)
         print(owner_id)
         print(group_id)
 
