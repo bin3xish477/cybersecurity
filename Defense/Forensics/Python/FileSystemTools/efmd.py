@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from platform import system
 from argparse import ArgumentParser
 from os.path import abspath

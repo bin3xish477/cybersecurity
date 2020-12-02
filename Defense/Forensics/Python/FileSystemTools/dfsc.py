@@ -16,7 +16,7 @@ from os import walk, remove
 from glob import glob
 from sys import exit
 from csv import writer, reader
-from random import choice
+from random import choice, randint
 
 
 __author__ = "Alexis Rodriguez"
@@ -53,8 +53,7 @@ def prog_args():
     ###################
     # Program arguments
     parser.add_argument(
-        "-d", "--dir", 
-        metavar="DIR",
+        "DIRECTORY", 
         default=".",
         help="Monitor changes to a specified \
             directory and not entire file system, default='/'"
@@ -119,6 +118,8 @@ class Hash():
                 csvwriter.writerow(csv_fields_)
                 for root, _, files in walk(self.directory):
                     for f in files:
+                        if self.f1 in f or self.f2 in f:
+                            continue
                         file_meta = []
                         abs_file_path = join(root, f)
                         file_hash = self.hash_file(abs_file_path)
@@ -138,7 +139,6 @@ class Hash():
 
         with open(f, "rb") as fb:
             file_bytes = fb.read()
-            # TODO: hash file content based on HashAlgo value
             if self.hash_algo == "md5":
                 return md5(file_bytes).hexdigest()
 
@@ -159,6 +159,12 @@ class Hash():
 
     def diff(self):
 
+        num_of_files_changed = 0
+        num_of_new_files = 0
+
+        changed_file_color = randint(1,220)
+        new_file_color = randint(1,220)
+
         with open(self.f1) as r1, open(self.f2) as r2:
             file_1 = reader(r1, delimiter=',')
             file_2 = reader(r2, delimiter=',')
@@ -166,10 +172,31 @@ class Hash():
             next(file_1)
             next(file_2)
 
-            for f1_data, f2_data in zip(file_1, file_2):
-                print("-----")
-                print(f1_data)
-                print(f2_data)
+            original_file_hash = {f_name: f_hash for f_name, f_hash in file_1} 
+
+            for data in file_2:
+                if data[0] in original_file_hash:
+                    if original_file_hash[data[0]] == data[1]:
+                        continue
+                    else:
+                        print(
+                            "[%sChanged File%s] '%s'"
+                            % (fg(changed_file_color),attr(0),data[0])
+                            )
+                        num_of_files_changed += 1
+                else:
+                    print("[%sNew File%s] '%s'"
+                        % (fg(new_file_color), attr(0), data[0])
+                        )
+                    num_of_new_files += 1
+
+            print(f"\n{num_of_files_changed} files have changed within " \
+                  f"{self.wait} seconds"
+                 )
+
+            print(f"{num_of_new_files} files were created within " \
+                  f"{self.wait} seconds"
+                 )
 
     def recompute(self):
         sleep(self.wait)
@@ -181,7 +208,7 @@ def main():
     #print(args)
 
     # Create Hash obj
-    hasher = Hash(args.dir, args.hash_algo, int(args.wait))
+    hasher = Hash(args.DIRECTORY, args.hash_algo, int(args.wait))
     # Begin first round of hashing
     start = perf_counter()
     hasher.run(ignore_permission_exception=ignore_permission_exception)
