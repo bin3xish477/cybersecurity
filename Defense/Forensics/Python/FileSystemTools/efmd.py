@@ -83,7 +83,7 @@ if __name__ == "__main__":
 
     access_on = (
         "\t[%sLast Accessed On%s]: %s"
-        % (fg(randint(1, 220)), attr(0), dt.fromtimestamp(file_stats.st_mtime))
+        % (fg(randint(1, 220)), attr(0), dt.fromtimestamp(file_stats.st_atime))
         )
 
     file_perm = (
