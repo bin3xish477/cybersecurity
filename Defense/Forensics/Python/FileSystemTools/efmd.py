@@ -2,7 +2,7 @@
 
 from platform import system
 from argparse import ArgumentParser
-from os.path import abspath
+from os.path import abspath, isdir
 from os import stat
 from datetime import datetime as dt
 from sys import exit
@@ -130,12 +130,13 @@ if __name__ == "__main__":
     print(num_of_hard_links)
     print(inode)
     
-    print(
-        "\n\t[%sFile Hashes%s]:"
-        % (fg(randint(1, 220)), attr(0))
-        )
+    if not isdir(args.file):
+        print(
+            "\n\t[%sFile Hashes%s]:"
+            % (fg(randint(1, 220)), attr(0))
+            )
 
-    # File hashes
-    for h in get_file_hashes(args.file):
-        print("\t"+h)
+        # File hashes
+        for h in get_file_hashes(args.file):
+            print("\t"+h)
 
