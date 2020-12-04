@@ -41,10 +41,15 @@ RUN chmod +x msfinstall && \
 
 
 # Install Nessus
-# SHA256 checksum : b878e1b85b4c8aa04d4a579059c88fbca216e8fa64da9f60207ce28a204b7d68
-RUN wget && \
-    /etc/init.d/nessusd start && \
 
-CMD ["echo", "Happy", "Hacking !!!", "&&", "/etc/init.d/nessusd", "start"]
+# SHA256 checksum : b878e1b85b4c8aa04d4a579059c88fbca216e8fa64da9f60207ce28a204b7d68
+# Download directory from Nessus download page : https://www.tenable.com/downloads/nessus
+
+# https://locatlhost:8834
+RUN wget https://github.com/binexisHATT/EthicalHacking/raw/master/Nessus-8.12.1-debian6_amd64.deb && \
+    dpkg -i Nessus*.deb && \
+    rm Nessus.deb
+
+CMD ["echo", "Happy", "Hacking !!!", "&&", "systemctl", "start", "nessusd.service"]
     
     
