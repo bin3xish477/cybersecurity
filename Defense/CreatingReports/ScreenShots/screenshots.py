@@ -32,7 +32,7 @@ parser.add_argument(
 parser.add_argument(
 	"-c", "--create_archive",
 	choices=("zip", "tar"),
-	help="Create Tar archive file of directory with screenshots"
+	help="Create Zip/Tar archive file of directory with screenshots"
 	)
 parser.add_argument(
 	"-m", "--max-screenshots",
