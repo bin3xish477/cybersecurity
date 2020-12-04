@@ -79,7 +79,7 @@ if __name__ == "__main__":
 	try:
 		print("[!!!] Press CTRL+C to stop program ...")
 		if args.max_screenshots:
-			while num_of_screenshots < args.max_screenshots:
+			while num_of_screenshots <= args.max_screenshots:
 				num_of_screenshots += 1
 				take_screenshot(args.OUTDIR, args.INTERVAL, num_of_screenshots)
 		else:
