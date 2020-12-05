@@ -205,7 +205,7 @@ class Hash():
 
     def take_second_snapshot(self):
         sleep(self.wait)
-        self.run(ignore_permission_exception=ignore_permission_exception)
+        self.take_first_snapshot(ignore_permission_exception=ignore_permission_exception)
 
 
 def main():
