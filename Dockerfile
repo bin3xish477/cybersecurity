@@ -6,7 +6,18 @@
 #   docker run -d -p 8834:8834 --name red_team_container pentest_image
 #   docker exec -it pentest_image
 
-
+# Currently installes:
+# - metasploit
+# - gobuster
+# - nmap
+# - whatweb
+# - john
+# - netcat
+# - vim
+# - nishang
+# - seclists
+# - sqlmap
+# - Nessus
 
 
 FROM ubuntu
