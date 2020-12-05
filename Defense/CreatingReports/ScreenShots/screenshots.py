@@ -1,3 +1,6 @@
+#!/usr/bin/env python3 
+
+
 from tarfile import open as taropen
 from zipfile import ZipFile as zfopen
 from sys import exit
