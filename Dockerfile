@@ -1,4 +1,3 @@
-
 # Should take 5-6 minutes to build
 
 # Instruction to run:
@@ -18,7 +17,6 @@
 # - seclists
 # - sqlmap
 # - Nessus
-
 
 FROM ubuntu
 
@@ -68,8 +66,6 @@ RUN wget https://github.com/OJ/gobuster/releases/download/v3.1.0/gobuster-linux-
     chmod +x /opt/gobuster && \
     mv /opt/gobuster /bin/gobuster
 
-
-
 # Setup Waybackurls
 RUN git clone https://github.com/tomnomnom/waybackurls.git /opt/waybackurls && \
     ln -s /opt/waybackurls/main.go /bin/waybackurls
@@ -81,10 +77,9 @@ RUN git clone https://github.com/samratashok/nishang.git /opt/nishang
 RUN git clone https://github.com/danielmiessler/SecLists.git /opt/SecLists
 
 # Setup Sqlmap
-#RUN wget 'https://github.com/sqlmapproject/sqlmap/tarball/master' -O /opt/sqlmap.tar.gz && \
-    #tar -xzf /opt/sqlmap.tar.gz -C /opt && \
-    #find /opt -name "sqlmap*" -type d | xargs -I {} ln -s '{}/sqlmap.py' /bin/sqlmap
-
+RUN wget 'https://github.com/sqlmapproject/sqlmap/tarball/master' -O /opt/sqlmap.tar.gz && \
+    tar -xzf /opt/sqlmap.tar.gz -C /opt && \
+    find /opt -name "sqlmap*" -type d | xargs -I {} ln -s '{}/sqlmap.py' /bin/sqlmap
 
 # Setup Nessus
 # Nessus-8.12.1-debian6_amd64.deb checksum : b878e1b85b4c8aa04d4a579059c88fbca216e8fa64da9f60207ce28a204b7d68
