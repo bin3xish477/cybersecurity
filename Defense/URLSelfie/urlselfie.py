@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-
+"""
+TODO:
+	- take screen of specified url
+	- maybe add option to download page source
+	- add zip, tar compressions options
+"""
 from selenium import webdriver
 from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
@@ -9,6 +14,8 @@ from selenium.webdriver.common.keys import Keys
 from time import sleep
 from pyscreenshot import grab
 from colored import fg, attr
+from tarfile import open as taropen
+from zipfile import ZipFile as zfopen
 
 
 def run_chrome(url):
@@ -25,17 +32,6 @@ def run_chrome(url):
 	driver = Chrome(executable_path=path_to_driver, options=options)
 	
 	return driver
-
-
-def open_tab(driver, new_tab_url):
-	
-    # Open new tab with keyboard shortcut CTRL + t
-    driver.find_element_by_tag_name("body").send_keys(Keys.CONTROL + 't')
-     
-    # Open new url
-    driver.get(new_tab_url)
-
-    return driver
 
 
 def main():
