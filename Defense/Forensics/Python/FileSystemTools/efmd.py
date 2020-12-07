@@ -2,8 +2,8 @@
 
 from platform import system
 from argparse import ArgumentParser
-from os.path import abspath
-from os import stat
+from os.path import abspath, isdir, exists
+from os import stat 
 from datetime import datetime as dt
 from sys import exit
 from colored import fg, attr
@@ -56,10 +56,18 @@ if __name__ == "__main__":
         print("(-) Please provide the `-f` argument")
         exit(1)
 
-    file_stats = stat(args.file)
-    SYSTEM = system()
+    if exists(args.file):
+        file_stats = stat(args.file)
+        SYSTEM = system()
+    else:
+        print(f"(-) {args.file} does not exists")
+        exit(1)
 
-    print("\nFile: %s%s%s\n" % (fg(255), args.file, attr(0)))
+    if isdir(args.file):
+        print("\nDirectory: %s%s%s\n" % (fg(255), args.file, attr(0)))
+    else:
+        print("\nFile: %s%s%s\n" % (fg(255), args.file, attr(0)))
+
 
     if SYSTEM in ("Linux", "Darwin"):
         ctime = (
@@ -83,7 +91,7 @@ if __name__ == "__main__":
 
     access_on = (
         "\t[%sLast Accessed On%s]: %s"
-        % (fg(randint(1, 220)), attr(0), dt.fromtimestamp(file_stats.st_mtime))
+        % (fg(randint(1, 220)), attr(0), dt.fromtimestamp(file_stats.st_atime))
         )
 
     file_perm = (
@@ -130,12 +138,13 @@ if __name__ == "__main__":
     print(num_of_hard_links)
     print(inode)
     
-    print(
-        "\n\t[%sFile Hashes%s]:"
-        % (fg(randint(1, 220)), attr(0))
-        )
+    if not isdir(args.file):
+        print(
+            "\n\t[%sFile Hashes%s]:"
+            % (fg(randint(1, 220)), attr(0))
+            )
 
-    # File hashes
-    for h in get_file_hashes(args.file):
-        print("\t"+h)
+        # File hashes
+        for h in get_file_hashes(args.file):
+            print("\t"+h)
 

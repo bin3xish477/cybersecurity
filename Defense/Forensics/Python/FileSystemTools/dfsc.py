@@ -9,14 +9,14 @@ from colored import fg, attr
 from enum import Enum
 from time import sleep, perf_counter
 from os.path import (
-    exists, dirname, abspath,
-    join 
+    exists, dirname, abspath, join 
 )
 from os import walk, remove
 from glob import glob
 from sys import exit
 from csv import writer, reader
 from random import choice, randint
+from subprocess import run
 
 
 __author__ = "Alexis Rodriguez"
@@ -48,7 +48,7 @@ def prog_args():
 
     parser = ArgumentParser(
         prog="dfsc.py",
-        description="Detect File System Change"
+        description="Detect File System Change after malware execution"
         )
     ###################
     # Program arguments
@@ -70,6 +70,11 @@ def prog_args():
         default=10,
         help="The seconds to wait before performing the second round of hashing" \
             ", default=10"
+        )
+    parser.add_argument(
+        "-m", "--malware-file", 
+        metavar="FILE",
+        help="The sample malware file to run"
         )
 
     return parser.parse_args()
@@ -102,7 +107,7 @@ class Hash():
         
         return exists(self.directory)
 
-    def run(self, ignore_permission_exception: bool=False):
+    def take_first_snapshot(self, ignore_permission_exception: bool=False):
         """Open and interates over all the files in `self.dirname`"""
 
         if self.round == 1:
@@ -198,27 +203,39 @@ class Hash():
                   f"{self.wait} seconds"
                  )
 
-    def recompute(self):
+    def take_second_snapshot(self):
         sleep(self.wait)
-        self.run(ignore_permission_exception=ignore_permission_exception)
+        self.take_first_snapshot(ignore_permission_exception=ignore_permission_exception)
 
 
 def main():
     args = prog_args()
     #print(args)
+    
+    if not exists(args.DIRECTORY):
+        print(f"(-) {args.DIRECTORY} does not exists")
+        exit(1)
 
     # Create Hash obj
     hasher = Hash(args.DIRECTORY, args.hash_algo, int(args.wait))
-    # Begin first round of hashing
+
     start = perf_counter()
-    hasher.run(ignore_permission_exception=ignore_permission_exception)
-    # Perform second round of hashing
-    hasher.recompute()
+    # Take first snapshot of file system
+    hasher.take_first_snapshot(ignore_permission_exception=ignore_permission_exception)
+
+    # run the malware sample
+    #run(f"./{args.malware_file}")
+
+    # Take second snapshot of file system
+    hasher.take_second_snapshot()
+
     end = perf_counter()
+
     # Compare csv files for file changes
     hasher.diff()
 
     print(f"Completed in {end - start} seconds")
+
 
 if __name__ == "__main__":
     try:
