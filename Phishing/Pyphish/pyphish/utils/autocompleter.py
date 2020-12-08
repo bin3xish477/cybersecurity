@@ -1,7 +1,10 @@
 commands = (
     "campaigns", "groups", "templates", 
-    "pages", "smtp", "help", "exit",
-    "back", "cls", "clear"
+    "pages", "profiles", "help", "exit",
+    "cls", "clear", "edit", "create",
+    "get", "delete", "info", "set", "back",
+
+    "name", "host", "email_address", "ignore_cert_errors"
 )
 
 def auto_complete(text, state):
@@ -12,3 +15,4 @@ def auto_complete(text, state):
         return options[state]
     except IndexError:
         return None
+

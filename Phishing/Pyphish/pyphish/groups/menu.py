@@ -12,7 +12,7 @@ class GroupsMenu():
     def prompt(self):
         while (
             i := input(
-                "(%sgroups%s) %s " %(fg(self.groups_menu_color), attr(0), "%")
+                "(%sGroups%s) %s " %(fg(self.groups_menu_color), attr(0), "%")
             ).strip().lower()):
             if i == "back":
                return 
@@ -22,3 +22,5 @@ class GroupsMenu():
                     %(fg(self.groups_menu_color),attr(0))
                     )
 
+    def get_groups():
+        pass

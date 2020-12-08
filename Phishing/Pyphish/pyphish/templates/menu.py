@@ -12,7 +12,7 @@ class TemplatesMenu:
     def prompt(self):
         while (
             i := input(
-                "(%stemplates%s) %s " %(fg(self.templates_menu_color), attr(0), "%")
+                "(%sTemplates%s) %s " %(fg(self.templates_menu_color), attr(0), "%")
             ).strip().lower()):
             if i == "back":
                return 

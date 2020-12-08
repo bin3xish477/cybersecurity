@@ -12,7 +12,7 @@ class PagesMenu:
     def prompt(self):
         while (
             i := input(
-                "(%spages%s) %s " %(fg(self.pages_menu_color), attr(0), "%")
+                "(%sPages%s) %s " %(fg(self.pages_menu_color), attr(0), "%")
             ).strip().lower()):
             if i == "back":
                return 
