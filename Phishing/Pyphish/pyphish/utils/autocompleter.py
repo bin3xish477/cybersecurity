@@ -1,11 +1,13 @@
-addrs = (
+commands = (
     "campaigns", "groups", "templates", 
     "pages", "smtp", "help", "exit",
     "back", "cls", "clear"
 )
 
 def auto_complete(text, state):
-    options = [x for x in addrs if x.startswith(text)]
+    options = [command 
+               for command in commands if command.startswith(text)
+              ]
     try:
         return options[state]
     except IndexError:
