@@ -14,21 +14,19 @@ from pyphish.smtp.menu import SMTPMenu
 from pyphish.utils.autocompleter import auto_complete
 
 
-# Applying autocomplete functionality
-set_completer(auto_complete)
-parse_and_bind("tab: complete")
-
-# Disable SSL warnings
-packages.urllib3.disable_warnings()
-
-# Random color option for every new pyphish running instance
-prog_color = randint(1, 220)
-
-# Current version
-version = 0.1
+__author__ = "binexisHATT"
+__version__ = 1.0
 
 
 if __name__ == "__main__":
+    # Applying autocomplete functionality
+    set_completer(auto_complete)
+    parse_and_bind("tab: complete")
+    # Disable SSL warnings
+    packages.urllib3.disable_warnings()
+    # Random color option for every new pyphish running instance
+    prog_color = randint(1, 220)
+
     gophish_api_key = environ["GOPHISH_API_KEY"]
     gophish_client = Gophish(gophish_api_key, verify=False)
 
@@ -38,8 +36,9 @@ if __name__ == "__main__":
 \t│░█▀▀░░█░░█▀▀░█▀█░░█░░▀▀█░█▀█│                                                                                         
 \t│░▀░░░░▀░░▀░░░▀░▀░▀▀▀░▀▀▀░▀░▀│                                                                                         
 \t└────────────────────────────┘
-    \t\t Version {}
-""".format(version))
+    \tAuthor: @{}
+    \tVersion: {}
+""".format(__author__, __version__))
 
     main_menu_options = [
         ["campaigns", "Enter campaigns menu"],
