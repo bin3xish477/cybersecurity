@@ -1,44 +1,76 @@
 #!/usr/bin/env python3
-
-# pip3 install gophish
 from gophish import Gophish
 from os import environ
 from requests import packages
 from readline import set_completer, parse_and_bind
 from random import randint
 from colored import fg, attr
-from pyphish.campaigns.menu import show as campaigns_menu
-from pyphish.groups.menu import show as groups_menu
-from pyphish.templates.menu import show as templates_menu
-from pyphish.pages.menu import show as pages_menu
-from pyphish.smtp.menu import show as smtp_menu
+from tabulate import tabulate
+from pyphish.campaigns.menu import CampaignsMenu
+from pyphish.groups.menu import GroupsMenu
+from pyphish.templates.menu import TemplatesMenu
+from pyphish.pages.menu import PagesMenu
+from pyphish.smtp.menu import SMTPMenu
 from pyphish.utils.autocompleter import auto_complete
 
 
+# Applying autocomplete functionality
 set_completer(auto_complete)
 parse_and_bind("tab: complete")
+
+# Disable SSL warnings
 packages.urllib3.disable_warnings()
 
+# Random color option for every new pyphish running instance
 prog_color = randint(1, 220)
+
+# Current version
+version = 0.1
+
 
 if __name__ == "__main__":
     gophish_api_key = environ["GOPHISH_API_KEY"]
-    phish_client = Gophish(gophish_api_key, verify=False)
+    gophish_client = Gophish(gophish_api_key, verify=False)
+
+    print("""
+\t┌────────────────────────────┐                                                                                         
+\t│░█▀█░█░█░█▀█░█░█░▀█▀░█▀▀░█░█│                                                                                         
+\t│░█▀▀░░█░░█▀▀░█▀█░░█░░▀▀█░█▀█│                                                                                         
+\t│░▀░░░░▀░░▀░░░▀░▀░▀▀▀░▀▀▀░▀░▀│                                                                                         
+\t└────────────────────────────┘
+    \t\t Version {}
+""".format(version))
+
+    main_menu_options = [
+        ["campaigns", "Enter campaigns menu"],
+        ["groups", "Enter groups menu"],
+        ["template", "Enter templates menu"],
+        ["pages", "Enter landing pages menu"],
+        ["smtp", "Enter STMP menu"],
+        ["help", "Show this help menu"],
+        ["exit", "Exit program"]
+    ]
 
     try:
-        while (choice := input("Enter options: ").strip()) != "exit":
-            if choice == "Campaigns":
-                campaigns_menu()
-            elif choice == "Groups":
-                templates_menu()
-            elif choice == "Templates":
-                groups_menu()
-            elif choice == "Pages":
-                pages_menu()
-            elif choice == "SMTP":
-                smtp_menu()
+        while (
+            c := input("(%smain%s) %s " %(fg(prog_color),attr(0),"%")
+            ).strip().lower()) != "exit": 
+            if c == "campaigns":
+                _ = CampaignsMenu(client=gophish_client).prompt()
+            elif c == "groups":
+                _ = GroupsMenu(client=gophish_client).prompt()
+            elif c == "templates":
+                _ = TemplatesMenu(client=gophish_client).prompt()
+            elif c == "pages":
+                _ = PagesMenu(client=gophish_client).prompt()
+            elif c == "smtp":
+                _ = SMTPMenu(client=gophish_client).prompt()
+            elif c == "help":
+                print(tabulate(main_menu_options, headers=["Commands", "Command Action"]))
+            elif c in ("cls", "clear"):
+                for _ in range(100): print()
             else:
-                print("<[%s-%s]> Invalid option ..." % (fg(prog_color), attr(0)))
+                print("<[%s-%s]> Invalid option ..." %(fg(prog_color),attr(0)))
     except KeyboardInterrupt:
-        print("<[%s-%s]> Exiting Pyphish interface ... Goodbye" % (fg(prog_color), attr(0)))
+        print("\n%s<[-]>%sGoodbye ..." %(fg(prog_color),attr(0)))
 

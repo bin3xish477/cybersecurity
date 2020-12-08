@@ -1,6 +1,7 @@
 addrs = (
-    "Campaigns", "Group", "Templates", 
-    "Pages", "SMTP"
+    "campaigns", "groups", "templates", 
+    "pages", "smtp", "help", "exit",
+    "back", "cls", "clear"
 )
 
 def auto_complete(text, state):
