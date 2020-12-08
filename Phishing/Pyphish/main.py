@@ -25,7 +25,6 @@ if __name__ == "__main__":
     packages.urllib3.disable_warnings()
     prog_color = randint(1, 220)
 
-
     config_file = load(open("config.json"))
     config_file["api_key"] = environ["GOPHISH_API_KEY"]
     gophish_client = Gophish(config_file["api_key"], host=config_file["host"], verify=False)
@@ -84,4 +83,3 @@ if __name__ == "__main__":
                 print("<[%s-%s]> Invalid option ..." %(fg(prog_color),attr(0)))
     except KeyboardInterrupt:
         print("\n%s<[-]>%s Goodbye ..." %(fg(prog_color),attr(0)))
-
