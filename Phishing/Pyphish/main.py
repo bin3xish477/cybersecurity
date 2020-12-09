@@ -27,6 +27,7 @@ if __name__ == "__main__":
 
     config_file = load(open("config.json"))
     config_file["api_key"] = environ["GOPHISH_API_KEY"]
+    config_file["host"] = environ["GOPHISH_HOST"]
     gophish_client = Gophish(config_file["api_key"], host=config_file["host"], verify=False)
 
     print("""
