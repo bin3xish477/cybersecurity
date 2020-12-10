@@ -25,7 +25,6 @@ def extract_row_data_cells(row: str):
 
 def parse_response(resp: str):
     html_parser = bs(resp.text, "html.parser")
-    #print(html_parser.prettify())
 
     all_tables = html_parser.findAll("table")
     general_details = all_tables[2]
@@ -118,14 +117,7 @@ if __name__ == "__main__":
         default="random",
         help="Select the gender to generate a Fake Id for"
         )
-
     args = parser.parse_args()
-
-#    for _ in range(10):
-#        resp = make_request(hidden_service_url)
-#        create_new_tor_ip()
-#        print(resp.text)
-#        sleep(5)
 
     resp = make_request(hidden_service_url, args.gender)
     parse_response(resp)
