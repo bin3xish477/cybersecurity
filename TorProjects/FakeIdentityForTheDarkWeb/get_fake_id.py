@@ -3,11 +3,8 @@ from stem import Signal
 from stem.control import Controller
 from argparse import ArgumentParser as AP
 from fake_useragent import UserAgent
-from json import dump
-from csv import writer
 from requests import get
 from os import environ
-from time import sleep
 from bs4 import BeautifulSoup as bs
 from colored import fg, attr
 from re import compile, findall, IGNORECASE
