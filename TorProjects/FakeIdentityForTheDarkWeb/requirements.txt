@@ -1,0 +1,4 @@
+stem
+requests
+pysocks
+fake_useragent
