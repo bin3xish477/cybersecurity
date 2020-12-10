@@ -99,11 +99,7 @@ def make_request(url: str, gender: str):
     else: 
         url = url + "?gender=r"
 
-    resp = get(url, headers=headers, proxies=tor_proxy)
-    #Testing url
-    #resp = get("http://httpbin.org/ip", headers=headers, proxies=tor_proxy)
-
-    return resp
+    return get(url, headers=headers, proxies=tor_proxy)
 
 
 def create_new_tor_ip():
@@ -132,7 +128,6 @@ if __name__ == "__main__":
 #        sleep(5)
 
     resp = make_request(hidden_service_url, args.gender)
-    #print(resp.text)
     parse_response(resp)
 
     
