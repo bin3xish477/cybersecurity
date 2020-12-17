@@ -1,0 +1,3 @@
+colored
+hexdump
+py7zr
