@@ -8,10 +8,10 @@ from argparse import ArgumentParser as AP
 from sys import exit
 
 def deauth(
-    iface: str,
-    count: int,
-    bssid: str,
-    target_mac: str
+      iface: str,
+      count: int,
+      bssid: str,
+      target_mac: str
     ):
 
     """
