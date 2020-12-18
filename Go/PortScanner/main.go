@@ -34,7 +34,6 @@ func main() {
 
 	for range results {
 		port := <-results
-		fmt.Println(port)
 		openPorts = append(openPorts, port)
 	}
 
