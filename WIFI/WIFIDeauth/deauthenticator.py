@@ -1,4 +1,9 @@
-from scapy.all import RadioTap, Dot11, sendp
+#!/usr/bin/env python3
+from scapy.all import (
+                       RadioTap, # Adds additional metadata to an 802.11 frame
+                       Dot11,    # For creating 802.11 frame
+                       sendp     # for sending packets
+                      )
 from argparse import ArgumentParser as AP
 from sys import exit
 
