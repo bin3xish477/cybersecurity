@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-This Python script will take a provided Python
+This Python script will take a specified Python
 script and obfuscate it's contents
 
 Usage:
