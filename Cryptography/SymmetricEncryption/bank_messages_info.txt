@@ -1,0 +1,3 @@
+Ace Inc,Alberto M.,123.00
+Evil Corp,Hamlet B.,230.00
+Google, Martha R.,500.00

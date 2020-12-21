@@ -1,0 +1,13 @@
+C:\Users\rodri\Documents\Cryptography\SymmetricEncryption\CSharpAES\obj\Debug\netcoreapp3.1\CSharpAES.csprojAssemblyReference.cache
+C:\Users\rodri\Documents\Cryptography\SymmetricEncryption\CSharpAES\obj\Debug\netcoreapp3.1\CSharpAES.AssemblyInfoInputs.cache
+C:\Users\rodri\Documents\Cryptography\SymmetricEncryption\CSharpAES\obj\Debug\netcoreapp3.1\CSharpAES.AssemblyInfo.cs
+C:\Users\rodri\Documents\Cryptography\SymmetricEncryption\CSharpAES\obj\Debug\netcoreapp3.1\CSharpAES.csproj.CoreCompileInputs.cache
+C:\Users\rodri\Documents\Cryptography\SymmetricEncryption\CSharpAES\bin\Debug\netcoreapp3.1\CSharpAES.exe
+C:\Users\rodri\Documents\Cryptography\SymmetricEncryption\CSharpAES\bin\Debug\netcoreapp3.1\CSharpAES.deps.json
+C:\Users\rodri\Documents\Cryptography\SymmetricEncryption\CSharpAES\bin\Debug\netcoreapp3.1\CSharpAES.runtimeconfig.json
+C:\Users\rodri\Documents\Cryptography\SymmetricEncryption\CSharpAES\bin\Debug\netcoreapp3.1\CSharpAES.runtimeconfig.dev.json
+C:\Users\rodri\Documents\Cryptography\SymmetricEncryption\CSharpAES\bin\Debug\netcoreapp3.1\CSharpAES.dll
+C:\Users\rodri\Documents\Cryptography\SymmetricEncryption\CSharpAES\bin\Debug\netcoreapp3.1\CSharpAES.pdb
+C:\Users\rodri\Documents\Cryptography\SymmetricEncryption\CSharpAES\obj\Debug\netcoreapp3.1\CSharpAES.dll
+C:\Users\rodri\Documents\Cryptography\SymmetricEncryption\CSharpAES\obj\Debug\netcoreapp3.1\CSharpAES.pdb
+C:\Users\rodri\Documents\Cryptography\SymmetricEncryption\CSharpAES\obj\Debug\netcoreapp3.1\CSharpAES.genruntimeconfig.cache
