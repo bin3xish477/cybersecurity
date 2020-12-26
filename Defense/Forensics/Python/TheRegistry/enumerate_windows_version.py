@@ -13,8 +13,3 @@ if __name__ == "__main__":
             for i in range(num_of_values):
                 values = EnumValue(hosts_key, i)
                 print(values)
-
-
-
-
-
