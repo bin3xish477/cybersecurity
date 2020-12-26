@@ -1,12 +1,12 @@
 from winreg import (
-                    ConnectRegistry,
-                    OpenKey,
-                    KEY_ALL_ACCESS,
-                    EnumValue,
-                    QueryInfoKey,
-                    HKEY_LOCAL_MACHINE,
-                    HKEY_CURRENT_USER
-                    )
+  ConnectRegistry,
+  OpenKey,
+  KEY_ALL_ACCESS,
+  EnumValue,
+  QueryInfoKey,
+  HKEY_LOCAL_MACHINE,
+  HKEY_CURRENT_USER
+)
 def enum_key(hive, subkey:str):
     with OpenKey(hive, subkey, 0, KEY_ALL_ACCESS) as key:
         num_of_values = QueryInfoKey(key)[1]
@@ -31,3 +31,5 @@ if __name__ == "__main__":
         print("\nPreviously rand applications")
         print("-"*50)
         enum_key(hkcu_hive, r"SOFTWARE\Classes\Local Settings\Software\Microsoft\Windows\Shell\MuiCache")
+
+        
