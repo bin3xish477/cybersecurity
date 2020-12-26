@@ -1,3 +1,0 @@
-pillow
-pyscreenshot
-colored
