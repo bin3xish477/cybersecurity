@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 from scapy.all import (
-                       RadioTap,    # Adds additional metadata to an 802.11 frame
-                       Dot11,       # For creating 802.11 frame
-                       Dot11Deauth, # For creating deauth frame
-                       sendp        # for sending packets
-                      )
+  RadioTap,    # Adds additional metadata to an 802.11 frame
+  Dot11,       # For creating 802.11 frame
+  Dot11Deauth, # For creating deauth frame
+  sendp        # for sending packets
+)
 from argparse import ArgumentParser as AP
 from sys import exit
 def deauth(iface: str, count: int, bssid: str, target_mac: str):
