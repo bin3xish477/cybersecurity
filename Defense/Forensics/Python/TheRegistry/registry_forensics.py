@@ -28,7 +28,7 @@ if __name__ == "__main__":
         enum_key(hklm_hive, r"SOFTWARE\Microsoft\Windows\CurrentVersion\Run")
     # Connecting to the HKEY_CURRENT_USER hive
     with ConnectRegistry(None, HKEY_CURRENT_USER) as hkcu_hive:
-        print("\nPreviously rand applications")
+        print("\nPreviously Ran Applications")
         print("-"*50)
         enum_key(hkcu_hive, r"SOFTWARE\Classes\Local Settings\Software\Microsoft\Windows\Shell\MuiCache")
 
