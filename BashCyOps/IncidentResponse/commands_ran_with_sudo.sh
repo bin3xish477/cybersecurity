@@ -18,7 +18,7 @@ do
         DATE=$(echo $LINE | egrep -o '[JFMASONDa-z]{3}\s[0-9]{1,2}\s[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}')
         USERNAME=$(echo $LINE | egrep -o 'USER=[A-Za-z0-9]+\s')
         # Change the statements above to use parameter expansion for optimization
-        DIRECTORY=${LINE##*PWD} && DIRECTORY=${DIRECTORY/ *//}
+        DIRECTORY=${LINE##*PWD=} && DIRECTORY=${DIRECTORY/ *//}
         echo $DATE $USERNAME $DIRECTORY
     else
         continue
