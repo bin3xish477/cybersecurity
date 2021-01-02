@@ -6,7 +6,8 @@ except ImportError:
     print("[-] Run this script on a Windows machine with Python3 installed")
     exit(1)
 from win32con import PROCESS_ALL_ACCESS
-from psutil import pids, Process as ps
+from psutil import pids
+from psutil import Process as ps
 from typing import Union
 
 class Process:
