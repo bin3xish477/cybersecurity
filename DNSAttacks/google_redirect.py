@@ -1,10 +1,3 @@
-"""
-This Program simply poisons someone DNS queries to google.com.
-Anyone who has uses DNS server will will be able to retrieve any DNS
-records normally excluding google.com. Any DNS query to google.com will
-result in the victim being redirected to this bing.com
-"""
-
 from socket import socket, AF_INET, SOCK_DGRAM
 
 def start_dns_server(IP: str, PORT: int):
