@@ -13,7 +13,7 @@ from typing import Union
 class Process:
     def __init__(self, proc: Union[str, int], id=False):
         if not id:
-            self.pid = self.__get_process_id(proc)
+            self.pid = self._get_process_id(proc)
         else:
             self.pid = proc
         self.kern32 = windll.kernel32
@@ -28,7 +28,7 @@ class Process:
             raise Exception("An exception occured leaving context manager scope")
         return False
 
-    def __get_process_id(self, proc: str) -> str:
+    def _get_process_id(self, proc: str) -> str:
         return "".join([p for p in pids() if ps(p).name == proc])
     
     def virtual_alloc_ex(self):
