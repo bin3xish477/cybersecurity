@@ -7,8 +7,10 @@ if __name__ == "__main__":
    parser.add_argument("proc", help="the target process")
 
    args = parser.parse_args()
-   proc = Process(args.proc, args.by_id)
-
+   
+   with Process(args.proc, args.by_id) as proc:
+      pass
+   
    payload = bytearray(
     "Testing"
    )
