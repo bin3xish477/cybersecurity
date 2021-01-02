@@ -1,15 +1,16 @@
 from sys import exit
+from win32con import PROCESS_ALL_ACCESS
+from psutil import pids
+from psutil import Process as ps
+from typing import Union
+
 try:
     from ctypes import windll
 except ImportError:
     print("[-] The `windll` dll could not be imported")
     print("[-] Run this script on a Windows machine with Python3 installed")
     exit(1)
-from win32con import PROCESS_ALL_ACCESS
-from psutil import pids
-from psutil import Process as ps
-from typing import Union
-
+    
 class Process:
     def __init__(self, proc: Union[str, int], id=False):
         if not id:
