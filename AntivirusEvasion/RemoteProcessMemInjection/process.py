@@ -13,6 +13,12 @@ except ImportError:
     print("[-] Run this script on a Windows machine with Python3 installed")
     exit(1)
     
+class WinAPIConstants:
+        PROCESS_VM_OPERATION = 0x0008
+        PROCESS_VM_WRITE     = 0x0020
+        MEM_COMMIT           = 0x1000
+        PAGE_READWRITE       = 0x04
+    
 class Process:
     def __init__(self, proc: Union[str, int], *, pid=False):
         if not pid:
@@ -26,11 +32,9 @@ class Process:
         self.kern32 = windll.kernel32
 
     def __enter__(self):
-        PROCESS_VM_OPERATION = 0x0008
-        PROCESS_VM_WRITE     = 0x0020
         self.proc_handle = self.kern32.OpenProcess(
-            PROCESS_VM_OPERATION |
-            PROCESS_VM_WRITE,
+            WinAPIConstants.PROCESS_VM_OPERATION |
+            WinAPIConstants.PROCESS_VM_WRITE,
             False,
             self.pid
         )
@@ -46,14 +50,12 @@ class Process:
         return [p for p in pids() if ps(p).name() == proc][0]
     
     def virtual_alloc_ex(self, payload_size: int):
-        MEM_COMMIT = 0x1000
-        PAGE_READWRITE = 0x04
         virt_mem_base_addr = self.kern32.VirtualAllocEx(
-                self.proc_handle,       # process handle 
-                0,                      # NULL, let function determine memory allocation region
-                c_size_t(payload_size), # size_t = size of payload
-                MEM_COMMIT,             # type of memory allocation 
-                PAGE_READWRITE          # Give rw permission to allocated memory
+                self.proc_handle,                # Process handle 
+                0,                               # NULL, let function determine memory allocation region
+                c_size_t(payload_size),          # Size_t = size of payload
+                WinAPIConstants.MEM_COMMIT,      # Type of memory allocation 
+                WinAPIContants.PAGE_READWRITE    # Give rw permission to allocated memory
                 )
         # If VirtualAllocEx function call faied
         if virt_mem_base_addr == None:
@@ -68,4 +70,3 @@ class Process:
     def create_remote_thread(self):
         return self.kern32.CreateRemoteThread()
         
-
