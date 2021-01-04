@@ -54,11 +54,8 @@ class ProcessInjector:
     
     def virtual_alloc_ex(self, payload_size: int):
         if not (alloc_mem_base_addr := self.kern32.VirtualAllocEx(
-            self.proc_handle,         # Process handle 
-            payload_size,             # size of payload
-            MEM_COMMIT | MEM_RESERVE, # Type of memory allocation
-            PAGE_EXECUTE_READWRITE)   # Give rwx permission to allocated memory
-            ):
+            self.proc_handle, 0, payload_size, MEM_COMMIT, PAGE_EXECUTE_READWRITE
+            )):
             raise Exception(f"[-] Could not allocate memory in the target process: {self.pid}")
         else:
             return alloc_mem_base_addr
@@ -76,6 +73,8 @@ class ProcessInjector:
             ):
             print(ret_val)
             raise Exception("[-] Failed to write data into the allocated memory")
+        print(ret_val)     
+            
     
     def create_remote_thread(self):
         return self.kern32.CreateRemoteThread()
