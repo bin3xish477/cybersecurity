@@ -32,9 +32,9 @@ class ProcessInjector:
 
     def __enter__(self):
         self.proc_handle = self.kern32.OpenProcess(
-            PROCESS_ALL_ACCESS,
-            False,
-            self.pid)
+            PROCESS_ALL_ACCESS, # Giving all access to the handle we create
+            False,              # Subprocess do not inherit this handle
+            self.pid)           # PID of target process
         if not self.proc_handle:
             print("[-] Unable to obtain a handle to the target process")
             exit(1)
