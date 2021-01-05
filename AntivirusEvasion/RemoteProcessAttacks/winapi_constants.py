@@ -8,6 +8,7 @@ PROCESS_SET_QUOTA                 = 0x0100
 PROCESS_SUSPEND_RESUME            = 0x0800 
 PROCESS_TERMINATE                 = 0x0001 
 PROCESS_VM_OPERATION              = 0x0008
+PROCESS_VM_READ                   = 0x0010
 PROCESS_VM_WRITE                  = 0x0020
 PROCESS_ALL_ACCESS                = 0x1f0fff
 
@@ -30,3 +31,7 @@ PAGE_WRITECOPY         = 0x08
 PAGE_GUARD             = 0x100
 PAGE_NOCACHE           = 0x200
 PAGE_WRITECOMBINE      = 0x400
+
+EXECUTE_IMMEDIATELY               = 0x00000000
+CREATE_SUSPENDED                  = 0x00000004
+STACK_SIZE_PARAM_IS_A_RESERVATION = 0x00010000
