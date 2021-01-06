@@ -29,6 +29,7 @@ from ctypes.wintypes import DWORD
 from ctypes.wintypes import LPVOID
 from ctypes.wintypes import BOOL
 
+
 class SecurityAttributes(Structure):
     """SECURITY_ATTRIBUTES structure that specifies 
     a security descriptor for the new thread created
