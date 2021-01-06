@@ -81,7 +81,7 @@ class ProcessInjector:
             self.pid)           # PID of target process
         self.assign_privs()
         if not self.proc_handle:
-            print("[x] Unable to obtain a handle to the target process")
+            print("[x] (OpenProcess) Unable to obtain a handle to the target process")
             exit(1)
         else:
             return self
