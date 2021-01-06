@@ -73,7 +73,7 @@ func handler(conn net.Conn, shell string) {
 }
 
 func main() {
-	if len(os.Args) < 3 {
+	if len(os.Args) < 4 {
 		fmt.Println("[!] Usage: main.go <ip> <port> <cmd.exe|powershell.exe|/bin/bash")
 		os.Exit(1)
 	}
