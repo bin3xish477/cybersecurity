@@ -74,7 +74,6 @@ class ProcessInjector:
         if not return_val:
             raise Exception("[-] System error with code: %s" % self.kern32.GetLastError())
             return
-        return num_bytes_written
     
     def create_remote_thread(self):
         thread_id = c_ulong(0)
@@ -90,3 +89,4 @@ class ProcessInjector:
             raise Exception("[-] System error with code: %s" % self.kern32.GetLastError())
             return
         return thread_id
+
