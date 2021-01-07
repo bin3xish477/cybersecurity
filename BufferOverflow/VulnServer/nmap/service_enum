@@ -1,1 +1,0 @@
-# Nmap 7.91 scan initiated Mon Nov 16 17:03:29 2020 as: nmap -sC -sV -oN nmap/service_enum 192.168.91.129
