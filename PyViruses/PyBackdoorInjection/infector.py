@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 from os.path import expanduser
-from os import walk, environ, getuid, stat
+from os import walk, stat
 from sys import path
 from glob import glob
 from platform import system
-from re import search
 from base64 import b64encode, b64decode
 from subprocess import run, PIPE
 from datetime import datetime
