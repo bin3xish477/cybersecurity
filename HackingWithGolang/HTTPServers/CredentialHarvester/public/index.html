@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<!-- saved from url=(0017)http://localhost/ -->
+<html lang="en" class=" js chrome webkit"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style class="darkreader darkreader--fallback" media="screen"></style><style class="darkreader darkreader--text" media="screen"></style><style class="darkreader darkreader--invert" media="screen">.jfk-bubble.gtx-bubble, .captcheck_answer_label > input + img, embed[type="application/pdf"] {
+    filter: invert(100%) hue-rotate(180deg) contrast(90%) !important;
+}</style><style class="darkreader darkreader--inline" media="screen">[data-darkreader-inline-bgcolor] {
+  background-color: var(--darkreader-inline-bgcolor) !important;
+}
+[data-darkreader-inline-bgimage] {
+  background-image: var(--darkreader-inline-bgimage) !important;
+}
+[data-darkreader-inline-border] {
+  border-color: var(--darkreader-inline-border) !important;
+}
+[data-darkreader-inline-border-bottom] {
+  border-bottom-color: var(--darkreader-inline-border-bottom) !important;
+}
+[data-darkreader-inline-border-left] {
+  border-left-color: var(--darkreader-inline-border-left) !important;
+}
+[data-darkreader-inline-border-right] {
+  border-right-color: var(--darkreader-inline-border-right) !important;
+}
+[data-darkreader-inline-border-top] {
+  border-top-color: var(--darkreader-inline-border-top) !important;
+}
+[data-darkreader-inline-boxshadow] {
+  box-shadow: var(--darkreader-inline-boxshadow) !important;
+}
+[data-darkreader-inline-color] {
+  color: var(--darkreader-inline-color) !important;
+}
+[data-darkreader-inline-fill] {
+  fill: var(--darkreader-inline-fill) !important;
+}
+[data-darkreader-inline-stroke] {
+  stroke: var(--darkreader-inline-stroke) !important;
+}
+[data-darkreader-inline-outline] {
+  outline-color: var(--darkreader-inline-outline) !important;
+}
+[data-darkreader-inline-stopcolor] {
+  stop-color: var(--darkreader-inline-stopcolor) !important;
+}</style><style class="darkreader darkreader--variables" media="screen">:root {
+   --darkreader-neutral-background: #131516;
+   --darkreader-neutral-text: #d8d4cf;
+   --darkreader-selection-background: #004daa;
+   --darkreader-selection-text: #e8e6e3;
+}</style><script class="darkreader darkreader--proxy">(function injectProxy() {
+        document.dispatchEvent(
+            new CustomEvent("__darkreader__inlineScriptsAllowed")
+        );
+        const addRuleDescriptor = Object.getOwnPropertyDescriptor(
+            CSSStyleSheet.prototype,
+            "addRule"
+        );
+        const insertRuleDescriptor = Object.getOwnPropertyDescriptor(
+            CSSStyleSheet.prototype,
+            "insertRule"
+        );
+        const deleteRuleDescriptor = Object.getOwnPropertyDescriptor(
+            CSSStyleSheet.prototype,
+            "deleteRule"
+        );
+        const removeRuleDescriptor = Object.getOwnPropertyDescriptor(
+            CSSStyleSheet.prototype,
+            "removeRule"
+        );
+        const cleanUp = () => {
+            Object.defineProperty(
+                CSSStyleSheet.prototype,
+                "addRule",
+                addRuleDescriptor
+            );
+            Object.defineProperty(
+                CSSStyleSheet.prototype,
+                "insertRule",
+                insertRuleDescriptor
+            );
+            Object.defineProperty(
+                CSSStyleSheet.prototype,
+                "deleteRule",
+                deleteRuleDescriptor
+            );
+            Object.defineProperty(
+                CSSStyleSheet.prototype,
+                "removeRule",
+                removeRuleDescriptor
+            );
+            document.removeEventListener("__darkreader__cleanUp", cleanUp);
+            document.removeEventListener(
+                "__darkreader__addUndefinedResolver",
+                (e) => addUndefinedResolver(e)
+            );
+        };
+        const addUndefinedResolver = (e) => {
+            customElements.whenDefined(e.detail.tag).then(() => {
+                document.dispatchEvent(
+                    new CustomEvent("__darkreader__isDefined", {
+                        detail: {tag: e.detail.tag}
+                    })
+                );
+            });
+        };
+        document.addEventListener("__darkreader__cleanUp", cleanUp);
+        document.addEventListener("__darkreader__addUndefinedResolver", (e) =>
+            addUndefinedResolver(e)
+        );
+        const updateSheetEvent = new Event("__darkreader__updateSheet");
+        function proxyAddRule(selector, style, index) {
+            addRuleDescriptor.value.call(this, selector, style, index);
+            if (
+                this.ownerNode &&
+                !this.ownerNode.classList.contains("darkreader")
+            ) {
+                this.ownerNode.dispatchEvent(updateSheetEvent);
+            }
+            return -1;
+        }
+        function proxyInsertRule(rule, index) {
+            const returnValue = insertRuleDescriptor.value.call(
+                this,
+                rule,
+                index
+            );
+            if (
+                this.ownerNode &&
+                !this.ownerNode.classList.contains("darkreader")
+            ) {
+                this.ownerNode.dispatchEvent(updateSheetEvent);
+            }
+            return returnValue;
+        }
+        function proxyDeleteRule(index) {
+            deleteRuleDescriptor.value.call(this, index);
+            if (
+                this.ownerNode &&
+                !this.ownerNode.classList.contains("darkreader")
+            ) {
+                this.ownerNode.dispatchEvent(updateSheetEvent);
+            }
+        }
+        function proxyRemoveRule(index) {
+            removeRuleDescriptor.value.call(this, index);
+            if (
+                this.ownerNode &&
+                !this.ownerNode.classList.contains("darkreader")
+            ) {
+                this.ownerNode.dispatchEvent(updateSheetEvent);
+            }
+        }
+        Object.defineProperty(
+            CSSStyleSheet.prototype,
+            "addRule",
+            Object.assign({}, addRuleDescriptor, {value: proxyAddRule})
+        );
+        Object.defineProperty(
+            CSSStyleSheet.prototype,
+            "insertRule",
+            Object.assign({}, insertRuleDescriptor, {value: proxyInsertRule})
+        );
+        Object.defineProperty(
+            CSSStyleSheet.prototype,
+            "deleteRule",
+            Object.assign({}, deleteRuleDescriptor, {value: proxyDeleteRule})
+        );
+        Object.defineProperty(
+            CSSStyleSheet.prototype,
+            "removeRule",
+            Object.assign({}, removeRuleDescriptor, {value: proxyRemoveRule})
+        );
+    })()</script><style class="darkreader darkreader--user-agent" media="screen">html {
+    background-color: #181a1b !important;
+}
+html, body, input, textarea, select, button {
+    background-color: #181a1b;
+}
+html, body, input, textarea, select, button {
+    border-color: #736b5e;
+    color: #e8e6e3;
+}
+a {
+    color: #3391ff;
+}
+table {
+    border-color: #545b5e;
+}
+::placeholder {
+    color: #b2aba1;
+}
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+    background-color: #555b00 !important;
+    color: #e8e6e3 !important;
+}
+::-webkit-scrollbar {
+    background-color: #202324;
+    color: #aba499;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #454a4d;
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: #575e62;
+}
+::-webkit-scrollbar-thumb:active {
+    background-color: #484e51;
+}
+::-webkit-scrollbar-corner {
+    background-color: #181a1b;
+}
+* {
+    scrollbar-color: #202324 #454a4d;
+}
+::selection {
+    background-color: #004daa !important;
+    color: #e8e6e3 !important;
+}
+::-moz-selection {
+    background-color: #004daa !important;
+    color: #e8e6e3 !important;
+}</style>
+<title>Roundcube Webmail :: Welcome to Roundcube Webmail</title>
+<meta name="viewport" content="" id="viewport">
+<link rel="shortcut icon" href="http://localhost/skins/larry/images/favicon.ico">
+<link rel="stylesheet" type="text/css" href="./public_files/styles.css"><style class="darkreader darkreader--sync" media="screen"></style>
+<link rel="stylesheet" type="text/css" href="./public_files/jquery-ui.css"><style class="darkreader darkreader--sync" media="screen"></style>
+<script type="text/javascript" src="./public_files/ui.js"></script><meta name="darkreader" content="a7ffd547bc28ac6bfd9efdae0eeeeab6"><style class="darkreader darkreader--override" media="screen">.vimvixen-hint {
+    background-color: #7b5300 !important;
+    border-color: #d8b013 !important;
+    color: #f3e8c8 !important;
+}
+::placeholder {
+    opacity: 0.5 !important;
+}</style>
+
+
+
+
+<script src="./public_files/jquery.min.js" type="text/javascript"></script>
+<script src="./public_files/common.js" type="text/javascript"></script>
+<script src="./public_files/app.js" type="text/javascript"></script>
+<script src="./public_files/jstz.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+/*
+        @licstart  The following is the entire license notice for the 
+        JavaScript code in this page.
+
+        Copyright (C) 2005-2014 The Roundcube Dev Team
+
+        The JavaScript code in this page is free software: you can redistribute
+        it and/or modify it under the terms of the GNU General Public License
+        as published by the Free Software Foundation, either version 3 of
+        the License, or (at your option) any later version.
+
+        The code is distributed WITHOUT ANY WARRANTY; without even the implied
+        warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+        See the GNU GPL for more details.
+
+        @licend  The above is the entire license notice
+        for the JavaScript code in this page.
+*/
+var rcmail = new rcube_webmail();
+rcmail.set_env({"task":"login","standard_windows":false,"locale":"en_US","devel_mode":null,"cookie_domain":"","cookie_path":"\/","cookie_secure":false,"skin":"larry","refresh_interval":60,"session_lifetime":600,"action":"","comm_path":".\/?_task=login","compose_extwin":false,"date_format":"yy-mm-dd","request_token":"vaZZc3hf36CsbWICxnYXvwL6neuoNj2A"});
+rcmail.add_label({"loading":"Loading...","servererror":"Server Error!","connerror":"Connection Error (Failed to reach the server)!","requesttimedout":"Request timed out","refreshing":"Refreshing...","windowopenerror":"The popup window was blocked!","uploadingmany":"Uploading files...","close":"Close","errortitle":"An error occurred!","toggleadvancedoptions":"Toggle advanced options"});
+rcmail.gui_container("loginfooter","bottomline");
+rcmail.gui_object('loginform', 'form');
+rcmail.gui_object('message', 'message');
+</script>
+
+<script type="text/javascript" src="./public_files/jquery-ui.min.js"></script>
+</head>
+<body>
+
+<h1 class="voice">Roundcube Webmail Login</h1>
+
+<div id="login-form">
+<div class="box-inner" role="main">
+<img src="./public_files/roundcube_logo.png" id="logo" alt="Roundcube Webmail">
+
+<form name="form" method="post" action="/login">
+<input type="hidden" name="_token" value="vaZZc3hf36CsbWICxnYXvwL6neuoNj2A">
+<input type="hidden" name="_task" value="login"><input type="hidden" name="_action" value="login"><input type="hidden" name="_timezone" id="rcmlogintz" value="America/New_York"><input type="hidden" name="_url" id="rcmloginurl" value=""><table><tbody><tr><td class="title"><label for="rcmloginuser">Username</label>
+</td>
+<td class="input"><input name="_user" id="rcmloginuser" required="required" size="40" autocapitalize="off" autocomplete="off" type="text"></td>
+</tr>
+<tr><td class="title"><label for="rcmloginpwd">Password</label>
+</td>
+<td class="input"><input name="_pass" id="rcmloginpwd" required="required" size="40" autocapitalize="off" autocomplete="off" type="password"></td>
+</tr>
+</tbody>
+</table>
+<p class="formbuttons"><input type="submit" id="rcmloginsubmit" class="button mainaction" value="Login"></p>
+
+</form>
+
+</div>
+
+<div class="box-bottom" role="complementary">
+	<div id="message"></div>
+	<noscript>
+		<p class="noscriptwarning">Warning: This webmail service requires Javascript! In order to use it please enable Javascript in your browser's settings.</p>
+	</noscript>
+</div>
+
+<div id="bottomline" role="contentinfo">
+	Roundcube Webmail 
+		
+</div>
+</div>
+
+
+
+<script type="text/javascript">
+if (!window.UI) { var UI = new rcube_mail_ui(); }
+</script>
+
+
+
+
+<script type="text/javascript">
+
+jQuery.extend(jQuery.ui.dialog.prototype.options.position, {
+                using: function(pos) {
+                    var me = jQuery(this),
+                        offset = me.css(pos).offset(),
+                        topOffset = offset.top - 12;
+                    if (topOffset < 0)
+                        me.css('top', pos.top - topOffset);
+                    if (offset.left + me.outerWidth() + 12 > jQuery(window).width())
+                        me.css('left', pos.left - 12);
+                }
+            });
+$(document).ready(function(){ 
+rcmail.init();
+var images = ["skins\/larry\/images\/ajaxloader.gif","skins\/larry\/images\/ajaxloader_dark.gif","skins\/larry\/images\/buttons.png","skins\/larry\/images\/addcontact.png","skins\/larry\/images\/filetypes.png","skins\/larry\/images\/listicons.png","skins\/larry\/images\/messages.png","skins\/larry\/images\/messages_dark.png","skins\/larry\/images\/quota.png","skins\/larry\/images\/selector.png","skins\/larry\/images\/splitter.png","skins\/larry\/images\/watermark.jpg"];
+            for (var i=0; i<images.length; i++) {
+                img = new Image();
+                img.src = images[i];
+            }
+});
+</script>
+
+
+</body></html>
