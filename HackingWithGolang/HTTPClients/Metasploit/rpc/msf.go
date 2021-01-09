@@ -32,8 +32,8 @@ type SessionListResponse struct {
 	Type        string `msgpack:"omitempty"`
 	TunnelLocal string `msgpack:"tunnel_local"`
 	TunnelPeer  string `msgpack:"tunnel_pack"`
-	ViaExploit  string `msgpack:"via_exploit"`
-	ViaPayload  strin  `msgpack:"via_payload"`
+	Exploit     string `msgpack:"via_exploit"`
+	Payload     strin  `msgpack:"via_payload"`
 	Desc        string `msgpack:"desc"`
 	Info        string `msgpack:"info"`
 	Workspace   string `msgpack:"workspace"`
@@ -77,6 +77,23 @@ type LogoutResponse struct {
 	Result string
 }
 
+// New creates a new instance of type ``Metasploit`` and
+// attempts to login to the RPC server by invoking the
+// ```Login``` receiver function
+func New(host, user, pass string) (*Metasploit, error) {
+	m := &Metasploit{
+		Host: host,
+		User: user,
+		Pass: pass,
+	}
+
+	if err := m.Login(); err != nil {
+		return nil, err
+	}
+
+	return m, nil
+}
+
 // send sends requests to the RPC server
 func (m *Metasploit) send(request interface{}, response interface{}) error {
 	buf := new(bytes.Buffer)
@@ -111,4 +128,40 @@ func (m *Metasploit) Login() error {
 
 	msf.Token = resp.Token
 	return nil
+}
+
+// Logout allows a user to logout of their Metasploit RPC server
+func (m *Metasploit) Logout() error {
+	logout := &Logout{
+		Method:      "auth.logout",
+		Token:       m.Token,
+		LogoutToken: m.Token,
+	}
+
+	var resp LogoutResponse
+	if err := m.send(logout, &resp); err != nil {
+		return err
+	}
+
+	m.Token = ""
+	return nil
+}
+
+// SessionList returns all the active Metasploit sessions
+func (m *Metasploit) SessionList() (map[uint32]SessionListRequest, error) {
+	req := &SessionListRequest{
+		Method: "session.list",
+		Token:  m.Token,
+	}
+	resp := make(map[uint32]SessionListRequest)
+	if err := m.send(req, &resp); err != nil {
+		return nil, err
+	}
+
+	for id, session := range resp {
+		session.Id = id
+		resp[id] = session
+	}
+
+	return resp, nil
 }

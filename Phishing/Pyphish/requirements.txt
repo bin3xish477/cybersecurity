@@ -1,4 +1,0 @@
-gophish
-tinydb
-colored
-tabulate
