@@ -7,6 +7,11 @@ import (
 	"rpc"
 )
 
+var (
+	printf := fmt.Printf
+	println := fmt.Println
+)
+
 func main() {
 	host := os.Getenv("MSFHOST")
 	user := "msf"
@@ -26,10 +31,12 @@ func main() {
 	if err != nil {
 		log.Panicln(err)
 	}
-
+	
+	println("Metasploit Sessions:")
 	for _, session := range sessions {
-		fmt.Print("Session Id: %d\n", session.Id)
-		fmt.Print("Session type: %s\n", session.Type)
-		fmt.Print("Session Payload: %s\n", session.Payload)
+		printf("Session Id: %d\n", session.Id)
+		printf("Session type: %s\n", session.Type)
+		printf("Session Payload: %s\n", session.Payload)
+		println("[ -------------------------------------------------- ]")
 	}
 }
