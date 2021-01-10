@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 
 TARGET=$1
+OPT_NMAP_ARGS=$2
 # Make nmap directory if it doesn't exist
 [[ ! -d nmap ]] && mkdir nmap
 
 # Perform port scan against all tcp ports
-nmap -vvv -Pn -p- -oN nmap/all_ports.txt $TARGET
+nmap -vvv -p- $OPT_NMAP_ARGS -oN nmap/all_ports.txt $TARGET
 
 # Filter ports from all ports scan for only open TCP ports
 OPEN_PORTS=$(cat nmap/all_ports.txt | egrep -oE '([0-9]+)/tcp' | \
@@ -14,4 +15,4 @@ OPEN_PORTS=$(cat nmap/all_ports.txt | egrep -oE '([0-9]+)/tcp' | \
 
 # Pass extracted open ports into an nmap with service scan
 # and default scripts enabled
-nmap -vvv -Pn -sV -sC -p $OPEN_PORTS -oN nmap/service_enum.txt $TARGET
+nmap -vvv -sV -sC -p $OPEN_PORTS $OPT_NMAP_ARGS -oN nmap/service_enum.txt $TARGET
