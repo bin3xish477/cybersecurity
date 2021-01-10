@@ -13,6 +13,9 @@ OPEN_PORTS=$(cat nmap/all_ports.txt | egrep -oE '([0-9]+)/tcp' | \
     awk -F/ '{print $1}' | \
     tr "\n" "," | rev | cut -c 2- | rev)
 
+# If no ports were open, exit
+[[ -z $OPEN_PORTS ]] && echo "[-] No ports were open..."; exit 1
+
 # Pass extracted open ports into an nmap with service scan
 # and default scripts enabled
 nmap -vvv -sV -sC -p $OPEN_PORTS $OPT_NMAP_ARGS -oN nmap/service_enum.txt $TARGET
