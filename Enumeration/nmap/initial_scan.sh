@@ -2,6 +2,12 @@
 
 TARGET=$1
 OPT_NMAP_ARGS=$2
+
+if [[ -z $TARGET ]]
+then
+    echo "usage: $0 <IP> <Optional Nmap Flags>"
+    exit 1
+fi
 # Make nmap directory if it doesn't exist
 [[ ! -d nmap ]] && mkdir nmap
 
