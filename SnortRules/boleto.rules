@@ -1,0 +1,9 @@
+alert tcp $HOME_NET any -> $EXTERNAL_NET $HTTP_PORTS (msg:"Probable phishing attack"; flow:established,to_server; content:"GET"; http_method; content:"/ldkfJu.php?"; http_uri; classtype:trojan-activity; sid:10000001; rev:1;)
+
+alert tcp $HOME_NET any -> $EXTERNAL_NET $HTTP_PORTS (msg: "Probable post-infection - Indicator"; flow:established,to_server; content:"GET"; http_method; content:"/bibi/"; http_uri; pcre:"/(\.txt|\.exe|\.tiff|\.dll|\.zip)"; classtype:trojan-activity; sid:10000002; rev:1;)
+
+alert tcp $HOME_NET any -> $EXTERNAL_NET $HTTP_PORTS ( msg:"Boleto - Second Indicator", flow:established,to_server; content:"GET"; http_method; content:"/bsb/infects/index.php?"; http_uri; classtype:trojan-activity; sid:10000003; rev:1; )
+
+alert tcp $HOME_NET any -> $EXTERNAL_NET $HTTP_PORTS (msg:"Boleto - Third Indicator"; flow:established,to_server; content:"GET"; http_method; content:"/bdb/debugnosso/index.php?"; http_uri; sid:10000004; rev:1;)
+
+alert tcp $HOME_NET any -> $EXTERNAL_NET $HTTP_PORTS (msg:"Boleto - Fourth Indicator"; flow:established,to_server; content:"POST"; http_method; content:"/metre/admin/x.php"; http_uri; classtype:trojan-activity; sid:10000005; rev:1;)
