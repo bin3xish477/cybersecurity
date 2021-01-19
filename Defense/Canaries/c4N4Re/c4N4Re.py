@@ -5,4 +5,5 @@ from configparser import ConfigParser
 from canary_watcher import CanaryWatcher
 
 if __name__ == "__main__":
-    cw = CanaryWatcher()
+    with CanaryWatcher(ConfigParser().read("config.ini")) as cw:
+        pass
