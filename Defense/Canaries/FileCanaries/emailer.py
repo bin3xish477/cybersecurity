@@ -1,4 +1,5 @@
-import smtplib, ssl
+from smtplib import SMTP_SSL
+from ssl import create_default_context
 
 class Emailer():
     def __init__(self, smtp_server, smtp_port):
@@ -6,10 +7,8 @@ class Emailer():
         self.smtp_port = smtp_port
 
     def __enter__(self):
-        context = ssl.create_default_context()
-        self.server = smtplib.SMTP_SSL(self.smtp_server,
-                                       self.smtp_port,
-                                       context=context)
+        context = create_default_context()
+        self.server = SMTP_SSL(self.smtp_server, self.smtp_port, context=context)
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
