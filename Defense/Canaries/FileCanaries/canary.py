@@ -19,7 +19,9 @@ def watch_canary(f):
 
     while True:
         file_access_time = stat(f).st_atime
+        
         if file_access_time != initial_file_access_time:
+            
             gmail_address = environ["GMAIL_ADDR"]
             gmail_password  = environ["GMAIL_PASS"]
 
@@ -45,6 +47,7 @@ if __name__ == "__main__":
     parser.add_argument("FILE", help="File to act as canary")
 
     args = parser.parse_args()
+    
     if exists(args.FILE) and isfile(args.FILE):
         watch_canary(args.FILE)
     else:
