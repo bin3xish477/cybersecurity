@@ -11,6 +11,8 @@ from os.path import realpath
 
 from time import sleep
 
+from datetime import datetime
+
 from argparse import ArgumentParser
 
 def watch_canary(f):
@@ -35,7 +37,8 @@ def watch_canary(f):
                     print("{-} Authentication unsuccessful!")
 
                 subject = "[WARNING] Canary Triggered"
-                message = f"Someone accessed the canary file:\n\t {realpath(f)}"
+                now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+                message = f"[{now}] Someone accessed the canary file:\n\t {realpath(f)}"
 
                 if email.send(gmail_address, subject, message):
                     print("{*} Successfully sent email!")
