@@ -1,6 +1,6 @@
 # File Canary
 
-Get an email whenever a file you intentionally create to lure attackers gets opened. This should be installed as a cronjob (Linux) or scheduled task (Windows). Enjoy!
+Receive an email whenever a file you intentionally create to lure attackers gets opened. This should be installed as a cronjob (Linux) or scheduled task (Windows). Enjoy!
 
 ### Usage
 
