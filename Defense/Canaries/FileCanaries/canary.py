@@ -26,7 +26,9 @@ def watch_canary(f):
             gmail_password  = environ["GMAIL_PASS"]
 
             with Emailer("smtp.gmail.com", 465) as email:
-
+                
+                # Remove print statements when running as cronjob or
+                # scheduled task
                 if email.authenticate(gmail_address, gmail_password):
                     print("{*} Authentication successful!")
                 else:
