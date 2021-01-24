@@ -1,11 +1,4 @@
-global local_subnets: set[subnet] = {
-									    192.168.1.0/24,
-									    192.68.2.0/24,
-									    172.16.0.0/20,
-									    172.16.16.0/20,
-									    172.16.32.0/20,
-									    172.16.48.0/20
-									};
+global local_subnets: set[subnet] = {192.168.1.0/24, 192.68.2.0/24, 172.16.0.0/20, 172.16.16.0/20, 172.16.32.0/20, 172.16.48.0/20};
 global inside_local_network: set[addr];
 global outside_local_network: set[addr];
 
