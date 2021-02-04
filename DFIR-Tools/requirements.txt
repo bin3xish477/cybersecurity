@@ -1,0 +1,5 @@
+colored
+pytenable
+ipython
+folium
+tabulate
