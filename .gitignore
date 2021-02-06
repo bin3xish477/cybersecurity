@@ -130,3 +130,6 @@ dmypy.json
 
 # exe files
 *.exe
+
+# obsidian folder
+.obsidian/
