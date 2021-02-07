@@ -1,4 +1,4 @@
-# Policy And Compliance
+# Policy and Compliance
 
 The information security policy framework of an organization outlines the *policies*, *standards*, *procedures*, and *guidelines* that the organization follows to achieve maximum **cyber resilency** (the ability to withstand or quickly recover from incidents that were meant to disrupt business operations). 
 
