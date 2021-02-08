@@ -10,7 +10,7 @@ def _from_hex_to_ascii(s: str) -> str:
 		_ascii += chr(int(hex_char, 16))
 	return _ascii
 
-def _pad_and_get_index(bit_string, bit_length) -> int:
+def _pad_right_and_get_index(bit_string, bit_length) -> int:
 	if bit_length == 2:
 		return int(f"{bit_string}0000", 2)
 	elif bit_length == 4:
@@ -32,13 +32,13 @@ def to_b64(string: bytes) -> str:
 			_bit_block = _bits[j:j+6]
 			if len(_bit_block) == 2:
 				if '1' in _bit_block:
-					_index = _pad_and_get_index(_bit_block, len(_bit_block))
+					_index = _pad_right_and_get_index(_bit_block, len(_bit_block))
 					_encoded += char_set_dict[_index] + "=="
 				else:
 					_encoded += "=="
 			elif len(_bit_block) == 4:
 					if '1' in _bit_block:
-						_index = _pad_and_get_index(_bit_block, len(_bit_block))
+						_index = _pad_right_and_get_index(_bit_block, len(_bit_block))
 						_encoded += char_set_dict[_index] + '='
 					else:
 						_encoded += '='
