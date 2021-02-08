@@ -1,11 +1,7 @@
 from string import ascii_lowercase, ascii_uppercase
 
-char_set = (
-	*ascii_uppercase, *ascii_lowercase, *"0123456789+/"
-	)
-char_set_dict = {
-	i: char for i, char in zip(range(len(char_set)), char_set)
-	}
+char_set = ( *ascii_uppercase, *ascii_lowercase, *"0123456789+/" )
+char_set_dict = { i: char for i, char in zip(range(len(char_set)), char_set) }
 
 def _from_hex_to_ascii(s: str) -> str:
 	_ascii = ""
