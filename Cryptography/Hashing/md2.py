@@ -1,5 +1,3 @@
-from binascii import hexlify
-
 def md2(msg: bytes) -> str:
 	"""
 	MD2 implementation using RFC 1319: https://tools.ietf.org/html/rfc1319
