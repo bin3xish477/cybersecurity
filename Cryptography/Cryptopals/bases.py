@@ -19,8 +19,7 @@ class Bases:
 
 	def to_b64(self, string: bytes) -> str:
 		base64_dict = {
-		i: char for i, char in zip(range(len(self.base64_charset)), self.base64_charset)
-		}
+			i: char for i, char in zip(range(len(self.base64_charset)), self.base64_charset) }
 		if not isinstance(string, bytes):
 			raise TypeError("Argument to ``to_b64`` must be bytes")
 
