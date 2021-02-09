@@ -26,11 +26,8 @@ class Bases:
 
 		_encoded = ""
 		for i in range(0, len(string), 3):
-			group = string[i:i+3]
-			# create a string containing the bits of the three character bytes
-			_bits = ''.join(bin(b)[2:].zfill(8) for b in group)
-			# get chunks of 6 bits and convert them into ascii characters
-			# adding padding as needed based on the block bit length
+			_group = string[i:i+3]
+			_bits = ''.join(bin(b)[2:].zfill(8) for b in _group)
 			for j in range(0, len(_bits), 6):
 				_bit_block = _bits[j:j+6]
 				if len(_bit_block) == 2:
@@ -44,8 +41,25 @@ class Bases:
 					_encoded += base64_dict[_index]
 		return _encoded
 
-	def from_b64(self, string: bytes) -> str:
-		pass
+	def from_b64(self, string: str) -> str:
+		if not isinstance(string, bytes):
+			raise TypeError("Argument to ``from_b64`` must be bytes")
+
+		_decoded = ""
+		string = bytes(str(string)[2:-1].rstrip('='), "utf8")
+		for i in range(0, len(string), 4):
+			_group = string[i:i+4]
+			_bits = ''.join(
+				bin(self.base64_charset.index(chr(c)))[2:].zfill(8)[2:]
+				for c in _group ) 
+			for j in range(0, len(_bits), 8):
+				_block = _bits[j:j+8]
+				# if the last block is not equal to 8, break
+				if len(_block) != 8:
+					break
+				else:
+					_decoded += chr(int(_bits[j:j+8], 2))
+		return _decoded
 
 	def to_b32(self, string: bytes) -> str:
 		pass
@@ -54,11 +68,17 @@ class Bases:
 		pass
 
 	def hex_to_b64(self, string: bytes) -> str:
-		pass
+		string = bytes(self._from_hex_to_ascii(string), "utf8")
+		return self.to_b64(string)
 
 def main():
-	b64_encode = Bases().to_b64
-	print(b64_encode(b"abcd"))
+	bases = Bases()
+	b64_encode = bases.to_b64
+	b64_decode = bases.from_b64
+	s = b"QUJD"
+	print(b64_decode(s))
+	s = "49276d206b696c6c696e6720796f757220627261696e206c696b65206120706f69736f6e6f7573206d757368726f6f6d"
+	print(bases.hex_to_b64(s))
 
 if __name__ == "__main__":
 	main()
