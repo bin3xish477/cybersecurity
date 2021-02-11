@@ -1,7 +1,7 @@
-; Spamhaus DROP List 2021/02/10 - (c) 2021 The Spamhaus Project
+; Spamhaus DROP List 2021/02/11 - (c) 2021 The Spamhaus Project
 ; https://www.spamhaus.org/drop/drop.txt
 ; Last-Modified: Wed, 10 Feb 2021 13:53:43 GMT
-; Expires: Wed, 10 Feb 2021 23:02:07 GMT
+; Expires: Fri, 12 Feb 2021 00:04:06 GMT
 1.10.16.0/20 ; SBL256894
 1.19.0.0/16 ; SBL434604
 1.32.128.0/18 ; SBL286275

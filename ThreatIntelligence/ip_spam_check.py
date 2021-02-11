@@ -2,6 +2,7 @@
 
 from requests import get
 from netaddr import IPNetwork
+from netaddr.core import AddrFormatError
 from argparse import ArgumentParser
 from os import remove
 from os.path import isfile, exists
@@ -22,8 +23,13 @@ def ip_spam_check(ip: str) -> bool:
 			# skip first four lines
 			[next(drop_file) for _ in range(4)]
 			for line in drop_file:
-				ip_block = line.split(";")[0].strip()
-				print(ip_block)
+				try:
+					ip_block = IPNetwork(line.split(";")[0].strip())
+					if ip in ip_block:
+						return True
+				except AddrFormatError:
+					print(f"[!] Invalid IPv4 address: {ip}")
+					exit(1)
 	else:
 		get_spam_list()
 		ip_spam_check(ip)
@@ -31,15 +37,17 @@ def ip_spam_check(ip: str) -> bool:
 
 if __name__ == '__main__':
 	parser = ArgumentParser()
-	parser.add_argument("-i", "--ip", help="The IP address to analyze")
-	parser.add_argument("-u", "--update", help="Retrieve the updated list of spam block list")
+	parser.add_argument("IP", help="The IP address to analyze")
+	parser.add_argument("-u", "--update",
+		action="store_true", help="Retrieve an updated list of known spam network blocks")
 
 	args = parser.parse_args()
 
 	if args.update:
 		get_spam_list()
+
+	ip = args.IP
+	if ip_spam_check(ip):
+		print(f"[!] {ip} is part of an IP block controlled by spammers")
 	else:
-		if ip_spam_check(args.ip):
-			print(f"[!] {args.ip} is part of an IP block controlled by spammers")
-		else:
-			print(f"[X] {args.ip} is not part of an IP block controlled by spammers")
+		print(f"[X] {ip} is not part of an IP block controlled by spammers")
