@@ -5,7 +5,7 @@ USE marvel;
 CREATE TABLE characters (
 	Name VARCHAR(35),
 	SuperPower VARCHAR(150),
-	gender BIT(1)	
+	Gender BIT(1)	
 );
 
 INSERT INTO characters 
