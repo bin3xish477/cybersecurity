@@ -1,19 +1,21 @@
 from mysql.connector import connect 
 from os import environ
 
-def invoke_stored_procedure(cursor, stored_proc_name):
-	cursor.callproc(stored_proc_name)
-	print("Superheros:")
-	for result in cursor.stored_results():
-		for entry in result.fetchall():
-			print("\t", *entry)
+def get_email_addr(cursor, stored_proc_name, *stored_proc_args):
+	result = cursor.callproc(stored_proc_name, [*stored_proc_args])
+	email = result[2]
+	print(email)
 
 if __name__ == "__main__":
+	from sys import argv
+	username = argv[1]
+	password = argv[2]
+
 	mydb = connect(
 		host="localhost",
 		user="root",
 		password=environ["MYSQL_PASS"],
-		database="marvel")
+		database="app")
 
 	cursor = mydb.cursor()
-	invoke_stored_procedure(cursor, "get_superheros")
+	get_email_addr(cursor, "get_email_addr", username, password, None)
