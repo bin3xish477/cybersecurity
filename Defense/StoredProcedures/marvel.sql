@@ -1,18 +1,17 @@
-CREATE DATABASE marvel;
+CREATE DATABASE app;
 
-USE marvel;
+USE app;
 
-CREATE TABLE characters (
-	Name VARCHAR(35),
-	SuperPower VARCHAR(150),
-	Gender BIT(1)	
+CREATE TABLE Users (
+	username VARCHAR(35),
+	email VARCHAR(35),
+	password VARCHAR(50)
 );
 
-INSERT INTO characters 
+INSERT INTO Users 
 VALUES
-	("Hulk", "Super Strength, Indestructable", 0),
-	("Spiderman", "Siper senses and strength", 0),
-	("Iron Man", "Intelligence, Advanced Armored Suit, Flight", 0),
-	("Captain Marvel", "Super Strength, Flight", 1),
-	("Black Widow", "Skilled Assassin", 1),
-	("Scarlet Witch", "Magic wielder", 1);
+	("james", "james@gmail.com", "password"),
+	("mike", "mike@proton.com", "mikeisawesome"),
+	("joker", "joker@batman.com", "jokerjoker123"),
+	("ashley", "ashley@yahoo.com", "1234567abc"),
+	("Daphne", "daph@gmail.com", "d@phne123abc");
