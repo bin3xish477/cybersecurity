@@ -9,7 +9,7 @@
 ### F -> flushes the CHAIN
 ```sudo iptables -t filter -F OUTPUT```
  
-### Z -> zeroises the packet and byte counters
+### Z -> zeros the packet and byte counters
 ```sudo iptables -t filter -Z```
  
 ### D -> deletes a rule
