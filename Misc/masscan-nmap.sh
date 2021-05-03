@@ -49,6 +49,6 @@ grep 'Host' ./results/masscan.out | \
 echo -e "\nStarting Nmap scan (\e[0;92mINFO\e[0m)\n"
 # run nmap against the target IP's in file, specifying the ports 
 # that were discovered port by masscan for further interrogation
-nmap -v -iL $IP_FILE -p $(cat ./results/ports) -A -Pn -oA ./results/nmap-$(date '+%Y%m%d%M%S')-1
+nmap -v -e $INTERFACE -iL $IP_FILE -p $(cat ./results/ports) -A -Pn -oA ./results/nmap-$(date '+%Y%m%d%M%S')-1
 
 echo -e "\nScans are complete (\e[0;97mATTENTION\e[0m)"
