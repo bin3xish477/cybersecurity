@@ -51,4 +51,4 @@ echo -e "\nStarting Nmap scan (\e[0;92mINFO\e[0m)\n"
 # that were discovered port by masscan for further interegation
 nmap -v -iL $IP_FILE -p $(cat ./results/ports) -A -Pn -oA ./results/nmap-$(date '+%Y%m%d%M%S')-1
 
-echo -e "Scans are complete (\e[0;97mATTENTION\e[0m)"
+echo -e "\nScans are complete (\e[0;97mATTENTION\e[0m)"
