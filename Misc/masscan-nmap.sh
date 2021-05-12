@@ -41,7 +41,7 @@ masscan -iL $IP_FILE \
 grep 'Host' ./results/masscan.out | \
     awk '{print $5}' | \
     awk -F/ '{print $1}' | \
-    grep [0-9] | \
+    grep '[0-9]' | \
     sort -n | \
     uniq | \
     tr '\n' ',' | \
