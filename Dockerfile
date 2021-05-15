@@ -12,12 +12,16 @@
 # - nmap
 # - whatweb
 # - john
+# - socat
 # - netcat
 # - vim
 # - nishang
 # - seclists
 # - sqlmap
-# - Nessus
+# - impacket
+# - awscli
+# - az (azure cli)
+# - pacu
 
 FROM ubuntu
 
@@ -52,12 +56,7 @@ RUN chmod +x msfinstall && \
     ./msfinstall && \
     rm ./msfinstall
 
-RUN apt install -y nmap && \
-    apt install -y whatweb && \
-    apt install -y john && \
-    apt install -y netcat && \
-    apt install -y vim && \
-    apt install -y masscan
+RUN apt install -y nmap whatweb john netcat vim masscan socat
 
 # Setup Gobuster
 # SHA256 Checksum : 7f11cba97772ac4f276177d5d782e6ebda58fbdbbbf959d6cb02e0454bc52e14
@@ -82,6 +81,18 @@ RUN git clone https://github.com/danielmiessler/SecLists.git /opt/SecLists
 RUN wget 'https://github.com/sqlmapproject/sqlmap/tarball/master' -O /opt/sqlmap.tar.gz && \
     tar -xzf /opt/sqlmap.tar.gz -C /opt && \
     find /opt -name "sqlmap*" -type d | xargs -I {} ln -s '{}/sqlmap.py' /bin/sqlmap
-
-
     
+RUN mkdir /opt/chisel && https://github.com/jpillora/chisel/releases/download/v1.7.6/chisel_1.7.6_linux_amd64.gz -O /opt/chisel/
+
+RUN git clone https://github.com/SecureAuthCorp/impacket.git /opt/impacket && pip install -r /opt/impacket/requirements.txt
+
+# aws cli
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
+    unzip awscliv2.zip && \
+    sudo ./aws/install && rm -rf awscliv2.zip aws
+
+# azure cli
+RUN curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+    
+# pacu
+RUN pip install -U pacu
