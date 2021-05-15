@@ -1,13 +1,14 @@
 # Should take 5-6 minutes to build
 
 # Instruction to run:
-#   docker build -t pentest_image
-#   docker run -d -p 8834:8834 --name red_team_container pentest_image
-#   docker exec -it pentest_image /bin/bash
+#   docker build -t pentest
+#   docker run -d -p 8834:8834 --name red pentest
+#   docker exec -it red /bin/bash
 
 # Currently installes:
 # - metasploit
 # - gobuster
+# - masscan
 # - nmap
 # - whatweb
 # - john
@@ -22,7 +23,7 @@ FROM ubuntu
 
 LABEL maintainer="rodriguez10011999@gmail.com"
 LABEL version="0.1"
-LABEL description="A basic docker container based on Ubuntu for practicing your pentest skills"
+LABEL description="A basic docker container based on Ubuntu for pentesting"
 
 RUN apt update && \
     apt upgrade && \
@@ -55,7 +56,8 @@ RUN apt install -y nmap && \
     apt install -y whatweb && \
     apt install -y john && \
     apt install -y netcat && \
-    apt install -y vim 
+    apt install -y vim && \
+    apt install -y masscan
 
 # Setup Gobuster
 # SHA256 Checksum : 7f11cba97772ac4f276177d5d782e6ebda58fbdbbbf959d6cb02e0454bc52e14
@@ -80,19 +82,6 @@ RUN git clone https://github.com/danielmiessler/SecLists.git /opt/SecLists
 RUN wget 'https://github.com/sqlmapproject/sqlmap/tarball/master' -O /opt/sqlmap.tar.gz && \
     tar -xzf /opt/sqlmap.tar.gz -C /opt && \
     find /opt -name "sqlmap*" -type d | xargs -I {} ln -s '{}/sqlmap.py' /bin/sqlmap
-
-# Setup Nessus
-# Nessus-8.12.1-debian6_amd64.deb checksum : b878e1b85b4c8aa04d4a579059c88fbca216e8fa64da9f60207ce28a204b7d68
-
-ADD Nessus-8.12.1-debian6_amd64.deb /tmp/Nessus-8.12.1-debian6_amd64.deb
-
-RUN dpkg -i /tmp/Nessus-8.12.1-debian6_amd64.deb && \
-    rm -r /tmp/Nessus-8.12.1-debian6_amd64.deb
-    
-# https://localhost:8834
-EXPOSE 8834
-
-CMD service nessusd start && tail -f /dev/null
 
 
     
