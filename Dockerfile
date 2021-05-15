@@ -23,13 +23,12 @@
 # - az (azure cli)
 # - pacu
 # - ffuf
-# - wpscan
 
-FROM ubuntu
+FROM ubuntu:lastest
 
 LABEL maintainer="rodriguez10011999@gmail.com"
-LABEL version="0.1"
-LABEL description="A basic docker container based on Ubuntu for pentesting"
+LABEL version="0.2"
+LABEL description="A basic docker container based on Ubuntu for generic pentesting"
 
 RUN apt update && apt upgrade && \
     apt install -y git && \
