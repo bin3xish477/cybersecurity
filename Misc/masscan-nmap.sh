@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# Automating Masscan/Nmap initial reconnaissance workflow
-# for cloud pentesting. However, this could obviously be used for 
-# any engagement
-
 INTERFACE=$1
 IP_FILE=$2
 
