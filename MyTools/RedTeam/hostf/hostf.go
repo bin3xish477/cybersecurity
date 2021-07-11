@@ -70,5 +70,6 @@ func main() {
 	log.Println(fmt.Sprintf("INFO: server listening on port %d", port))
 	log.Println(fmt.Sprintf("INFO: username = %s", username))
 	log.Println(fmt.Sprintf("INFO: password = %s", password))
+	// TODO: add TLS support to prevent Mitm attacks
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", port), nil))
 }
