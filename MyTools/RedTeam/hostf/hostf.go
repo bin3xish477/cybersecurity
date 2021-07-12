@@ -1,11 +1,18 @@
 package main
 
 import (
+	crand "crypto/rand"
+	"crypto/rsa"
+	"crypto/x509"
+	"crypto/x509/pkix"
+	"encoding/pem"
 	"flag"
 	"fmt"
 	"log"
+	"math/big"
 	"math/rand"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -23,16 +30,54 @@ func generateRandomString(length int) string {
 	return stringWithCharset(length, charset)
 }
 
-const (
-	charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789%&*#!$-="
-	length  = 16
-)
+func createCertificateAuthority() *x509.Certificate {
+	ca := &x509.Certificate{
+		SerialNumber: big.NewInt(1653),
+		Subject: pkix.Name{
+			Organization: []string{generateRandomString(length)},
+			Country:      []string{"US"},
+		},
+		NotBefore:             time.Now(),
+		NotAfter:              time.Now().AddDate(1, 0, 0),
+		IsCA:                  true,
+		ExtKeyUsage:           []x509.ExtKeyUsage{x509.ExtKeyUsageClientAuth, x509.ExtKeyUsageServerAuth},
+		KeyUsage:              x509.KeyUsageDigitalSignature | x509.KeyUsageCertSign,
+		BasicConstraintsValid: true,
+	}
+	return ca
+}
+
+func generateSelfSignedCert() {
+	ca := createCertificateAuthority()
+	priv, _ := rsa.GenerateKey(crand.Reader, 2048)
+	pub := &priv.PublicKey
+	ca_b, err := x509.CreateCertificate(crand.Reader, ca, ca, pub, priv)
+	if err != nil {
+		log.Println("ERROR: error creating certificate")
+		os.Exit(1)
+	}
+
+	certOut, err := os.Create("server.crt")
+	pem.Encode(certOut, &pem.Block{Type: "CERTIFICATE", Bytes: ca_b})
+	certOut.Close()
+	log.Println("INFO: writing public key to `server.crt`")
+
+	keyOut, err := os.OpenFile("server.key", os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0600)
+	pem.Encode(keyOut, &pem.Block{Type: "RSA PRIVATE KEY", Bytes: x509.MarshalPKCS1PrivateKey(priv)})
+	keyOut.Close()
+	log.Println("INFO: writing private key to `server.key`")
+}
 
 var (
 	dir      string
 	port     int
-	username = generateRandomString(length)
-	password = generateRandomString(length)
+	username string = generateRandomString(length)
+	password string = generateRandomString(length)
+)
+
+const (
+	charset string = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789%&*#!$-="
+	length  int    = 16
 )
 
 func auth(next http.Handler) http.Handler {
@@ -40,7 +85,6 @@ func auth(next http.Handler) http.Handler {
 		u, p, ok := r.BasicAuth()
 		if ok {
 			if u == username && p == password {
-				log.Println("INFO: successful login")
 				next.ServeHTTP(w, r)
 				return
 			} else {
@@ -70,6 +114,8 @@ func main() {
 	log.Println(fmt.Sprintf("INFO: server listening on port %d", port))
 	log.Println(fmt.Sprintf("INFO: username = %s", username))
 	log.Println(fmt.Sprintf("INFO: password = %s", password))
-	// TODO: add TLS support to prevent Mitm attacks
-	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", port), nil))
+
+	// generate cert every time the program is ran
+	generateSelfSignedCert()
+	log.Fatal(http.ListenAndServeTLS(fmt.Sprintf(":%d", port), "server.crt", "server.key", nil))
 }
