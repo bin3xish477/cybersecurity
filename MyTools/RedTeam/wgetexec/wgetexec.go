@@ -38,6 +38,11 @@ func main() {
 	flag.StringVar(&url, "url", "", "url of hosted file")
 	flag.Parse()
 
+	if url == "" {
+		fmt.Println("usage: wgetexec -url [url]")
+		return
+	}
+
 	url = strings.Trim(url, " ")
 	c := Command{}
 
