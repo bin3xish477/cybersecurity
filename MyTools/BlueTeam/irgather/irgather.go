@@ -142,7 +142,7 @@ func main() {
 					columnsByColon := strings.Split(trimmed, ":")
 					groupName, groupMembers := columnsByColon[0], columnsByColon[len(columnsByColon)-1]
 					fmt.Printf(
-						"\u001b[31mGroupName\u001b[0m='%s', \u001b[32mMembers\u001b[0m='%s'\n", groupName, groupMembers,
+						"\u001b[31mGroupName\u001b[0m=%s, \u001b[32mMembers\u001b[0m='%s'\n", groupName, groupMembers,
 					)
 				}
 
