@@ -69,9 +69,7 @@ func main() {
 					trimmed := strings.Trim(s, " ")
 					line := strings.Split(trimmed, " ")
 					userName, sid := line[0], line[1]
-					fmt.Printf(
-						"\u001b[31mUserName\u001b[0m=%s, \u001b[32mSID\u001b[0m=%s\n", userName, sid,
-					)
+					fmt.Printf("\u001b[31mUserName\u001b[0m=%s, \u001b[32mSID\u001b[0m=%s\n", userName, sid)
 				}
 				fmt.Println()
 			case "List Groups":
@@ -123,9 +121,7 @@ func main() {
 					if userName == "" && shell == "" {
 						continue
 					}
-					fmt.Printf(
-						"\u001b[31mUserName\u001b[0m=%s, \u001b[32mShell\u001b[0m=%s\n", userName, shell,
-					)
+					fmt.Printf("\u001b[31mUserName\u001b[0m=%s, \u001b[32mShell\u001b[0m=%s\n", userName, shell)
 				}
 				fmt.Println()
 			case "List Groups":
@@ -141,9 +137,7 @@ func main() {
 					trimmed := strings.Trim(group, " ")
 					columnsByColon := strings.Split(trimmed, ":")
 					groupName, groupMembers := columnsByColon[0], columnsByColon[len(columnsByColon)-1]
-					fmt.Printf(
-						"\u001b[31mGroupName\u001b[0m=%s, \u001b[32mMembers\u001b[0m='%s'\n", groupName, groupMembers,
-					)
+					fmt.Printf("\u001b[31mGroupName\u001b[0m=%s, \u001b[32mMembers\u001b[0m='%s'\n", groupName, groupMembers)
 				}
 
 			}
