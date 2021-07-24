@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os/exec"
+	"regexp"
 	"runtime"
 	"strings"
 
@@ -51,19 +52,22 @@ func main() {
 			switch selected {
 			case "List Users":
 				out, err := exec.Command(
-					"powershell.exe", "-NoProfile", "-NonInteractive", "-c", "Get-LocalUser", "|", "Select", "Name",
+					"powershell.exe", "-NoProfile", "-NonInteractive", "-c", "Get-LocalUser", "|", "Select", "Name", ",", "SID",
 				).Output()
 				if err != nil {
 					log.Printf("error running system command: %s", err)
 					return
 				}
+
 				users := strings.Split(strings.ReplaceAll(string(out), `\r\n`, `\n`), "\n")
+				fmt.Println("-----------------------------------------")
 				for _, user := range users[3 : len(users)-3] {
-					if user == "" {
-						continue
-					}
+					space := regexp.MustCompile(`\s+`)
+					s := space.ReplaceAllString(user, " ")
+					entry := strings.Split(s, " ")
+					userName, sid := entry[0], entry[1]
 					fmt.Printf(
-						"\u001b[31mUserName\u001b[0m=%s\n", user,
+						"\u001b[31mUserName\u001b[0m=%s, \u001b[32mSID\u001b[0m=%s\n", userName, sid,
 					)
 				}
 				fmt.Println()
@@ -90,12 +94,12 @@ func main() {
 				fmt.Println("-----------------------------------------")
 				for _, user := range users {
 					line := strings.Split(user, ":")
-					username, shell := line[0], line[len(line)-1]
-					if username == "" && shell == "" {
+					userName, shell := line[0], line[len(line)-1]
+					if userName == "" && shell == "" {
 						continue
 					}
 					fmt.Printf(
-						"\u001b[31mUserName\u001b[0m=%s, \u001b[32mShell\u001b[0m=%s\n", username, shell,
+						"\u001b[31mUserName\u001b[0m=%s, \u001b[32mShell\u001b[0m=%s\n", userName, shell,
 					)
 				}
 				fmt.Println()
