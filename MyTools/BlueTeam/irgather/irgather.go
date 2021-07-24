@@ -66,6 +66,7 @@ func main() {
 						"\u001b[31mUserName\u001b[0m=%s\n", user,
 					)
 				}
+				fmt.Println()
 			default:
 				return
 			}
@@ -101,5 +102,4 @@ func main() {
 			}
 		}
 	}
-
 }
