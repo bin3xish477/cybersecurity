@@ -69,9 +69,7 @@ func main() {
 					trimmed := strings.Trim(s, " ")
 					line := strings.Split(trimmed, " ")
 					userName, sid := line[0], line[1]
-					fmt.Printf(
-						"\u001b[31mUserName\u001b[0m=%s, \u001b[32mSID\u001b[0m=%s\n", userName, sid,
-					)
+					fmt.Printf("\u001b[31mUserName\u001b[0m=%s, \u001b[32mSID\u001b[0m=%s\n", userName, sid)
 				}
 				fmt.Println()
 			case "List Groups":
@@ -94,6 +92,75 @@ func main() {
 					lineLen := len(line)
 					groupName, sid := line[0:lineLen-1], line[lineLen-1]
 					fmt.Printf("\u001b[31mGroupName\u001b[0m='%s', \u001b[32mSID\u001b[0m=%s\n", strings.Join(groupName, " "), sid)
+				}
+				fmt.Println()
+			case "List Processes":
+				out, err := exec.Command(
+					"powershell.exe", "-NoProfile", "-NonInteractive", "-c", "Get-Process", "|", "Select", "Name", ",", "Id",
+				).Output()
+				if err != nil {
+					log.Printf("error running system command: %s", err)
+					return
+				}
+				processes := strings.Split(strings.ReplaceAll(string(out), `\r\n`, `\n`), "\n")
+				fmt.Println("-----------------------------------------")
+				for _, process := range processes[3 : len(processes)-3] {
+					s := space.ReplaceAllString(process, " ")
+					trimmed := strings.Trim(s, " ")
+					line := strings.Split(trimmed, " ")
+					lineLen := len(line)
+					if lineLen == 0 {
+						continue
+					}
+					procName, pid := line[0:lineLen-1], line[lineLen-1]
+					fmt.Printf("\u001b[31mProcessName\u001b[0m=%s, \u001b[32mProcessID\u001b[0m=%s\n", strings.Join(procName, " "), pid)
+				}
+				fmt.Println()
+			case "List Services":
+				out, err := exec.Command(
+					"powershell.exe", "-NoProfile", "-NonInteractive", "-c", "Get-Service", "|", "Select", "Name", ",", "Status",
+				).Output()
+				if err != nil {
+					log.Printf("error running system command: %s", err)
+					return
+				}
+				services := strings.Split(strings.ReplaceAll(string(out), `\r\n`, `\n`), "\n")
+				fmt.Println("-----------------------------------------")
+				for _, service := range services[3 : len(services)-3] {
+					s := space.ReplaceAllString(service, " ")
+					trimmed := strings.Trim(s, " ")
+					line := strings.Split(trimmed, " ")
+					lineLen := len(line)
+					if lineLen == 0 {
+						continue
+					}
+					serviceName, status := line[0:lineLen-1], line[lineLen-1]
+					fmt.Printf("\u001b[31mServiceName\u001b[0m=%s, \u001b[32mStatus\u001b[0m=%s\n", strings.Join(serviceName, " "), status)
+				}
+				fmt.Println()
+			case "List Open Ports":
+				out, err := exec.Command(
+					"powershell.exe", "-NoProfile", "-NonInteractive", "-c",
+					"Get-NetTCPConnection", "-State", "Listen", "|", "Select", "OwningProcess", ",", "LocalAddress", ",", "LocalPort",
+				).Output()
+				if err != nil {
+					log.Printf("error running system command: %s", err)
+					return
+				}
+				listeningPorts := strings.Split(strings.ReplaceAll(string(out), `\r\n`, `\n`), "\n")
+				fmt.Println("-----------------------------------------")
+				for _, port := range listeningPorts[3 : len(listeningPorts)-3] {
+					s := space.ReplaceAllString(port, " ")
+					trimmed := strings.Trim(s, " ")
+					line := strings.Split(trimmed, " ")
+					lineLen := len(line)
+					if lineLen == 0 {
+						continue
+					}
+					pid, localAddr, localPort := line[0], line[1], line[2]
+					fmt.Printf(
+						"\u001b[31mProcessId\u001b[0m=%s, \u001b[32mLocalAddr\u001b[0m=%s, \u001b[33mLocalPort\u001b[0m=%s\n",
+						pid, localAddr, localPort)
 				}
 				fmt.Println()
 			default:
@@ -123,9 +190,7 @@ func main() {
 					if userName == "" && shell == "" {
 						continue
 					}
-					fmt.Printf(
-						"\u001b[31mUserName\u001b[0m=%s, \u001b[32mShell\u001b[0m=%s\n", userName, shell,
-					)
+					fmt.Printf("\u001b[31mUserName\u001b[0m=%s, \u001b[32mShell\u001b[0m=%s\n", userName, shell)
 				}
 				fmt.Println()
 			case "List Groups":
@@ -141,9 +206,7 @@ func main() {
 					trimmed := strings.Trim(group, " ")
 					columnsByColon := strings.Split(trimmed, ":")
 					groupName, groupMembers := columnsByColon[0], columnsByColon[len(columnsByColon)-1]
-					fmt.Printf(
-						"\u001b[31mGroupName\u001b[0m=%s, \u001b[32mMembers\u001b[0m='%s'\n", groupName, groupMembers,
-					)
+					fmt.Printf("\u001b[31mGroupName\u001b[0m=%s, \u001b[32mMembers\u001b[0m='%s'\n", groupName, groupMembers)
 				}
 
 			}
