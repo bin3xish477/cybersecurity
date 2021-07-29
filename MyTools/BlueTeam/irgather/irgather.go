@@ -162,7 +162,6 @@ func getOpenPortsWin() {
 
 func main() {
 	prompt := createPrompt()
-	// determining os and shell to use
 	if runtime.GOOS == "windows" {
 		for {
 			_, selected, err := prompt.Run()
@@ -186,48 +185,6 @@ func main() {
 			}
 		}
 	} else {
-		for {
-			_, selected, err := prompt.Run()
-			if err != nil {
-				log.Printf("an error occured: %s", err)
-				return
-			}
-			switch selected {
-			case "List Users":
-				catPath, _ := commandExists("cat")
-				out, err := exec.Command(catPath, "/etc/passwd").Output()
-				if err != nil {
-					log.Printf("error running system command: %s", err)
-					return
-				}
-				users := strings.Split(string(out), "\n")
-				fmt.Println("-----------------------------------------")
-				for _, user := range users {
-					line := strings.Split(user, ":")
-					userName, shell := line[0], line[len(line)-1]
-					if userName == "" && shell == "" {
-						continue
-					}
-					fmt.Printf("\u001b[31mUserName\u001b[0m=%s, \u001b[32mShell\u001b[0m=%s\n", userName, shell)
-				}
-				fmt.Println()
-			case "List Groups":
-				catPath, _ := commandExists("cat")
-				out, err := exec.Command(catPath, "/etc/group").Output()
-				if err != nil {
-					log.Printf("error running system command: %s", err)
-					return
-				}
-				groups := strings.Split(string(out), "\n")
-				fmt.Println("-----------------------------------------")
-				for _, group := range groups {
-					trimmed := strings.Trim(group, " ")
-					columnsByColon := strings.Split(trimmed, ":")
-					groupName, groupMembers := columnsByColon[0], columnsByColon[len(columnsByColon)-1]
-					fmt.Printf("\u001b[31mGroupName\u001b[0m=%s, \u001b[32mMembers\u001b[0m='%s'\n", groupName, groupMembers)
-				}
-
-			}
-		}
+		fmt.Println("\u001b[31mThis tool was written for Windows information gathering\u001b[0m")
 	}
 }
