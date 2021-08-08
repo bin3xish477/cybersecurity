@@ -12,7 +12,7 @@ RUN go get -v -u github.com/tomnomnom/unfurl
 RUN go get -v -u github.com/tomnomnom/anew
 RUN go get -v -u github.com/tomnomnom/waybackurls
 RUN go get -v -u github.com/OWASP/Amass/v3/...
-RUN go get -u github.com/ffuf/ffuf
+RUN go get -v -u github.com/ffuf/ffuf
 
 WORKDIR /tools
 RUN wget https://github.com/epi052/feroxbuster/releases/download/v2.3.2/x86_64-linux-feroxbuster.tar.gz && \
