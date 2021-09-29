@@ -2,7 +2,8 @@
 
 ### Run
 
-> need `terraform` installed for the following instructions, download [here](https://www.terraform.io/downloads.html)
+> Need `terraform` installed for the following instructions, download [here](https://www.terraform.io/downloads.html)
+> Don't forget to change the AWS profile name in the `main.tf` file to your profile name
 
 ```
 terraform init
