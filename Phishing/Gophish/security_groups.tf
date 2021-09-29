@@ -13,7 +13,6 @@ resource "aws_security_group" "gophish_sg" {
       self = false
       prefix_list_ids = []
       security_groups = []
-
     },
     {
       description = "Allow HTTP"
@@ -30,6 +29,17 @@ resource "aws_security_group" "gophish_sg" {
       description = "Allow access to Gophish server"
       from_port = 0 
       to_port = 3333
+      protocol = "tcp"
+      cidr_blocks = [ "0.0.0.0/0" ]
+      ipv6_cidr_blocks = []
+      self = false
+      prefix_list_ids = []
+      security_groups = []
+    },
+    {
+      description = "Allow MailHog access"
+      from_port = 0
+      to_port = 8025
       protocol = "tcp"
       cidr_blocks = [ "0.0.0.0/0" ]
       ipv6_cidr_blocks = []
