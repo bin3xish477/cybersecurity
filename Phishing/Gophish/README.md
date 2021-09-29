@@ -2,7 +2,7 @@
 
 ### Run
 
-> need `terraform` installed for the following instructions
+> need `terraform` installed for the following instructions, download [here](https://www.terraform.io/downloads.html)
 
 ```
 terraform init
