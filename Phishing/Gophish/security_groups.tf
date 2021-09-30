@@ -5,7 +5,7 @@ resource "aws_security_group" "gophish_sg" {
   ingress = [
     {
       description = "Allow SSH"
-      from_port = 0
+      from_port = 22 
       to_port = 22
       protocol = "tcp"
       cidr_blocks = [ "0.0.0.0/0" ]
@@ -16,7 +16,7 @@ resource "aws_security_group" "gophish_sg" {
     },
     {
       description = "Allow HTTP"
-      from_port = 0 
+      from_port = 80 
       to_port = 80
       protocol = "tcp"
       cidr_blocks = [ "0.0.0.0/0" ]
@@ -27,7 +27,7 @@ resource "aws_security_group" "gophish_sg" {
     },
     {
       description = "Allow access to Gophish server"
-      from_port = 0 
+      from_port = 3333
       to_port = 3333
       protocol = "tcp"
       cidr_blocks = [ "0.0.0.0/0" ]
@@ -38,7 +38,7 @@ resource "aws_security_group" "gophish_sg" {
     },
     {
       description = "Allow MailHog access"
-      from_port = 0
+      from_port = 8025 
       to_port = 8025
       protocol = "tcp"
       cidr_blocks = [ "0.0.0.0/0" ]
