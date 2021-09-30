@@ -1,6 +1,6 @@
 resource "aws_security_group" "gophish_sg" {
   name = "Allow Gophish traffic"
-  description = "Allow traffic to Gophish server on ports 22, 80, and 3333"
+  description = "Allow traffic to ports 22, 80, 3333, and 8025"
 
   ingress = [
     {
