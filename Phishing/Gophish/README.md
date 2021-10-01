@@ -22,7 +22,7 @@ ssh -i id_rsa ec2-user@[EC2_INSTANCE_IP]
 sudo cat /var/log/cloud-init-output.log | grep -oE '(Please.*)password\s[a-f0-9]+' | awk '{print $(NF-1),"=",$NF}'
 ```
 
-> Login to Gophish interface at https://[EC2@_INSTANCE_IP]:3333
+> Login to Gophish interface at https://[EC2_INSTANCE_IP]:3333
 
 > Enter the credentials admin:[PASSWORD]
 
@@ -35,5 +35,7 @@ sudo cat /var/log/cloud-init-output.log | grep -oE '(Please.*)password\s[a-f0-9]
 ### Creating Sending Profiles
 
 #### Sending Test Email
+
+Before saving the profile, send a test email to your own test account to make sure you are successfully able to send emails.
 
 ### Creating Campaign
