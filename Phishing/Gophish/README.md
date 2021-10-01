@@ -1,8 +1,11 @@
-# Gophish/MailHog/ElasticMail Phishing Infrastructure Automation (AWS)
+# Gophish Phishing Infrastructure Automation (AWS)
+
+### Prequisites
+1. An email account. I like using [Protonmail](https://protonmail.com/) since it's easy to create and destroy.
+2. An SMTP server. I'll be [ElasticMail](https://elasticemail.com/) since it's free and easy to setup. You can obviously use the SMTP provided by what email service you use (Gmail, Office, etc).
+3. Download and install [Terraform](https://www.terraform.io/downloads.html)
 
 ### Run
-
-> Need `terraform` installed for the following instructions, download [here](https://www.terraform.io/downloads.html)
 
 > Don't forget to change the AWS profile name in the `main.tf` file to your profile name
 
