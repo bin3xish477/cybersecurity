@@ -3,7 +3,12 @@
 ### Prequisites
 1. An email account. I like using [Protonmail](https://protonmail.com/) since it's easy to create and destroy.
 2. An SMTP server. I'll be using PostFix.
-3. Download and install [Terraform](https://www.terraform.io/downloads.html)
+  - Install PostFix on Amazon AMI: `sudo yum install postfix`
+    - Select the **Internet Site** option from the drop down and continue with the installation
+  - Edit `/etc/postfix/main.cf` and make the following modifications:
+    - Change the value of `myhostname` to `mail.[YOUR_DOMAIN].com`, example: `mail.phish.com`
+    - Change the value of `mydomain` to `[YOUR_DOMAIN].com`, example: `phish.com`
+4. Download and install [Terraform](https://www.terraform.io/downloads.html)
 
 ### Run
 
