@@ -5,9 +5,10 @@
 2. An SMTP server. I'll be using PostFix.
   - Install PostFix on Amazon AMI: `sudo yum install postfix`
     - Select the **Internet Site** option from the drop down and continue with the installation
+    - Enter the email domain you want to use
   - Edit `/etc/postfix/main.cf` and make the following modifications:
     - Change the value of `myhostname` to `mail.[YOUR_DOMAIN].com`, example: `mail.phish.com`
-    - Change the value of `mydomain` to `[YOUR_DOMAIN].com`, example: `phish.com`
+    - Create a new variable called `mydomain` and set it to `[YOUR_DOMAIN].com`, example: `mydomain = phish.com`
 4. Download and install [Terraform](https://www.terraform.io/downloads.html)
 
 ### Run
