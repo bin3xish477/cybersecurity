@@ -2,7 +2,7 @@
 
 ### Prequisites
 1. An email account. I like using [Protonmail](https://protonmail.com/) since it's easy to create and destroy.
-2. An SMTP server. I'll be using [ElasticMail](https://elasticemail.com/) since it's free and easy to setup. You can obviously use the SMTP provided by what email service you use (Gmail, Office, etc).
+2. An SMTP server. I'll be using PostFix.
 3. Download and install [Terraform](https://www.terraform.io/downloads.html)
 
 ### Run
