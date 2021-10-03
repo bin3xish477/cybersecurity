@@ -1,6 +1,6 @@
 resource "aws_instance" "gophish_instance" {
-  ami = "ami-087c17d1fe0178315"
-  instance_type = "t2.micro"
+  ami = "${var.ami}"
+  instance_type = "${var.instance_type}"
   key_name = "${aws_key_pair.gophish_ssh_key.key_name}"
 
   tags = {
