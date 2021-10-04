@@ -1,6 +1,7 @@
 resource "aws_security_group" "gophish_sg" {
   name = "Allow Gophish traffic"
   description = "Allow traffic to ports 22, 80, 3333, and 8025"
+  vpc_id = "${aws_vpc.gophish_vpc.id}"
 
   ingress = [
     {

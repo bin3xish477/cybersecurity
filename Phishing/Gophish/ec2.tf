@@ -1,4 +1,5 @@
 resource "aws_instance" "gophish_instance" {
+  subnet_id = "${aws_subnet.public_subnet.id}"
   ami = "${var.ami}"
   instance_type = "${var.instance_type}"
   key_name = "${aws_key_pair.gophish_ssh_key.key_name}"
