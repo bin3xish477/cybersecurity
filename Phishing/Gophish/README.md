@@ -1,9 +1,9 @@
 # Gophish Phishing Infrastructure Automation (AWS)
 
 ### Prequisites
-1. An email account. I like using [Protonmail](https://protonmail.com/) since it's easy to create and destroy.
-2. A Domain. We'll be using Amazon Route 53 to register a domain if you don't already have one.
-3. An SMTP server. We'll be using AWS SES (Simple Email Server).
+1. AWS credential profile (`~/.aws/credentials`)
+2. A Domain - We'll be using Amazon Route 53 to register a domain if you don't already have one.
+3. An SMTP server - We'll be using AWS SES (Simple Email Server).
 4. Download and install [Terraform](https://www.terraform.io/downloads.html)
 
 ### Run
