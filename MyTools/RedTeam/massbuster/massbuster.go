@@ -32,7 +32,7 @@ var (
 )
 
 const (
-	green  = "\u001b[32m"
+	red    = "\u001b[31m"
 	end    = "\u001b[0m"
 	underL = "\u001b[4m"
 )
@@ -59,7 +59,7 @@ func parseConfig() {
 
 func gobust(host string) {
 	fmt.Printf(
-		"URL: %s%s%s%s\n-----------------------------------------------------\n", green, underL, host, end,
+		"URL: %s%s%s%s\n\n", red, underL, host, end,
 	)
 	mainArgs := fmt.Sprintf("-t %s -u %s -w %s", strconv.Itoa(threads), host, wordList)
 	allArgs := fmt.Sprintf("%s %s", mainArgs, config.GobusterArgs)
