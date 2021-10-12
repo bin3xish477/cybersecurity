@@ -1,0 +1,4 @@
+{
+  "gobuster": "-b 301,403,404 dir -q --no-error --random-agent",
+  "httpx": "-silent -random-agent -no-color"
+}
