@@ -61,10 +61,13 @@ func gobust(host string) {
 	fmt.Printf(
 		"URL: %s%s%s%s\n\n", red, underL, host, end,
 	)
+
 	mainArgs := fmt.Sprintf("-t %s -u %s -w %s", strconv.Itoa(threads), host, wordList)
 	allArgs := fmt.Sprintf("%s %s", mainArgs, config.GobusterArgs)
+
 	if gobusterPath, exists := getCommandPath("gobuster"); exists {
 		cmd := exec.Command(gobusterPath, strings.Split(allArgs, " ")...)
+
 		cmd.Stdin = os.Stdin
 		cmd.Stdout = os.Stdout
 		cmd.Stderr = os.Stderr
@@ -78,11 +81,10 @@ func gobust(host string) {
 
 func start() {
 	if httpxPath, exists := getCommandPath("httpx"); exists {
-		cmd := exec.Command(httpxPath,
-			"-silent", "-random-agent", "-no-color",
-			"-threads", strconv.Itoa(threads), "-list", hostFile,
-		)
+		mainArgs := fmt.Sprintf("-threads %s -list %s", strconv.Itoa(threads), hostFile)
+		allArgs := fmt.Sprintf("%s %s", mainArgs, config.HttpxArgs)
 
+		cmd := exec.Command(httpxPath, strings.Split(allArgs, " ")...)
 		r, _ := cmd.StdoutPipe()
 
 		done := make(chan bool)
