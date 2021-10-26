@@ -1,4 +1,4 @@
 {
-  "gobuster": "--status-codes-blacklist 302,404 dir -q --no-error --random-agent",
+  "gobuster": "--follow-redirect --status-codes-blacklist 404 -q --no-error --random-agent",
   "httpx": "-silent -random-agent -no-color"
 }

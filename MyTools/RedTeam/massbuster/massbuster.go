@@ -62,7 +62,7 @@ func gobust(host string) {
 		"URL: %s%s%s%s\n\n", red, underL, host, end,
 	)
 
-	mainArgs := fmt.Sprintf("-t %s -u %s -w %s", strconv.Itoa(threads), host, wordList)
+	mainArgs := fmt.Sprintf("dir -t %s -u %s -w %s", strconv.Itoa(threads), host, wordList)
 	allArgs := fmt.Sprintf("%s %s", mainArgs, config.GobusterArgs)
 
 	if gobusterPath, exists := getCommandPath("gobuster"); exists {
