@@ -1,0 +1,25 @@
+# server instance listening on port 8080
+server {
+  listen 443 http2 ssl default_server;
+  root /var/www/html;
+  index "index.html";
+  server_name "bin3x.com";
+
+  ssl_certificate "/etc/ssl/certs/nginx-selfsigned.crt";
+  ssl_certificate_key "/etc/ssl/private/nginx-selfsigned.key";
+  ssl_dhparam "/etc/ssl/certs/dhparam.pem";
+
+  # try finding the specified path in the 
+  # request URI (part after domain), if not found return 404
+  location / {
+    try_files $uri $uri/ =404;
+  }
+
+  # MSF C2 route
+  location /msf_endpoint {
+    proxy_pass "https://localhost:8443";
+    proxy_ssl_verify off;
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  }
+}
