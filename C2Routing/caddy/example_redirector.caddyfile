@@ -1,0 +1,42 @@
+# Example Caddyfile checking for common blue team forensics user agents
+# and redirecting to amazon
+
+# global options
+{
+	http_port 8000
+	https_port 8443
+	# turn off admin endpoint
+	admin off
+}
+
+# server listening on port 8000
+:8000 {
+	# log requests to stdout
+	log {
+		output stdout
+		#output file ./access.log
+		# use human-readable formating as opposed to JSON
+	}
+
+	# named matcher matching user agents with regex
+	@user-agent-blacklist {
+		# case insensitive match of user agents using re2 regular expressions
+		# NOTE: header_regexp only allows 1 regular expression per header
+		header_regexp User-Agent "(?i)curl*|wget*|nmap*"
+	}
+
+	# redirect to amazon if request user agent matches condition in user-agent-blacklist
+	redir @user-agent-blacklist https://aws.amazon.com 301
+
+	# {remote} placeholder containing the IP:Port of connecting machine
+	reverse_proxy 127.0.0.1:31337 {
+		header_up Host {upstream_hostport}
+		header_up X-Forwarded-Host {host}
+		header_up X-Forwarded-Port {port}
+	}
+}
+
+# setting up an example C2 server 
+:31337 {
+	respond "Hello, {remote}, from your C2"
+}
