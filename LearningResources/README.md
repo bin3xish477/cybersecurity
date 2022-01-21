@@ -4,11 +4,10 @@
 - [Break The Isolation: Cross-Account AWS Vulnerabilities](https://i.blackhat.com/USA21/Wednesday-Handouts/us-21-Breaking-The-Isolation-Cross-Account-AWS-Vulnerabilities.pdf)
 - [HTTP/2: The Sequel is Always Worse](https://i.blackhat.com/USA21/Wednesday-Handouts/us-21-Kettle-HTTP-The-Sequel-Is-Always-Worse.pdf)
 
-
 ### Blogs
 - [GadgetToJScript, Covenant, Donut](https://3xpl01tc0d3r.blogspot.com/2020/02/gadgettojscript-covenant-donut.html)
 - [Attacking Active Directory](https://zer1t0.gitlab.io/posts/attacking_ad/)
-
+- [F-Secure: Hunting for AMSI Bypasses](https://blog.f-secure.com/hunting-for-amsi-bypasses/)
 
 ### Tools/Repos
 - [Caddy Server](https://caddyserver.com/docs/)
