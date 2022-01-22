@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"syscall"
 	"unsafe"
-	//"golang.org/x/sys/windows"
+	"golang.org/x/sys/windows"
 )
 
 var sc = []byte{
