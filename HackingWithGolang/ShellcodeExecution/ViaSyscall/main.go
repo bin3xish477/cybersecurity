@@ -122,7 +122,7 @@ func prettyPrintShellcode(sc []byte) {
 
 func main() {
 	key := byte(65)
-	sc := xor(sc, key)
+	// sc := xor(sc, key)
 
 	//prettyPrintShellcode(sc)
 
