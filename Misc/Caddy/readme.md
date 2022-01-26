@@ -1,6 +1,6 @@
-# Setting Up Caddy Modules
+# Caddy Server Stuff
 
-### Web Dav Module
+### Installing Web Dav Module
 
 1. Download and install Caddy
 2. Install third-party module, Run `sudo caddy add-package github.com/mholt/caddy-webdav`
