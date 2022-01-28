@@ -1,0 +1,14 @@
+# Caddy webdav server basic example
+{
+  admin off
+}
+
+:8000 {
+  route {
+    rewrite /dav /dav/
+    webdav /dav/* {
+      prefix /dav
+    }
+  }
+  file_server browse
+}
