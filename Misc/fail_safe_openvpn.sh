@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+#### Run
+# openvpn --script-security 2 --down fail_safe_openvpn.sh --config [OPENVPN_CONFIG_FILE]
+
 echo '==> disabling network...'
 systemctl stop network-manager
 killall -9 dhclient
