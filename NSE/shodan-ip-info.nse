@@ -19,7 +19,6 @@
 -- |_    53
 --
 -- @args shodan.api-key   Shodan API key
---
 ---
 
 local ipOps  = require "ipOps"
@@ -30,7 +29,7 @@ local json   = require "json"
 description = [[
 Queries Shodan's API for generic information about the host IP address
 
-Information such as the ASN, country, hostnames, organizations, etc
+Information obtained includes things like ASN, country, hostnames, organizations, etc
 ]]
 
 author = ""
