@@ -21,24 +21,23 @@
 -- @args shodan.api-key   Shodan API key
 ---
 
-local ipOps  = require "ipOps"
-local stdNse = require "stdnse"
-local http   = require "http"
-local json   = require "json"
-
 description = [[
 Queries Shodan's API for generic information about the host IP address
 
 Information obtained includes things like ASN, country, hostnames, organizations, etc
 ]]
-
-author = ""
+author = "Alexis Rodriguez"
 license = "Same as Nmap--See http://nmap.org/book/man-legal.html"
 categories = {
   "safe",
   "discovery",
   "default"
 }
+
+local ipOps  = require "ipOps"
+local stdNse = require "stdnse"
+local http   = require "http"
+local json   = require "json"
 
 local SHODAN_API_BASE = "https://api.shodan.io/shodan/host/"
 local SHODAN_API_KEY = ""
