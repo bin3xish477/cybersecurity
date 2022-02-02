@@ -1,7 +1,22 @@
 ---
--- @usage nmap --script shodan-ip-info --script-args 'shodan.api-key=<api_key>' <host>
+-- @usage nmap --script shodan-ip-info --script-args "shodan.api-key='<api_key>'" <host>
 -- 
 -- @output
+-- Host script results:
+-- | shodan-ip-info:
+-- |   IP: 1.1.1.1
+-- |   Hostnames:
+-- |     one.one.one.one
+-- |   Domains:
+-- |     one.one
+-- |   Organization: APNIC and Cloudflare DNS Resolver project
+-- |   ASN: AS13335
+-- |   Country: United States
+-- |   OS:
+-- |   Ports:
+-- |     80
+-- |     443
+-- |_    53
 --
 -- @args shodan.api-key   Shodan API key
 --
@@ -13,6 +28,9 @@ local http   = require "http"
 local json   = require "json"
 
 description = [[
+Queries Shodan's API for generic information about the host IP address
+
+Information such as the ASN, country, hostnames, organizations, etc
 ]]
 
 author = ""
@@ -45,18 +63,22 @@ function action(host, port)
   local resp = http.get_url(url)
   
   if resp.status ~= 200 then
-    output["Results"] = "No data was found for the IP: " .. host.ip
+    output["Info"] = "No data was found for the IP: " .. host.ip
     return output
   end
 
   local ok, respJson = json.parse(resp.body)
 
   if ok then
-    output["IP"] = host.ip
-    output["Hostnames"] = respJson["hostnames"]
-    output["Country"] = respJson["country_name"]
+    output["IP"]           = host.ip
+    output["Hostnames"]    = respJson["hostnames"]
+    output["Domains"]      = respJson["domains"]
     output["Organization"] = respJson["org"]
-    output["ASN"] = respJson["asn"]
+    output["ISP"]          = respJson["ips"]
+    output["ASN"]          = respJson["asn"]
+    output["Country"]      = respJson["country_name"]
+    output["OS"]           = respJson["os"]
+    output["Ports"]        = respJson["ports"]
   else
     output["Error"] = "Could not parse JSON response from Shodan API..."
   end
