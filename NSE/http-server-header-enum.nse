@@ -1,10 +1,10 @@
----                                                       
--- @usage                                                 
---                                                        
--- @output                                                
---                                                        
--- @args                                                  
---                                                        
+---
+-- @usage
+--
+-- @output
+--
+-- @args
+--
 ---
 
 local shortPort = require "shortport"
