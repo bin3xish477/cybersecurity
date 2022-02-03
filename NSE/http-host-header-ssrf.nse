@@ -2,6 +2,13 @@
 -- @usage nmap --script http-host-header-ssrf --script-args "oob.server='<oob_server>'" <host>
 -- 
 -- @output
+-- PORT     STATE SERVICE
+-- 3000/tcp open  ppp
+-- | http-host-header-ssrf:
+-- |   Location: None
+-- |   Injected-Host-Header: faljfqp141laafa.interact.sh
+-- |   Response-Code: 404
+-- |_  Verdict: Non-200/301 status codes may mean no SSRF is present but check your server logs anyways
 --
 -- @args oob.server    The hostname of the server to listen for connection
 --
@@ -80,8 +87,8 @@ function action(host, port)
   output["Injected-Host-Header"] = oobServer
   output["Response-Code"]        = resp.status
 
-  if resp.status ~= 200 then
-    output["Verdict"] = "Non-200 status codes may mean no SSRF is present but check your server logs just in case"
+  if resp.status ~= 200 or resp.status ~= 301 then
+    output["Verdict"] = "Non-200/301 status codes may mean no SSRF is present but check your server logs anyways"
   else
     output["Verdict"] = "*** Potential SSRF detected ***"
   end
