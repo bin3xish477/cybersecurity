@@ -1,0 +1,22 @@
+id: host-header-ssrf
+
+info:
+  name: Detect SSRF via HTTP Host Header
+  author: bin3xish477
+  severity: high
+  description: Detects Server-side Request Forgery (SSRF) by injecting an interactsh URL into the Host header to detect for external service interactions
+  tags: ssrf
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+    headers:
+      Host: "{{interactsh-url}}"
+    matchers:
+      - type: word
+        part: interactsh_protocol
+        words:
+          - "dns"
+          - "http"
+          - "smtp"
