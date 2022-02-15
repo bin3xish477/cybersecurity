@@ -6,7 +6,7 @@ info:
   severity: high
   description: This scripts inject JNDI payloads into several HTTP headers and attempts to detect OOB interactions with interactsh
   tags: log4j,cve,rce
-  references:
+  reference:
     - https://github.com/Cybereason/Logout4Shell.git
 
 requests:
