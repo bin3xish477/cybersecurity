@@ -1,0 +1,23 @@
+id: aws-key-extractor
+
+info:
+  name: AWS Key Extractor
+  author: bin3xish477
+  severity: high
+  description: Discovers AWS access keys using regular expressions
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - "(A3T[A-Z0-9]|AKIA|AGPA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}"
+    extractors:
+      - type: regex
+        part: body
+        regex:
+          - "(A3T[A-Z0-9]|AKIA|AGPA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}"
+
