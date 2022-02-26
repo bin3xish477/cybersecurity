@@ -1,5 +1,9 @@
 package main
 
+// An example DNS exfiltration technique in Go
+// Encryption is not implemeted in this example, however,
+// all data should be encrypted before being exfiltrated
+
 import (
 	"bytes"
 	"context"
