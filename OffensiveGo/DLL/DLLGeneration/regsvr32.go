@@ -1,5 +1,10 @@
 package main
 
+/*
+
+PS C:\> regsvr32.exe /i Benign.dll
+
+*/
 import (
 	"fmt"
 	"io/ioutil"
