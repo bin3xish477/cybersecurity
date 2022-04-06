@@ -5,8 +5,10 @@ package main
 // Run: rundll32.exe ./updater.dll,Updater
 
 import (
+        "fmt"
         "net"
         "os/exec"
+        "strings"
         "syscall"
         "time"
 )
