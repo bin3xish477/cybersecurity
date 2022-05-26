@@ -5,6 +5,8 @@
 - [VirusTotal](https://www.virustotal.com/gui/)
 - [IPQualityScore](https://www.ipqualityscore.com/ip-reputation-check)
 - [CyberChef](https://gchq.github.io/CyberChef/)
+- [DMARC Check](https://mxtoolbox.com/dmarc.aspx)
+- 
 
 ### Get Amazon IP Ranges
 ```
@@ -47,4 +49,11 @@ If ($interface.Dhcp -eq "Disabled") {
 ### RDP Port Forward Through Jump Box
 ```bash
 ssh -N -q -L 3389:10.10.10.2:3389 jump-box
+```
+### Get Registry Keys and Properties
+```powershell
+# get reg key
+get-item 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\'
+# get specific property from reg key
+get-itemproperty 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\' | select userinit
 ```
