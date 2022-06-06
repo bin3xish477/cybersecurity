@@ -1,5 +1,18 @@
 # Detection Engineering Cheat Sheet
 
+### Malware Analysis Tools
+
+- [Process Monitor](https://docs.microsoft.com/en-us/sysinternals/downloads/procmon)
+- [Process Explorer](https://docs.microsoft.com/en-us/sysinternals/downloads/process-explorer)
+- [Process Hacker](https://processhacker.sourceforge.io/)
+- [Autoruns](https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns)
+- [TCPView](https://docs.microsoft.com/en-us/sysinternals/downloads/tcpview)
+- [Strings](https://docs.microsoft.com/en-us/sysinternals/downloads/strings)
+- [CFF Explorer](https://ntcore.com/?page_id=388)
+- [Fiddler](https://www.telerik.com/download/fiddler)
+- [WireShark](https://www.wireshark.org/download.html)
+- [BurpSuite](https://portswigger.net/burp/communitydownload)
+
 ### Yara Rules
 
 > Example Rule
@@ -27,13 +40,8 @@ rule silent_banker : banker
     - `strings`: the detection strings
     - `condition`: the conditions that must be met for the rule to trigger
 
-### Malware Analysis Tools
+### Iptables Rule to Redirect All HTTPS to Burp Suite
 
-- [Process Monitor](https://docs.microsoft.com/en-us/sysinternals/downloads/procmon)
-- [Process Explorer](https://docs.microsoft.com/en-us/sysinternals/downloads/process-explorer)
-- [Process Hacker](https://processhacker.sourceforge.io/)
-- [Autoruns](https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns)
-- [TCPView](https://docs.microsoft.com/en-us/sysinternals/downloads/tcpview)
-- [Strings](https://docs.microsoft.com/en-us/sysinternals/downloads/strings)
-- [CFF Explorer](https://ntcore.com/?page_id=388)
-- 
+```console
+sudo iptables -t nat -A PREROUTING -i ens3 -p tcp –dport 443 -j -REDIRECT –to-port 8080
+```
