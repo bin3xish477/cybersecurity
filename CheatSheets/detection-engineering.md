@@ -2,7 +2,14 @@
 
 ### Yara Rules
 
-> Example
+> Example Rule
+
+- This rule contains all the basics elements that make up a Yara rule definition
+    - `silent_banker`: the rule name
+    - `banker`: a rule tag
+    - `meta`: key-value pairs that define metadata about the rule
+    - `strings`: the detection strings
+    - `condition`: the conditions that must be met for the rule to trigger
 
 ```yara
 rule silent_banker : banker
