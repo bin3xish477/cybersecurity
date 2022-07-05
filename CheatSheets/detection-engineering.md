@@ -45,3 +45,23 @@ rule silent_banker : banker
 ```console
 sudo iptables -t nat -A PREROUTING -i ens3 -p tcp -–dport 443 -j -REDIRECT --to-port 8080
 ```
+
+### Velociraptor Query Language
+
+```console
+select * from glob(globs='c:\\Users\\**\*.{exe,dll,sys,msi}')
+
+select * from glob(globs='''C:\Users\**\*.exe''')
+
+select * from glob(globs=['C:\\Users\\**.{exe,dll}',
+                          'C:\\Temp\\**\\*.{exe,dll,msi}'])
+                          
+SELECT Pid, Name, {
+   SELECT Name FROM pslist(pid=Ppid)
+} AS ParentName
+FROM pslist()
+
+LET binary = SELECT FullPath
+  FROM Artifact.Generic.Utils.FetchBinary(ToolName="ToolName")
+SELECT * FROM execve(argv=[binary.FullPath[0], "--flag")
+```
