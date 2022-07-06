@@ -65,3 +65,9 @@ LET binary = SELECT FullPath
   FROM Artifact.Generic.Utils.FetchBinary(ToolName="ToolName")
 SELECT * FROM execve(argv=[binary.FullPath[0], "--flag")
 ```
+
+### Registered DLLs Executed by Svchost
+
+```console
+HKLM\SOFTWARE\Microsoft\WindowsNT\CurrentVersion\Svchost
+```
