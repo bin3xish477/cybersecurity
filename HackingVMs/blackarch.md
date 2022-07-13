@@ -14,14 +14,12 @@ sudo pacman -S <pkg> --noconfirm
 
 ### Install/Enable VMware tools
 
-1. Should maximize screen
+1. Fixes VM resolution to match host
 2. Allow for copy/paste between guest and host
 3. Improves device performances
-4. etc
 
 ```console
-sudo pacman -S open-vm-tools --noconfirm
-sudo pacman -S archlinux-keyring glibc lib32-glibc --noconfirm
+sudo pacman -S archlinux-keyring open-vm-tools glibc lib32-glibc --noconfirm
 sudo systemctl enable vmtoolsd
 sudo systemctl start vmtoolsd
 ```
