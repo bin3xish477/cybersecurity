@@ -9,7 +9,7 @@ sudo pacman -Syu --needed --overwrite='*' blackarch
 ### Update specific package
 
 ```console
-sudo pacman -S <pkg> --confirm
+sudo pacman -S <pkg> --noconfirm
 ```
 
 ### Install/Enable VMware tools
@@ -20,7 +20,8 @@ sudo pacman -S <pkg> --confirm
 4. etc
 
 ```console
-sudo pacman -S --confirm open-vm-tools
+sudo pacman -S open-vm-tools --noconfirm
+sudo pacman -S archlinux-keyring glibc lib32-glibc --noconfirm
 sudo systemctl enable vmtoolsd
 sudo systemctl start vmtoolsd
 ```
