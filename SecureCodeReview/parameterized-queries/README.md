@@ -57,6 +57,13 @@ try {
 }
 ```
 
+#### Ruby
+
+```ruby
+insert_new_user = db.prepare "INSERT INTO users (name, age, gender) VALUES (?, ? ,?)"
+insert_new_user.execute 'aizatto', '20', 'male'
+```
+
 ### References
 
 - [OWASP Cheat Sheet Series: Query Parameterization](https://cheatsheetseries.owasp.org/cheatsheets/Query_Parameterization_Cheat_Sheet.html)
