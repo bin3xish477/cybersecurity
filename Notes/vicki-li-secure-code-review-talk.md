@@ -59,10 +59,8 @@ Tools needed to perform good secure code review:
 
 #### Digging deeper
 
-1. focus on critical functions
-  - authentication, authorization, application use case
+1. focus on critical functions (authentication, authorization, application use case, PII, etc)
 2. trace user input data flows
-
 
 ### Practice
 
