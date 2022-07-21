@@ -10,3 +10,5 @@ This folder will contain notes/resources on secure code review.
 - [Python Security Best Practices (Snyk)](https://snyk.io/blog/python-security-best-practices-cheat-sheet/)
 - [Java Secure Coding Guidelines](https://www.oracle.com/java/technologies/javase/seccodeguide.html)
 - [Go Secure Coding Practices PDF (OWASP)](https://github.com/OWASP/Go-SCP/blob/master/dist/go-webapp-scp.pdf)
+- [Vicki Li's "How to Analyze Code for Vulnerabilities" Talk](https://www.youtube.com/watch?v=A8CNysN-lOM)
+- [Ken Johnson & Seth Law: "Secure-er Code Reviews" Talk](https://www.youtube.com/watch?v=89rSpNBtVWE)
