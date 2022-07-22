@@ -1,0 +1,1 @@
+The `sample.1.js` code does not have any vulnerabilities. One might think there is an account take over in the code due to the use of the `findOne` method which performing a lowercase lookup even though the `toLowerCase` method is being invoked against the email before registering the account. However, what actually happens is that an account with the same email will be created.

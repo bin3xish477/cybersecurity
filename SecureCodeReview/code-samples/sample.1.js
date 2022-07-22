@@ -1,6 +1,4 @@
-/*
-Does the following code have any vulnerabilities?
-*/
+/* Can you spot the vulnerability?? */
 
 const express = require('express');
 const User = require('../models/User');
