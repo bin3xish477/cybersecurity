@@ -30,9 +30,22 @@ The directives used in the `Content-Security-Policy` use the keyword **self** wh
 Content-Security-Policy: default-src 'self'; img-src 'self' cdn.example.com;
 ```
 
-More on the CSP header [here](https://content-security-policy.com/).
+More on the CSP header [here](https://content-security-policy.com/)
 
 ### X-XSS-Protection
+
+The `X-XSS-Protection` header is **deprecated** because its purpose was/is to detect reflected cross-site scripting attacks but it actually introduced XSS vulnerabilities itself.
+
+#### Examples
+
+```
+X-XSS-Protection: 0
+X-XSS-Protection: 1
+X-XSS-Protection: 1; mode=block
+X-XSS-Protection: 1; report=<reporting-uri>
+```
+
+More on the `X-XSS-Protection` header [here](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection)
 
 ### X-Frame-Options
 
