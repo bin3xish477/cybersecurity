@@ -52,16 +52,49 @@ X-Frame-Options: DENY
 
 ### Referrer-Policy
 
+The mispelled `Referer` header is used to inform websites about who just "referred" them to their site. For example, if someone on website A visits website B, an absolute or partial address of website A is included in the `Referer` header. The `Referer` header will be included in all requests to external resources such as styles, image, scripts, form submissions, etc. This particular header, however, can leak information 
+
+- `""`:  
+- `no-referrer`: the `Referer` header will not be included in requests
+- `no-referrer-when-downgrade`: if a requests is made from a secure site (HTTPS) to an insecure site (HTTP), the `Referer` header will not be included
+- `same-origin`: the `Referer` header is only included is the request is made to the same origin (scheme,domain,port)
+- `origin`: send only the origin, truncate the path
+- `strict-origin`: include the `Referer` header if the protocol security level remains the same **HTTPS->HTTPS**
+
+#### Examples
+
+```
+Referrer-Policy: no-referrer
+Referrer-Policy: no-referrer-when-downgrade
+Referrer-Policy: origin
+Referrer-Policy: origin-when-cross-origin
+Referrer-Policy: same-origin
+Referrer-Policy: strict-origin
+Referrer-Policy: strict-origin-when-cross-origin
+Referrer-Policy: unsafe-url
+```
+
 ### X-Content-Type-Options
+
+
+#### Example
 
 ### Permissions-Policy
 
+
+#### Example
+
 ### X-Download-Options
+
+
+#### Example
 
 ```
 X-Download-Options: noopen
 ```
 
 ### Expect-CT
+
+#### Example
 
 Learn more about certificate transparency [here](https://certificate.transparency.dev/howctworks/)
