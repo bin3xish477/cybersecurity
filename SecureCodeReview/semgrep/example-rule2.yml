@@ -1,0 +1,7 @@
+id: python-no-prints-in-prod
+pattern: oldp($X)
+message: Use logging.debug() instead of old_print()
+severity: INFO
+fix: logging.debug($X)
+languages:
+  - python
