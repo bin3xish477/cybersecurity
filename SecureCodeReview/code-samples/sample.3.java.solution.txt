@@ -1,0 +1,1 @@
+You guessed it, its XXE! No validation of the XML document being parsed - no external entites protections, no DTDs protections, etc
