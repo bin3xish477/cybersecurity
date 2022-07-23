@@ -62,17 +62,42 @@ Secure design is a methodology that should ensure an applications security defen
 
 ### A05 Security Misconfiguration
 
+Misconfiguring an application or any component of its technology stack is a common way to expose a larger attack surface to threat actors. With so many configurable options, applications are many times configured with settings that may or may not have been set and that undermine the applications defences. Security hardening failures across the application stack, unnecessary enabled options (e.g. redundant ports, services, pages, accounts, etc), default credentials, verbose error handling messages sent in responses to users, security settings of the servers, frameworks, libraries, databases, etc in use are missing, and outdated technologies in use, are some security misconfigurations that leave an application vulnerable to attack.
+
 
 #### How to Prevent
 
+- an application security configuraton review process must be in place to ensure applications aren't inadvertently introducing security vulnerabilities via configurable options.
+- use a platform that requires minimal configuration on behalf of the developer
+- do not enable options unless there is a thorough understanding of how that option alters the application
+- include configuration reviews into the patch management process
+- use automation to check against the effectiveness of an applications current configuration
 
 ### A06 Vulnerable and Outdate Components
 
+One easy way to weaken the defences of an application is to unintentionally or intentionally use components with knkown vulnerabilities - and yes, you read that right, *intentionally*. Why developers might continue to use vulnerable components in their application really comes down to how dependent their application is on that component. For example, maybe the 3rd party validation library an application uses breaks with the current, secure release of the library. A risk assessment would normally need to be performed in such a case to understand the risks involved with keeping the vulnerable component. Decision makers may need to tolerate a high level of risks until a solution is discovered or potentially lose revenue. 
+
+Vulnerable compoments make their way into application because developers might not know the versions of these components, and whether or not they are container known vulnerabilities. Failing to establish processes that scan for known vulnerabilities or test compatibility with updated/uprgraded libraries, also allows vulnerable components to remain in use unknowingly.
+
+#### How to Prevent
+
+- remove unused dependencies, unnecessary features, components, files, documention, etc
+- maintain an inventory of all the 3rd component libraries in use
+- only use signed components from official sources over secure links
+- establish a process to monitor for depencencies that are no longer in use
+
 ### A07 Identification and Authentication Failures
+
+#### How to Prevent
 
 ### A08 Software and Data Integrity Failures
 
+#### How to Prevent
+
 ### A09 Security Logging and Monitoring Failures
+
+#### How to Prevent
 
 ### A10 Server-side Request Forgery
 
+#### How to Prevent
