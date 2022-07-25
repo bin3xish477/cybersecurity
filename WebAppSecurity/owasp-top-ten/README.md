@@ -75,7 +75,7 @@ Misconfiguring an application or any component of its technology stack is a comm
 
 ### A06 Vulnerable and Outdate Components
 
-One easy way to weaken the defences of an application is to unintentionally or intentionally use components with knkown vulnerabilities - and yes, you read that right, *intentionally*. Why developers might continue to use vulnerable components in their application really comes down to how dependent their application is on that component. For example, maybe the 3rd party validation library an application uses breaks with the current, secure release of the library. A risk assessment would normally need to be performed in such a case to understand the risks involved with keeping the vulnerable component. Decision makers may need to tolerate a high level of risks until a solution is discovered or potentially lose revenue. 
+One easy way to weaken the defences of an application is to unintentionally or intentionally use components with known vulnerabilities - and yes, you read that right, *intentionally*. Why developers might continue to use vulnerable components in their application really comes down to how dependent their application is on that component. For example, maybe the 3rd party validation library an application uses breaks with the current, secure release of the library. A risk assessment would normally need to be performed in such a case to understand the risks involved with keeping the vulnerable component. Decision makers may need to tolerate a high level of risks until a solution is discovered or potentially lose revenue. 
 
 Vulnerable compoments make their way into application because developers might not know the versions of these components, and whether or not they are container known vulnerabilities. Failing to establish processes that scan for known vulnerabilities or test compatibility with updated/uprgraded libraries, also allows vulnerable components to remain in use unknowingly.
 
@@ -100,4 +100,20 @@ Vulnerable compoments make their way into application because developers might n
 
 ### A10 Server-side Request Forgery
 
+Server-side Request Forgery (SSRF) allows an attacker to control the destination URL of a resource, coercing the application to make requests on behalf of the attacker. SSRF arises in applications that fail to validate user-supplied URLs in services. With the growing implementation of microservice architectures, SSRF is becoming more ubiquitous because of the decoupled nature of microservices and there dependence on remotely deployed components that create opportunities for attackers to hijack the request to these components.
+
+SSRF can also be used to carry out attacks against other organizations resources such as DOS attacks and because requests are originating from the vulnerable application, an attacker can make it appear as if one organization is DOSing another. 
+
 #### How to Prevent
+
+*At the Network Layer*
+
+- segment remote resources into seperate networks
+- create "deny by default" firewall policies for traffic that does match intended behavior
+
+*At the Application Layer*
+
+- sanitize and validate all user-supplied input data specifically where the user is allowed to specify a URL
+- use URL allows list to validate user-supplied URLs
+- disable HTTP redirections
+- **DON'T** use blacks or regular expressions to attempt to mitigate SSRF because attackers can find ways to bypass these filters
