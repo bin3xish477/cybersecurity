@@ -1,0 +1,22 @@
+# Secure Coding Best Practices
+
+- [ ] Input Validation
+  - sanitize, validate all user-supplied input server-side
+  - centralize input validation procedures
+  - conanicalize data before passing it to a validation routine
+  - data that fails to pass validations should be rejected
+  - validate all sources of untrusted user inputs such as URLs, URL parameters, HTTP headers, form data
+  - validate number ranges, date ranges, expected data types
+  - validate input against trusted allow ("white") list
+- [ ] Output Encoding
+- [ ] Authentication and Password Management
+- [ ] Session Management
+- [ ] Access Control
+- [ ] Cryptographic Practices
+- [ ] Error Handling and Logging
+- [ ] Data Protection
+- [ ] Communication Security
+- [ ] System Configuration
+- [ ] Database Security
+- [ ] File Management
+- [ ] Memory Management
