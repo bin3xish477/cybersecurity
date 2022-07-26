@@ -7,6 +7,8 @@
   - users with the least amount of privileges required to perform a function should be created to execute containerized applications
   - helps prevent against common container breakout techniques
   - `RUN groupadd -r app && useradd -g app appuser`
+  - `RUN chown -R appuser:app /app`
+  - `USER appuser`
 - [ ] Users & Permissions with Role-based Access Controls (RBAC)
 - [ ] Use Network Policies
 - [ ] Encrypt Communication
