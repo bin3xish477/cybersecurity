@@ -88,11 +88,29 @@ Vulnerable compoments make their way into application because developers might n
 
 ### A07 Identification and Authentication Failures
 
+Identification and authentication failures allow attackers to carry out identity and authentication related attacks that completely subvert an applications efforts to correctly identify users and limit the access of users to intended resources. Applications that fail to prevent automated attacks such as credentials stuffing or brute force attacks, use default credentials, implement weak credential recovery mechanisms, use insecure communication protocols, fail to provide MFA, improperly invalidate session tokens, etc allow attackers to act on behalf of the identities of privileged or non-privileged users, undermining the application security defences.
+
 #### How to Prevent
+
+- implement proper MFA using 2 of the 3 three factors
+  - use time-based one time passwords (TOTPs) or physical security tokens
+- ensure default credentials are not in use
+- perform checks for weak passwords obtained from data breaches
+- enforce a strong password creation policy
+- delay authentication attempts incrementally after authentication failures
+- use server-side session management libraries that generate random session IDs
 
 ### A08 Software and Data Integrity Failures
 
+With the growing use of CI/CD pipelines, infrastructure-as-code (IoC), and automation, identifying integrity failures is crucial to prevent attacks against infrastructure and application development and deployment workflows. Because so many components of an application now rely on dependencies that are no longer internally developed, maintained, and stored, developers are left to rely on the security implemented by 3rd parties. Components such as plugins, libraries, modules can all come from untrusted sources, repositories, and content delivery networks (CDNs) which means secure integrity verification procedures need to be created to catch malicious components attempting to gain access to an application or its technology stack.
+
 #### How to Prevent
+
+- use digital signatures to verify software and data is originating from trusted parties
+- use internally hosted code repositories when possible, if not, ensure dependency fetching tools (pip, npm) are consuming trusted repositories
+- use software supply chain tools to search dependencies for known vulnerabilities
+- code and configuration changes should be vetted by several individuals before being making it to production
+- CI/CD pipelines should have secure flow control mechanisms, configurations, and access controls to ensure the integrity of changes being sent through the build and deploy process
 
 ### A09 Security Logging and Monitoring Failures
 
