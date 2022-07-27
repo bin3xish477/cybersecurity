@@ -89,7 +89,15 @@ Referrer-Policy: unsafe-url
 
 ### X-Content-Type-Options
 
+The `X-Content-Type-Options` HTTP header is used to control MIME sniffing which is a way for browsers to determine the MIME type of a web source/content and render the content according to the assumed MIME type. This may be leveraged by attackers by submitting malicious code and then letting the browser determine the MIME type and then render/execute the text according to the sniffed MIME type. 
+
+- `nosniff`: tells the browser to not sniff content for a MIME type
+
 #### Example
+
+```
+X-Content-Type-Options: nosniff
+```
 
 ### Public-Key-Pins
 
@@ -110,6 +118,16 @@ Public-Key-Pins: pin-sha256="d6qzRu9zOECb90Uez27xWltNsj0e1Md7GkYYkVoZWmM="; pin-
 
 ### Expect-CT
 
+A potential replacement for the HPKP security header, `Expect-CT` lets sites specify if they want to enforce certificate transparency requirements to prevent users from establishing connections using fraudulent certificates. Browsers will use a Signed Certificate Timestamp (SCT) which is created when a CA issues a certificate and logs it to a public certificate log.
+
+- `enforce`: tells the browser to enforce compliance with CT policy and to refuse future connections that violate CT policy
+- `max-age`: number of seconds the browser should cache and use the received policy for
+- `report-uri`: the URL to report malicious certificates that fail CT checks to
+
 #### Example
+
+```
+Expect-CT: max-age=86400, enforce, report-uri="https://foo.example.com/report"
+```
 
 Learn more about certificate transparency [here](https://certificate.transparency.dev/howctworks/)
