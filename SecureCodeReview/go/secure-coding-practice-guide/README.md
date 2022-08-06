@@ -29,8 +29,8 @@ utf8.DecodeRuneInString
 * for custom formats, use the `regexp` pacakge, e.g., validating an IP address
 
 ```go
-var IPExp = regexp.MustCompile(`([0-9]{1,3}){3}\.[0-9]{1,3}`)
-IPExp.MatchString(userInput)
+var IPExpr = regexp.MustCompile(`([0-9]{1,3}){3}\.[0-9]{1,3}`)
+IPExpr.MatchString(userInput)
 ```
 
 ### Output Encoding
