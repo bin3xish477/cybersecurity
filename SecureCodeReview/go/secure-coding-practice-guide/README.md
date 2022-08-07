@@ -1,10 +1,10 @@
-# Go Secure Coding Practices Guide
+# Go Secure Coding Practices Quick Reference
 
 ### Input Validation
 
 #### User Interactivity
  
- * use native libraries to handle input in different datatypes
+* use native libraries to handle input in different datatypes
 
 ```go
 strconv.Atoi
@@ -32,6 +32,17 @@ utf8.DecodeRuneInString
 var IPExpr = regexp.MustCompile(`([0-9]{1,3}){3}\.[0-9]{1,3}`)
 IPExpr.MatchString(userInput)
 ```
+
+* use whitelists to define trustable input characters
+* perform boundary checking for dates, numbers, ranges, etc
+* escape potentially dangerous characters like null bytes, escape sequence characters like `\n` etc
+* validate filepaths to prevent filepath alterations that lead to LFI ("../", "\\..")
+* ensure HTTP response headers and responses only contain ASCII text
+* check for alternate representations of special characters
+* use third-party packages for security such as:
+  * [go-playground/form](https://github.com/go-playground/form)
+  * [go-playground/validator](https://github.com/go-playground/validator)
+  * [gorilla](https://github.com/gorilla/)
 
 ### Output Encoding
 
