@@ -1,4 +1,4 @@
-# Cool Stuff I Learned While Researching Stuff
+# Cool Things I Learned While Doing Security Research
 
 ### JSONP
 
