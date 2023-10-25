@@ -12,6 +12,15 @@ Disabling or nullifying DTDs for different programming languages:
 factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
 ```
 
+```java
+dbFactory.setFeature("http://xml.org/sax/features/external-general-entities", false);
+dbFactory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+dbFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+
+dbFactory.setXIncludeAware(false);
+dbFactory.setExpandEntityReferences(false);
+```
+
 #### C#
 
 ```csharp
