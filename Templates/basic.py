@@ -7,13 +7,12 @@ import base64
 
 requests.urllib3.disable_warnings()
 
-url = "http://aws.amazon.com"
+url = "http://localhost:8080"
 proxies = {
     "http": "http://localhost:8080",
     "https": "https://localhost:8080",
 }
 ok_codes = [200, 201, 204, 301, 304]
-session = requests.Session()
 
 
 def b64(s: str) -> str:
@@ -28,8 +27,8 @@ def json_to_dict(s: str) -> dict:
     return json.loads(s)
 
 
-def ok(code: int) -> bool:
-    return code in ok_codes
+def ok(r: requests.Response) -> bool:
+    return r.status_code in ok_codes
 
 
 # send HTTP requests
@@ -45,7 +44,7 @@ def hit(
 ) -> requests.Response:
     if as_json:
         headers["Content-Type"] = "application/json"
-    return session.request(
+    return requests.request(
         method=method,
         url=url,
         data=json.dumps(data) if as_json else data,
@@ -64,24 +63,11 @@ def main():
     #    as_json=True,
     #    verify=False,
     # )
-    # resp = hit(url="http://aws.amazon.com.", redirects=False)
-    # code = resp.status_code
-    # if ok(code):
-    #    if code == 301:
-    #        resp2 = hit(
-    #            url=resp.headers["Location"],
-    #        )
-    #        code2 = resp2.status_code
-    #        if ok(code2):
-    #            print(resp2.headers)
-    # else:
-    #    print(f"response code = {resp.status_code}")
-    resp = hit(url=url)
-    code = resp.status_code
-    if ok(code):
-        print(f"StatusCode: {code}")
+    resp = hit(url=url, verify=False)
+    if ok(resp):
+        pass
     else:
-        print(f"Failed with response code `{code}`")
+        pass
 
 
 if __name__ == "__main__":
