@@ -1,5 +1,10 @@
+if (!requestResponse.hasResponse()) {
+    return false;
+}
+
 Annotations annotations = requestResponse.annotations();
 HttpRequest request = requestResponse.request();
+HttpResponse response = requestResponse.response();
 String method = request.method();
 
 switch (method) {
@@ -22,8 +27,17 @@ switch (method) {
     annotations.setHighlightColor(HighlightColor.MAGENTA);
     break;
   default:
-    annotations.setHighlightColor(HighlightColor.PINK);
     break;
+}
+
+// filters for headers that begin with ^X-.* to match non-standard headers
+List<HttpHeader> extendedHeaders = response.headers().stream()
+	.filter(e -> Pattern.compile("^x-(?!.*(?:frame-options|xss-protection|content-type-options)).*$", Pattern.CASE_INSENSITIVE)
+		.matcher(e.name()).find())
+	.collect(Collectors.toList());
+
+if (!extendedHeaders.isEmpty()) {
+    annotations.setNotes(extendedHeaders.stream().map(HttpHeader::name).collect(Collectors.joining(";")));
 }
 
 return true;
