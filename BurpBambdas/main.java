@@ -40,4 +40,4 @@ if (!extendedHeaders.isEmpty()) {
     annotations.setNotes(extendedHeaders.stream().map(HttpHeader::name).collect(Collectors.joining(";")));
 }
 
-return true;
+return request.isInScope();
