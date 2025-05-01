@@ -1,7 +1,0 @@
-{
-    "bambda":{
-        "http_history_display_filter":{
-            "bambda":"if (!requestResponse.hasResponse()) {\r\n    return false;\r\n}\n\nAnnotations annotations = requestResponse.annotations();\r\nHttpRequest request = requestResponse.request();\r\nHttpResponse response = requestResponse.response();\r\nString method = request.method();\r\n\r\nswitch (method) {\r\n  case \"GET\":\r\n    annotations.setHighlightColor(HighlightColor.GRAY);\r\n    break;\r\n  case \"POST\":\r\n    annotations.setHighlightColor(HighlightColor.ORANGE);\r\n    break;\r\n  case \"PUT\":\r\n    annotations.setHighlightColor(HighlightColor.CYAN);\r\n    break;\r\n  case \"PATCH\":\r\n    annotations.setHighlightColor(HighlightColor.YELLOW);\r\n    break;\r\n  case \"DELETE\":\r\n    annotations.setHighlightColor(HighlightColor.RED);\r\n    break;\r\n  case \"OPTIONS\":\r\n    annotations.setHighlightColor(HighlightColor.MAGENTA);\r\n    break;\r\n  default:\r\n    break;\r\n}\r\n\r\n// filters for headers that begin with ^X-.* to match non-standard headers\r\nList<HttpHeader> extendedHeaders = response.headers().stream()\n\t.filter(e -> Pattern.compile(\"^x-(?!.*(?:frame-options|xss-protection|content-type-options)).*$\", Pattern.CASE_INSENSITIVE)\n\t\t.matcher(e.name()).find())\n\t.collect(Collectors.toList());\r\n\r\nif (!extendedHeaders.isEmpty()) {\r\n    annotations.setNotes(extendedHeaders.stream().map(HttpHeader::name).collect(Collectors.joining(\";\")));\r\n}\r\n\r\nreturn request.isInScope();\r\n\r\n"
-        }
-    }
-}

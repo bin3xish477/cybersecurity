@@ -1,7 +1,0 @@
-{
-    "bambda":{
-        "http_history_display_filter":{
-            "bambda":"// ignore entry if no response returned\r\nif (!requestResponse.hasResponse()) return false;\r\n\r\nHttpRequest request = requestResponse.request();\r\nString url = request.url();\r\nMatcher matcher = Pattern.compile(\"portswigger\\\\.net\").matcher(url);\r\n\r\nreturn matcher.find() &&\r\n  request.hasHeader(\"cookie\") &&\r\n  !request.path().matches(\".*(\\\\.(png|svg|jpg|tiff|webp|ico|woff2?))\");\r\n\r\n// FOR IN SCOPE ITEMS\r\n//return request.isInScope() &&\r\n//  !request.path().matches(\".*(\\\\.(png|svg|jpg|tiff|webp|ico|woff2?))\");"
-        }
-    }
-}
