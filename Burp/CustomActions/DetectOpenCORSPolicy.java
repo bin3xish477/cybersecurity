@@ -12,6 +12,4 @@ if (resp.hasHeader(ACAO) && resp.hasHeader(ACAC) && resp.headerValue(ACAC).toLow
 	if (returnedAccessControlAllowOrigin.equals(collaborator) || returnedAccessControlAllowOrigin.equals("*")) {
 	    logging.logToOutput("[+] open CORS policy identified - the CORS policy reflects the injected payload or returns wildcard");
 	}
-} {
-    
 }
